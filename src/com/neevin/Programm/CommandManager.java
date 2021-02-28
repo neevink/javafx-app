@@ -13,16 +13,23 @@ public class CommandManager {
      */
     protected HashMap<String,Command> commands = new HashMap<String, Command>();
 
-    public CommandManager(CollectionController controller, SaveManager saveManager){
+    public CommandManager(CollectionController controller){
         registerCommand(new HelpCommand(this));
-        registerCommand(new ExitCommand());
-        registerCommand(new InfoCommand());
-
-        registerCommand(new ShowCommand(controller)); // Херня какая-то
-
-        registerCommand(new SaveCommand(saveManager, controller));
-        registerCommand(new ClearCommand(controller));
+        registerCommand(new InfoCommand(controller));
+        registerCommand(new ShowCommand(controller));
         registerCommand(new InsertCommand(controller));
+        // UpdateCommand
+        registerCommand(new RemoveCommand(controller));
+        registerCommand(new ClearCommand(controller));
+        registerCommand(new SaveCommand(controller));
+        // ExecuteScriptCommand
+        registerCommand(new ExitCommand());
+        // ReplaceIfGreater
+        // ReplaceIfLowe
+        // RemoveLowerKey
+        // FilterStartsWithName
+        // FilterGreaterThanDistance
+        // PrintFieldAscendingDistance
 
     }
 

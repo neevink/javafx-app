@@ -2,18 +2,16 @@ package com.neevin.Commands;
 
 import com.neevin.Parser.Token;
 import com.neevin.Programm.CollectionController;
-import com.neevin.Programm.SaveManager;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.AbstractList;
 import java.util.Date;
 
 public class SaveCommand implements Command{
-    private SaveManager saveManager;
     private CollectionController controller;
 
-    public SaveCommand(SaveManager saveManager, CollectionController controller){
-        this.saveManager = saveManager;
+    public SaveCommand(CollectionController controller){
         this.controller = controller;
     }
 
@@ -31,8 +29,12 @@ public class SaveCommand implements Command{
     @Override
     public void execute(AbstractList<Token> tokens) {
         try {
-            saveManager.Save(controller.dictionary, new Date(0));
+            controller.Save();
+
+            System.out.println("Текущее состояние коллекции успешно сохранено в файле.");
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

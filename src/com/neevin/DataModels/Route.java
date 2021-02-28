@@ -14,6 +14,9 @@ public class Route implements Comparable<Route> {
 
     private static final long MIN_ID_VALUE = 0;
     private static final long MIN_DISTANCE_VALUE = 1;
+    {
+        creationDate = new Date();
+    }
 
     public Route(){
 
@@ -26,8 +29,6 @@ public class Route implements Comparable<Route> {
         setFrom(from);
         setTo(to);
         setDistance(distance);
-
-        creationDate = new Date();
     }
 
     public long getId() {
@@ -42,11 +43,11 @@ public class Route implements Comparable<Route> {
         this.id = id;
     }
 
-    String getName(){
+    public String getName(){
         return this.name;
     }
 
-    void setName(String name){
+    public void setName(String name){
         if(name == null){
             throw new IllegalArgumentException("Имя не может быть null!");
         }
@@ -135,10 +136,14 @@ public class Route implements Comparable<Route> {
 
     @Override
     public String toString(){
-        return String.format("Маршрут #%d \'%s\' длиной в %d от %s", this.id, this.name, this.distance, this.creationDate.toString()) + '\n' +
-                "Текущая координата: " + this.coordinates.toString() + '\n' +
-                "Движение из: " + this.from.toString() + '\n' +
-                "Движение в: " + this.to.toString();
+        String coord = this.coordinates != null ? this.coordinates.toString() : "отсутствует";
+        String f = this.from != null ? this.from.toString() : "отсутствует";
+        String t = this.to != null ? this.to.toString() : "отсутствует";
+
+        return String.format("Маршрут #%d \"%s\" длиной в %d от %s", this.id, this.name, this.distance, this.creationDate.toString()) + '\n' +
+                "Текущая координата: " + coord + '\n' +
+                "Движение из: " + f + '\n' +
+                "Движение в: " + t;
     }
 
     @Override

@@ -1,10 +1,17 @@
 package com.neevin.Commands;
 
 import com.neevin.Parser.Token;
+import com.neevin.Programm.CollectionController;
 
 import java.util.AbstractList;
 
 public class InfoCommand implements Command{
+    private CollectionController controller;
+
+    public InfoCommand(CollectionController controller) {
+        this.controller = controller;
+    }
+
     @Override
     public String getName() {
         return "info";
@@ -17,8 +24,13 @@ public class InfoCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) {
-        System.out.println("Информация о коллекции: " + "\n" +
-                "Тип коллекции: " + "\n" +
-                "Дата инициализации: ");
+        String type = "HashMap<Long, Route>";
+
+        System.out.println(
+                "Информация о коллекции: " + "\n" +
+                "Тип коллекции: " + type + "\n" +
+                "Дата инициализации: " + controller.initializationTime + "\n" +
+                "Количество элементов в коллекции: " + controller.map.size()
+        );
     }
 }

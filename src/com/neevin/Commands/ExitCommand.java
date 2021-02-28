@@ -17,6 +17,6 @@ public class ExitCommand implements Command {
 
     @Override
     public void execute(AbstractList<Token> tokens) {
-        System.out.println("Пока чел...");
+        System.out.println("Выход.");
     }
 }

@@ -124,14 +124,14 @@ public abstract class Parser {
             x = parseDouble(tokens.get(0));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента x:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента x: " + e.getMessage());
         }
 
         try{
             y = parseDouble(tokens.get(1));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента y:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента y: " + e.getMessage());
         }
 
         return new Coordinates(x, y);
@@ -158,21 +158,21 @@ public abstract class Parser {
             x = parseDouble(tokens.get(0));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента x:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента x: " + e.getMessage());
         }
 
         try{
             y = parseDouble(tokens.get(1));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента y:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента y: " + e.getMessage());
         }
 
         try{
             name = parseString(tokens.get(2));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента name:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента name: " + e.getMessage());
         }
 
         return new Location(x, y, name);
@@ -198,21 +198,21 @@ public abstract class Parser {
             x = parseInt(tokens.get(0));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента x:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента x: " + e.getMessage());
         }
 
         try{
             y = parseInt(tokens.get(1));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента y:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента y: " + e.getMessage());
         }
 
         try{
             name = parseString(tokens.get(2));
         }
         catch (Exception e){
-            throw new Exception("Ошибка парсинга аргумента name:" + e.getMessage());
+            throw new Exception("Ошибка парсинга аргумента name: " + e.getMessage());
         }
 
         return new LocationInteger(x, y, name);

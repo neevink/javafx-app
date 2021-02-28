@@ -25,12 +25,12 @@ public class ShowCommand implements Command {
 
     @Override
     public void execute(AbstractList<Token> tokens) {
-        if(controller.dictionary.size() == 0){
+        if(controller.map.size() == 0){
             System.out.println("Коллекция пуста.");
         }
 
-        for(long key : controller.dictionary.keySet()){
-            Route r = controller.dictionary.get(key);
+        for(long key : controller.map.keySet()){
+            Route r = controller.map.get(key);
             System.out.println(r.toString() + '\n');
         }
     }

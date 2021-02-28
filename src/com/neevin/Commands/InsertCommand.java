@@ -43,6 +43,8 @@ public class InsertCommand implements Command {
             throw new IllegalArgumentException("Аргументов этой команды должно быть 3.");
         }
 
+        Route route = new Route();
+
         // Порсинг полей Route
         long id;
         try{
@@ -51,6 +53,7 @@ public class InsertCommand implements Command {
         catch (Exception e){
             throw new Exception("Парсинг агрумента id не удался. " + e.getMessage());
         }
+        route.setId(id);
 
         String name;
         try{
@@ -59,6 +62,7 @@ public class InsertCommand implements Command {
         catch (Exception e){
             throw new Exception("Парсинг агрумента name не удался. " + e.getMessage());
         }
+        route.setName(name);
 
         long distance;
         try{
@@ -67,26 +71,84 @@ public class InsertCommand implements Command {
         catch (Exception e){
             throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
         }
+        route.setDistance(distance);
 
         // Порсинг полей Coordinates
         Scanner s = new Scanner(System.in);
-        System.out.println("Введите поля объекта Coordinates через пробел: x(дробное число) y(дробное число)");
-        AbstractList<Token> coordinatesTokens = Tokenizer.tokenize(s.nextLine());
-        Coordinates coordinates = Parser.parseCoordinates(coordinatesTokens);
 
-        // Порсинг полей Location
-        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число) name(строка в двойных кавычках)");
-        AbstractList<Token>  locationTokens = Tokenizer.tokenize(s.nextLine());
-        Location location = Parser.parseLocation(locationTokens);
+        receiveCoordinates(route, s);
 
-        // Порсинг полей LocationInteger
-        System.out.println("Введите поля объекта Location через пробел: x(целое число) y(целое число) name(строка в двойных кавычках)");
-        AbstractList<Token>  locationIntegerTokens = Tokenizer.tokenize(s.nextLine());
-        LocationInteger locationInteger = Parser.parseLocationInteger(locationTokens);
+        receiveFrom(route, s);
 
-        Route route = new Route(id, name, coordinates, location, locationInteger, distance);
-        controller.dictionary.put(id, route);
+        receiveTo(route, s);
 
+        controller.map.put(id, route);
         System.out.println("Новый элемент успешно добавлен!\n");
+    }
+
+    private void receiveCoordinates(Route route, Scanner s) {
+        boolean coordinatesParsed = false;
+
+        System.out.println("Введите поля объекта Coordinates через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
+        // Пока координаты не спарсены успешно
+        while (!coordinatesParsed){
+            try{
+                AbstractList<Token> coordinatesTokens = Tokenizer.tokenize(s.nextLine());
+                Coordinates coordinates = null;
+                if(coordinatesTokens.size() != 0) {
+                    coordinates = Parser.parseCoordinates(coordinatesTokens);
+                }
+                route.setCoordinates(coordinates);
+                coordinatesParsed = true;
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println("Повторите ввод.");
+            }
+        }
+    }
+
+    private void receiveFrom(Route route, Scanner s) {
+        boolean locationParsed = false;
+
+        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
+        // Пока координаты не спарсены успешно
+        while (!locationParsed){
+            try{
+                AbstractList<Token> fromTokens = Tokenizer.tokenize(s.nextLine());
+                Location from = null;
+                if(fromTokens.size() != 0) {
+                    from = Parser.parseLocation(fromTokens);
+                }
+                route.setFrom(from);
+                locationParsed = true;
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println("Повторите ввод.");
+            }
+        }
+    }
+
+    private void receiveTo(Route route, Scanner s) {
+        boolean locationParsed = false;
+
+        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
+        // Пока координаты не спарсены успешно
+        while (!locationParsed){
+            try{
+                AbstractList<Token> toTokens = Tokenizer.tokenize(s.nextLine());
+                LocationInteger to = null;
+                if(toTokens.size() != 0) {
+                    to = Parser.parseLocationInteger(toTokens);
+                }
+                route.setTo(to);
+                locationParsed = true;
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+                System.out.println("Повторите ввод.");
+            }
+        }
     }
 }

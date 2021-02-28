@@ -27,7 +27,7 @@ public class Tokenizer {
             }
 
             // Если токен это число
-            if(Character.isDigit(input.charAt(i)) || input.charAt(i) == '.' || input.charAt(i) == ',' ){
+            if(Character.isDigit(input.charAt(i)) || input.charAt(i) == '.' || input.charAt(i) == ',' || input.charAt(i) == '-' ){
                 boolean wasCommaOrDot = input.charAt(i) == '.' || input.charAt(i) == ',';
 
                 int start = i;
@@ -54,7 +54,7 @@ public class Tokenizer {
             if(Character.isAlphabetic( input.charAt(i) )){
                 int start = i;
                 i++;
-                while (i < input.length() && Character.isAlphabetic(input.charAt(i))){
+                while (i < input.length() && ( Character.isAlphabetic(input.charAt(i)) || input.charAt(i) == '_' )){
                     i++;
                 }
                 int end = i;
