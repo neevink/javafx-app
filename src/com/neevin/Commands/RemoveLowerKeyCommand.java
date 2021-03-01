@@ -22,8 +22,7 @@ public class RemoveLowerKeyCommand implements Command{
 
     @Override
     public String getDescription() {
-        return "удалить из коллекции все элементы, ключ которых меньше, чем заданный"+
-                "\t\tremove_lower_key id";
+        return "удалить из коллекции все элементы, ключ которых меньше, чем заданный / remove_lower_key id";
     }
 
     @Override

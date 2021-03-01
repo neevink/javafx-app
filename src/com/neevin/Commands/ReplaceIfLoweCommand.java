@@ -9,6 +9,7 @@ import com.neevin.Parser.Token;
 import com.neevin.Parser.Tokenizer;
 import com.neevin.Programm.CollectionController;
 
+import java.io.InputStream;
 import java.util.AbstractList;
 import java.util.Scanner;
 
@@ -26,8 +27,7 @@ public class ReplaceIfLoweCommand implements Command{
 
     @Override
     public String getDescription() {
-        return "заменить значение по ключу, если новое значение меньше старого\nx"+
-                "\t\treplace_if_lowe id \"name\" distance";
+        return "заменить значение по ключу, если новое значение меньше старого / replace_if_lowe id \"name\" distance";
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.neevin.Parser.Token;
 import com.neevin.Parser.Tokenizer;
 import com.neevin.Programm.CollectionController;
 
+import java.io.InputStream;
 import java.util.AbstractList;
 import java.util.Scanner;
 
@@ -26,8 +27,7 @@ public class InsertCommand implements Command {
 
     @Override
     public String getDescription() {
-        return "добавить новый элемент с заданным ключом.\n" +
-                "\t\tinsert \"name\" distance";
+        return "добавить новый элемент с заданным ключом / insert \"name\" distance";
     }
 
     @Override

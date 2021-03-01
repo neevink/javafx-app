@@ -4,6 +4,7 @@ import com.neevin.DataModels.Route;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.CollectionController;
 
+import java.io.InputStream;
 import java.util.AbstractList;
 import java.util.Scanner;
 
@@ -21,8 +22,7 @@ public class UpdateCommand implements Command{
 
     @Override
     public String getDescription() {
-        return "обновить значение элемента коллекции, id которого равен заданному\n"+
-                "\t\tupdate id \"name\" distance";
+        return "обновить значение элемента коллекции, id которого равен заданному / update id \"name\" distance";
     }
 
     @Override

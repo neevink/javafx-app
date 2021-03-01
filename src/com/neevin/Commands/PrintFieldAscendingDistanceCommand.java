@@ -28,6 +28,19 @@ public class PrintFieldAscendingDistanceCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
+        if(controller.map.size() == 0){
+            System.out.println("Коллекция пуста. Нечего выводить.");
+        }
 
+        ArrayList<Long> arr = new ArrayList<Long>();
+        for(long key : controller.map.keySet()){
+            long distance = controller.map.get(key).getDistance();
+            arr.add(distance);
+        }
+
+        Collections.sort(arr);
+        for(long e :arr){
+            System.out.println(e);
+        }
     }
 }

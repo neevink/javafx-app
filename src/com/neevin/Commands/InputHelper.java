@@ -16,7 +16,7 @@ public class InputHelper {
     public static void receiveCoordinates(Route route, Scanner s) {
         boolean coordinatesParsed = false;
 
-        System.out.println("Введите поля объекта Coordinates через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
+        System.out.println("Введите поля объекта Coordinates через пробел: x(дробное число) y(дробное число).");
         // Пока координаты не спарсены успешно
         while (!coordinatesParsed){
             try{

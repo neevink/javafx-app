@@ -20,8 +20,7 @@ public class RemoveCommand implements Command{
 
     @Override
     public String getDescription() {
-        return "удалить элемент из коллекции по его ключу\n"+
-                "\t\t remove_key id";
+        return "удалить элемент из коллекции по его ключу / remove_key id";
     }
 
     @Override

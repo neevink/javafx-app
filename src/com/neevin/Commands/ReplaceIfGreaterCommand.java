@@ -4,6 +4,7 @@ import com.neevin.DataModels.Route;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.CollectionController;
 
+import java.io.InputStream;
 import java.util.AbstractList;
 import java.util.Scanner;
 
@@ -21,8 +22,7 @@ public class ReplaceIfGreaterCommand implements Command{
 
     @Override
     public String getDescription() {
-        return "заменить значение по ключу, если новое значение больше старого\n"+
-                "\t\treplace_if_greater id \"name\" distance";
+        return "заменить значение по ключу, если новое значение больше старого / replace_if_greater id \"name\" distance";
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.neevin.Parser.Token;
 import com.neevin.Parser.TokenType;
 import com.neevin.Parser.Tokenizer;
 
+import java.io.InputStream;
 import java.util.*;
 
 public class CommandManager {
@@ -22,8 +23,7 @@ public class CommandManager {
         registerCommand(new RemoveCommand(controller));
         registerCommand(new ClearCommand(controller));
         registerCommand(new SaveCommand(controller));
-        // ExecuteScriptCommand
-        registerCommand(new ExecuteScriptCommand(controller));
+        registerCommand(new ExecuteScriptCommand(this, controller));
         registerCommand(new ExitCommand());
         registerCommand(new ReplaceIfGreaterCommand(controller));
         registerCommand(new ReplaceIfLoweCommand(controller));
@@ -31,7 +31,6 @@ public class CommandManager {
         registerCommand(new FilterStartsWithNameCommand(controller));
         registerCommand(new FilterGreaterThanDistanceCommand(controller));
         registerCommand(new PrintFieldAscendingDistanceCommand(controller));
-
     }
 
     public void ParseAndExecute(String input) throws Exception {

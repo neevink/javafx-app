@@ -1,10 +1,11 @@
 package com.neevin.Programm;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class Programm {
-    public static void run(CommandManager cm){
-        Scanner sc = new Scanner(System.in);
+    public void run(CommandManager cm, InputStream inputStream){
+        Scanner sc = new Scanner(inputStream);
         String input;
 
         // Читаем новые строки и парсим их до тех пор, пока очередная не будет "exit"

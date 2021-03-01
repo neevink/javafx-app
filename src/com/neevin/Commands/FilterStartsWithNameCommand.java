@@ -23,8 +23,7 @@ public class FilterStartsWithNameCommand implements Command{
 
     @Override
     public String getDescription() {
-        return " вывести элементы, значение поля name которых начинается с заданной подстроки\n"+
-                "\t\tfilter_starts_with_name \"name\"";
+        return " вывести элементы, значение поля name которых начинается с заданной подстроки / filter_starts_with_name \"name\"";
     }
 
     @Override
@@ -32,7 +31,6 @@ public class FilterStartsWithNameCommand implements Command{
         if(controller.map.size() == 0){
             System.out.println("Коллекция пуста. Нечего выводить.");
         }
-
 
         String name;
         try{

@@ -22,8 +22,7 @@ public class FilterGreaterThanDistanceCommand implements Command{
 
     @Override
     public String getDescription() {
-        return "вывести элементы, значение поля distance которых больше заданного\n"+
-                "\t\tfilter_greater_than_distance distance";
+        return "вывести элементы, значение поля distance которых больше заданного / filter_greater_than_distance distance";
     }
 
     @Override
