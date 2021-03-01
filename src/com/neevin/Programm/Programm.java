@@ -4,8 +4,8 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Programm {
-    public void run(CommandManager cm, InputStream inputStream){
-        Scanner sc = new Scanner(inputStream);
+    public static void run(CommandManager cm){
+        Scanner sc = new Scanner(System.in);
         String input;
 
         // Читаем новые строки и парсим их до тех пор, пока очередная не будет "exit"

@@ -26,7 +26,6 @@ public class Main {
         }
 
         CommandManager cm = new CommandManager(col);
-
         Programm.run(cm);
     }
 }

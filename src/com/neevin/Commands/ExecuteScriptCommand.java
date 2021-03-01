@@ -7,6 +7,7 @@ import com.neevin.Programm.CommandManager;
 import com.neevin.Programm.Programm;
 
 import java.io.*;
+import java.nio.CharBuffer;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -51,22 +52,7 @@ public class ExecuteScriptCommand implements Command{
             throw new Exception("Нет прав на чтение файла со скриптом!");
         }
 
-        FileReader reader = new FileReader(script);
+        Scanner fileScanner = new Scanner(new BufferedInputStream(new FileInputStream(script)));
 
-        StringBuffer stringBuffer = new StringBuffer();
-
-        int c;
-        c = reader.read();
-        while(c != -1){
-            stringBuffer.append((char) c);
-            c = reader.read();
-        }
-
-        String s = stringBuffer.toString();
-        InputStream stream = new StringBufferInputStream(stringBuffer.toString());
-
-        Programm p = new Programm();
-        CommandManager cm = new CommandManager(controller, stream);
-        p.run(cm, stream);
     }
 }
