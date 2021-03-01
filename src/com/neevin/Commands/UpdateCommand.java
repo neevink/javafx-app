@@ -4,15 +4,16 @@ import com.neevin.DataModels.Route;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.CollectionController;
 
-import java.io.InputStream;
 import java.util.AbstractList;
 import java.util.Scanner;
 
 public class UpdateCommand implements Command{
     CollectionController controller;
+    Scanner scanner;
 
-    public UpdateCommand(CollectionController controller){
+    public UpdateCommand(CollectionController controller, Scanner scanner){
         this.controller = controller;
+        this.scanner = scanner;
     }
 
     @Override
@@ -27,6 +28,8 @@ public class UpdateCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
+        InputHelper.displayInput(tokens);
+
         if(tokens == null){
             throw new IllegalArgumentException("Сисок токенов не может быть равен null!");
         }
@@ -47,10 +50,9 @@ public class UpdateCommand implements Command{
         InputHelper.receiveName(newRoute, tokens.get(2));
         InputHelper.receiveDistance(newRoute, tokens.get(3));
 
-        Scanner s = new Scanner(System.in);
-        InputHelper.receiveCoordinates(newRoute, s);
-        InputHelper.receiveFrom(newRoute, s);
-        InputHelper.receiveTo(newRoute, s);
+        InputHelper.receiveCoordinates(newRoute, scanner);
+        InputHelper.receiveFrom(newRoute, scanner);
+        InputHelper.receiveTo(newRoute, scanner);
 
         Route storedRoute = controller.map.get(newRoute.getId());
         controller.map.remove(storedRoute);

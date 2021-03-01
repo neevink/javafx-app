@@ -4,13 +4,15 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Programm {
-    public static void run(CommandManager cm){
-        Scanner sc = new Scanner(System.in);
+    public static void run(CommandManager cm, Scanner scanner){
         String input;
 
         // Читаем новые строки и парсим их до тех пор, пока очередная не будет "exit"
         do{
-            input = sc.nextLine();
+            if(!scanner.hasNextLine()){
+                return;
+            }
+            input = scanner.nextLine();
             try {
                 cm.ParseAndExecute(input);
             }

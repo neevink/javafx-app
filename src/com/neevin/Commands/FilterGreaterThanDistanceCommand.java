@@ -27,6 +27,7 @@ public class FilterGreaterThanDistanceCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
+        InputHelper.displayInput(tokens);
         boolean wasPrint = false;
 
         long distance;

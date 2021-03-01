@@ -24,6 +24,7 @@ public class HelpCommand implements Command {
 
     @Override
     public void execute(AbstractList<Token> tokens) {
+        InputHelper.displayInput(tokens);
         System.out.println(manager.getCommandsNameWithDescription());
     }
 }

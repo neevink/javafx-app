@@ -25,6 +25,7 @@ public class ShowCommand implements Command {
 
     @Override
     public void execute(AbstractList<Token> tokens) {
+        InputHelper.displayInput(tokens);
         if(controller.map.size() == 0){
             System.out.println("Коллекция пуста.");
         }

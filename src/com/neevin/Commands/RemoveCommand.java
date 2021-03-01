@@ -25,6 +25,7 @@ public class RemoveCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
+        InputHelper.displayInput(tokens);
         if(tokens == null){
             throw new IllegalArgumentException("Список токенов не может быть null!");
         }

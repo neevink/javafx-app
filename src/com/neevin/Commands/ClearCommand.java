@@ -24,6 +24,7 @@ public class ClearCommand implements Command {
 
     @Override
     public void execute(AbstractList<Token> tokens) {
+        InputHelper.displayInput(tokens);
         controller.map.clear();
         System.out.println("Все элементы успешно удалены из коллекции.");
     }

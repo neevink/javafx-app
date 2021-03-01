@@ -27,6 +27,7 @@ public class RemoveLowerKeyCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
+        InputHelper.displayInput(tokens);
         long id;
         try{
             id = Parser.parseLong(tokens.get(1));

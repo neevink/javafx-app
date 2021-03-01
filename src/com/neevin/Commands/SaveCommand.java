@@ -28,6 +28,8 @@ public class SaveCommand implements Command{
     // Это говно переписать
     @Override
     public void execute(AbstractList<Token> tokens) {
+        InputHelper.displayInput(tokens);
+
         try {
             controller.Save();
 

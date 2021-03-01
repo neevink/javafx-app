@@ -10,9 +10,11 @@ import java.util.Scanner;
 
 public class ReplaceIfGreaterCommand implements Command{
     CollectionController controller;
+    private Scanner scanner;
 
-    public ReplaceIfGreaterCommand(CollectionController controller){
+    public ReplaceIfGreaterCommand(CollectionController controller, Scanner scanner){
         this.controller = controller;
+        this.scanner = scanner;
     }
 
     @Override
@@ -27,6 +29,7 @@ public class ReplaceIfGreaterCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
+        InputHelper.displayInput(tokens);
         if(tokens == null){
             throw new IllegalArgumentException("Сисок токенов не может быть равен null!");
         }
@@ -47,10 +50,9 @@ public class ReplaceIfGreaterCommand implements Command{
         InputHelper.receiveName(newRoute, tokens.get(2));
         InputHelper.receiveDistance(newRoute, tokens.get(3));
 
-        Scanner s = new Scanner(System.in);
-        InputHelper.receiveCoordinates(newRoute, s);
-        InputHelper.receiveFrom(newRoute, s);
-        InputHelper.receiveTo(newRoute, s);
+        InputHelper.receiveCoordinates(newRoute, scanner);
+        InputHelper.receiveFrom(newRoute, scanner);
+        InputHelper.receiveTo(newRoute, scanner);
 
         Route storedRoute = controller.map.get(newRoute.getId());
 

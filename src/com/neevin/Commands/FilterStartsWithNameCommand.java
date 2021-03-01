@@ -28,6 +28,7 @@ public class FilterStartsWithNameCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
+        InputHelper.displayInput(tokens);
         if(controller.map.size() == 0){
             System.out.println("Коллекция пуста. Нечего выводить.");
         }

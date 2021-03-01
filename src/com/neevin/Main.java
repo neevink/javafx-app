@@ -11,6 +11,8 @@ import com.neevin.Programm.CollectionController;
 import com.neevin.Programm.CommandManager;
 import com.neevin.Programm.Programm;
 
+import java.util.Scanner;
+
 public class Main {
 
     final static String environmentVariable = "PROG_LAB_FILE_PATH";
@@ -25,7 +27,7 @@ public class Main {
             return;
         }
 
-        CommandManager cm = new CommandManager(col);
-        Programm.run(cm);
+        CommandManager cm = new CommandManager(col, new Scanner(System.in));
+        Programm.run(cm, new Scanner(System.in));
     }
 }

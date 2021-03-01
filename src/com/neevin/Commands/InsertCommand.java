@@ -11,13 +11,17 @@ import com.neevin.Programm.CollectionController;
 
 import java.io.InputStream;
 import java.util.AbstractList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class InsertCommand implements Command {
     CollectionController controller;
+    Scanner scanner;
 
-    public InsertCommand(CollectionController controller){
+    public InsertCommand(CollectionController controller, Scanner scanner){
         this.controller = controller;
+        this.scanner = scanner;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class InsertCommand implements Command {
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
-        // Перед этим было введено insert id(целое число) "name"(строка) distance(целое число)
+        InputHelper.displayInput(tokens);
 
         if(tokens == null){
             throw new IllegalArgumentException("Сисок токенов не может быть равен null!");
@@ -50,12 +54,11 @@ public class InsertCommand implements Command {
         InputHelper.receiveName(route, tokens.get(1));
         InputHelper.receiveDistance(route, tokens.get(2));
 
-        Scanner s = new Scanner(System.in);
-        InputHelper.receiveCoordinates(route, s);
-        InputHelper.receiveFrom(route, s);
-        InputHelper.receiveTo(route, s);
+        InputHelper.receiveCoordinates(route, scanner);
+        InputHelper.receiveFrom(route, scanner);
+        InputHelper.receiveTo(route, scanner);
 
         controller.map.put(route.getId(), route);
-        System.out.println("Новый элемент успешно добавлен!\n");
+        System.out.println("Новый элемент успешно добавлен!");
     }
 }

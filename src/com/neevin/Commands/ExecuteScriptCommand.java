@@ -8,13 +8,13 @@ import com.neevin.Programm.Programm;
 
 import java.io.*;
 import java.nio.CharBuffer;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class ExecuteScriptCommand implements Command{
     CollectionController controller;
     CommandManager commandManager;
+
+    static Set<String> executingScripts = new HashSet<>();
 
     public ExecuteScriptCommand(CommandManager commandManager,CollectionController controller){
         this.commandManager = commandManager;
@@ -33,7 +33,7 @@ public class ExecuteScriptCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
-        System.out.println("Тэта тэ скриптик выполняется");
+        InputHelper.displayInput(tokens);
 
         String path;
         try{
@@ -51,8 +51,16 @@ public class ExecuteScriptCommand implements Command{
         if(!script.canRead()){
             throw new Exception("Нет прав на чтение файла со скриптом!");
         }
+        if(executingScripts.contains(path)){
+            throw new Exception("Этот скрипт уже выполняется, в целях избежания рекурсии его выполнение запрещено.");
+        }
 
         Scanner fileScanner = new Scanner(new BufferedInputStream(new FileInputStream(script)));
 
+        System.out.println("\uD83D\uDCC1Началось выполнение скрипта");
+        executingScripts.add(path);
+        Programm.run(new CommandManager(controller, fileScanner), fileScanner);
+        executingScripts.remove(path);
+        System.out.println("\uD83D\uDCC1Выполение скрипта завершено");
     }
 }

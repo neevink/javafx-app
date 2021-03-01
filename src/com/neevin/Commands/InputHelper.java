@@ -6,9 +6,11 @@ import com.neevin.DataModels.LocationInteger;
 import com.neevin.DataModels.Route;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
+import com.neevin.Parser.TokenType;
 import com.neevin.Parser.Tokenizer;
 
 import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InputHelper {
@@ -21,6 +23,7 @@ public class InputHelper {
         while (!coordinatesParsed){
             try{
                 AbstractList<Token> coordinatesTokens = Tokenizer.tokenize(s.nextLine());
+                InputHelper.displayInput(coordinatesTokens);
                 Coordinates coordinates = null;
                 if(coordinatesTokens.size() != 0) {
                     coordinates = Parser.parseCoordinates(coordinatesTokens);
@@ -38,11 +41,12 @@ public class InputHelper {
     public static void receiveFrom(Route route, Scanner s) {
         boolean locationParsed = false;
 
-        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
+        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число) name(строка в ковычках). Введите пусую строку, чтобы задать значение null.");
         // Пока координаты не спарсены успешно
         while (!locationParsed){
             try{
                 AbstractList<Token> fromTokens = Tokenizer.tokenize(s.nextLine());
+                InputHelper.displayInput(fromTokens);
                 Location from = null;
                 if(fromTokens.size() != 0) {
                     from = Parser.parseLocation(fromTokens);
@@ -60,11 +64,12 @@ public class InputHelper {
     public static void receiveTo(Route route, Scanner s) {
         boolean locationParsed = false;
 
-        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
+        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число) name(строка в ковычках). Введите пусую строку, чтобы задать значение null.");
         // Пока координаты не спарсены успешно
         while (!locationParsed){
             try{
                 AbstractList<Token> toTokens = Tokenizer.tokenize(s.nextLine());
+                InputHelper.displayInput(toTokens);
                 LocationInteger to = null;
                 if(toTokens.size() != 0) {
                     to = Parser.parseLocationInteger(toTokens);
@@ -110,5 +115,19 @@ public class InputHelper {
             throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
         }
         route.setDistance(distance);
+    }
+
+    public static void displayInput(AbstractList<Token> tokens){
+        String s = "Введено: ";
+        for (Token e : tokens){
+            if(e.type == TokenType.STRING){
+                s += String.format("\"%s\" ", e.object);
+            }
+            else {
+                s += e.object + " ";
+            }
+        }
+
+        System.out.println(s);
     }
 }

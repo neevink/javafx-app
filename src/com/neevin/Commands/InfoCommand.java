@@ -24,6 +24,7 @@ public class InfoCommand implements Command{
 
     @Override
     public void execute(AbstractList<Token> tokens) {
+        InputHelper.displayInput(tokens);
         String type = "HashMap<Long, Route>";
 
         System.out.println(
