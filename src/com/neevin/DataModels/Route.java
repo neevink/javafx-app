@@ -1,5 +1,6 @@
 package com.neevin.DataModels;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.Objects;
 
@@ -148,7 +149,27 @@ public class Route implements Comparable<Route> {
 
     @Override
     public int compareTo(Route o) {
-        throw new RuntimeException();
+        if(distance != null && o.distance != null && distance.compareTo(o.distance) != 0){
+            return distance.compareTo(o.distance);
+        }
 
+        if(this.name != null && o.name != null && this.name.compareTo(o.name) != 0){
+            return this.name.compareTo(o.name);
+        }
+
+        if(this.coordinates.compareTo(o.coordinates) != 0){
+            return this.coordinates.compareTo(o.coordinates);
+        }
+
+        if(this.from != null && o.from != null && this.from.compareTo(o.from) != 0){
+            return this.from.compareTo(o.from);
+        }
+
+        if(this.to != null && o.to != null &&  this.to.compareTo(o.to) != 0){
+            return this.to.compareTo(o.to);
+        }
+        else{
+            return 0;
+        }
     }
 }

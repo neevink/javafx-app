@@ -18,18 +18,19 @@ public class CommandManager {
         registerCommand(new InfoCommand(controller));
         registerCommand(new ShowCommand(controller));
         registerCommand(new InsertCommand(controller));
-        // UpdateCommand
+        registerCommand(new UpdateCommand(controller));
         registerCommand(new RemoveCommand(controller));
         registerCommand(new ClearCommand(controller));
         registerCommand(new SaveCommand(controller));
         // ExecuteScriptCommand
+        registerCommand(new ExecuteScriptCommand(controller));
         registerCommand(new ExitCommand());
-        // ReplaceIfGreater
-        // ReplaceIfLowe
-        // RemoveLowerKey
-        // FilterStartsWithName
-        // FilterGreaterThanDistance
-        // PrintFieldAscendingDistance
+        registerCommand(new ReplaceIfGreaterCommand(controller));
+        registerCommand(new ReplaceIfLoweCommand(controller));
+        registerCommand(new RemoveLowerKeyCommand(controller));
+        registerCommand(new FilterStartsWithNameCommand(controller));
+        registerCommand(new FilterGreaterThanDistanceCommand(controller));
+        registerCommand(new PrintFieldAscendingDistanceCommand(controller));
 
     }
 
@@ -54,7 +55,7 @@ public class CommandManager {
         }
 
         if(!commands.containsKey(firstToken.object)){
-            throw new IllegalArgumentException(String.format("Команды \"%s\" не существует!", firstToken.object));
+            throw new IndexOutOfBoundsException(String.format("Команды \"%s\" не существует!", firstToken.object));
         }
 
         try{

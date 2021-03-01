@@ -27,7 +27,7 @@ public class InsertCommand implements Command {
     @Override
     public String getDescription() {
         return "добавить новый элемент с заданным ключом.\n" +
-                "\t\tinsert id \"name\" distance";
+                "\t\tinsert \"name\" distance";
     }
 
     @Override
@@ -38,117 +38,24 @@ public class InsertCommand implements Command {
             throw new IllegalArgumentException("Сисок токенов не может быть равен null!");
         }
 
-        // Токенов должно быть 4: название команды и 3 аргумента
-        if(tokens.size() != 4){
-            throw new IllegalArgumentException("Аргументов этой команды должно быть 3.");
+        // Токенов должно быть 3: название команды и 2 аргумента
+        if(tokens.size() != 3){
+            throw new IllegalArgumentException("Аргументов этой команды должно быть 2.");
         }
 
         Route route = new Route();
 
-        // Порсинг полей Route
-        long id;
-        try{
-            id = Parser.parseLong(tokens.get(1));
-        }
-        catch (Exception e){
-            throw new Exception("Парсинг агрумента id не удался. " + e.getMessage());
-        }
-        route.setId(id);
+        route.setId(controller.getNextId());
 
-        String name;
-        try{
-            name = Parser.parseString(tokens.get(2));
-        }
-        catch (Exception e){
-            throw new Exception("Парсинг агрумента name не удался. " + e.getMessage());
-        }
-        route.setName(name);
+        InputHelper.receiveName(route, tokens.get(1));
+        InputHelper.receiveDistance(route, tokens.get(2));
 
-        long distance;
-        try{
-            distance = Parser.parseLong(tokens.get(3));
-        }
-        catch (Exception e){
-            throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
-        }
-        route.setDistance(distance);
-
-        // Порсинг полей Coordinates
         Scanner s = new Scanner(System.in);
+        InputHelper.receiveCoordinates(route, s);
+        InputHelper.receiveFrom(route, s);
+        InputHelper.receiveTo(route, s);
 
-        receiveCoordinates(route, s);
-
-        receiveFrom(route, s);
-
-        receiveTo(route, s);
-
-        controller.map.put(id, route);
+        controller.map.put(route.getId(), route);
         System.out.println("Новый элемент успешно добавлен!\n");
-    }
-
-    private void receiveCoordinates(Route route, Scanner s) {
-        boolean coordinatesParsed = false;
-
-        System.out.println("Введите поля объекта Coordinates через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
-        // Пока координаты не спарсены успешно
-        while (!coordinatesParsed){
-            try{
-                AbstractList<Token> coordinatesTokens = Tokenizer.tokenize(s.nextLine());
-                Coordinates coordinates = null;
-                if(coordinatesTokens.size() != 0) {
-                    coordinates = Parser.parseCoordinates(coordinatesTokens);
-                }
-                route.setCoordinates(coordinates);
-                coordinatesParsed = true;
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-                System.out.println("Повторите ввод.");
-            }
-        }
-    }
-
-    private void receiveFrom(Route route, Scanner s) {
-        boolean locationParsed = false;
-
-        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
-        // Пока координаты не спарсены успешно
-        while (!locationParsed){
-            try{
-                AbstractList<Token> fromTokens = Tokenizer.tokenize(s.nextLine());
-                Location from = null;
-                if(fromTokens.size() != 0) {
-                    from = Parser.parseLocation(fromTokens);
-                }
-                route.setFrom(from);
-                locationParsed = true;
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-                System.out.println("Повторите ввод.");
-            }
-        }
-    }
-
-    private void receiveTo(Route route, Scanner s) {
-        boolean locationParsed = false;
-
-        System.out.println("Введите поля объекта Location через пробел: x(дробное число) y(дробное число). Введите пусую строку, чтобы задать значение null.");
-        // Пока координаты не спарсены успешно
-        while (!locationParsed){
-            try{
-                AbstractList<Token> toTokens = Tokenizer.tokenize(s.nextLine());
-                LocationInteger to = null;
-                if(toTokens.size() != 0) {
-                    to = Parser.parseLocationInteger(toTokens);
-                }
-                route.setTo(to);
-                locationParsed = true;
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-                System.out.println("Повторите ввод.");
-            }
-        }
     }
 }
