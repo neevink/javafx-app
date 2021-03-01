@@ -1,5 +1,6 @@
 package com.neevin.Commands;
 
+import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.CollectionController;
@@ -7,7 +8,6 @@ import com.neevin.Programm.CommandManager;
 import com.neevin.Programm.Programm;
 
 import java.io.*;
-import java.nio.CharBuffer;
 import java.util.*;
 
 public class ExecuteScriptCommand implements Command{
@@ -57,10 +57,10 @@ public class ExecuteScriptCommand implements Command{
 
         Scanner fileScanner = new Scanner(new BufferedInputStream(new FileInputStream(script)));
 
-        System.out.println("\uD83D\uDCC1Началось выполнение скрипта");
+        System.out.println("\uD83D\uDCC1 Началось выполнение скрипта");
         executingScripts.add(path);
         Programm.run(new CommandManager(controller, fileScanner), fileScanner);
         executingScripts.remove(path);
-        System.out.println("\uD83D\uDCC1Выполение скрипта завершено");
+        System.out.println("\uD83D\uDCC1 Выполение скрипта завершено");
     }
 }

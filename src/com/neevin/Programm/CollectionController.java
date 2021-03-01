@@ -1,11 +1,13 @@
 package com.neevin.Programm;
 
 import com.neevin.DataModels.Route;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
+import java.beans.*;
 import java.io.*;
 import java.rmi.AccessException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -56,17 +58,55 @@ public class CollectionController {
     }
 
     public void Save() throws IOException {
-        XMLEncoder encoder = new XMLEncoder(new FileOutputStream(path));
+        String entity = serialize();
+
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(path));
+
+        writer.write(entity);
+        writer.flush();
+        writer.close();
+    }
+
+    public void Load() throws Exception {
+        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(path));
+
+        ArrayList<Byte> a = new ArrayList<>();
+        int c;
+        while ((c = inputStream.read()) != -1) {
+            byte ch = (byte)c;
+            a.add(ch);
+        }
+
+        byte[] arr = new byte[a.size()];
+        for(int i = 0; i < a.size(); i++) {
+            arr[i] = a.get(i);
+        }
+
+        deserialize(arr);
+
+        inputStream.close();
+    }
+
+    public long getNextId() {
+        return this.nextId++;
+    }
+
+    private String serialize(){
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        XMLEncoder encoder = new XMLEncoder(outputStream);
 
         encoder.writeObject(this.nextId);
         encoder.writeObject(this.initializationTime);
         encoder.writeObject(this.map);
         encoder.flush();
         encoder.close();
+
+        return outputStream.toString();
     }
 
-    public void Load() throws Exception {
-        XMLDecoder decoder = new XMLDecoder(new FileInputStream(path));
+    private void deserialize(byte[] bytes) throws Exception {
+        XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(bytes));
 
         try{
             this.nextId = (long) decoder.readObject();
@@ -77,9 +117,5 @@ public class CollectionController {
             throw new Exception("Заргузить данные невозможно, т. к. файл с сохранениями повреждён. Файл c сохраненимя будет создан заново при первом сохранении.");
         }
         decoder.close();
-    }
-
-    public long getNextId() {
-        return this.nextId++;
     }
 }

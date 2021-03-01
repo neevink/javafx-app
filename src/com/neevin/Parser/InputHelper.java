@@ -1,16 +1,11 @@
-package com.neevin.Commands;
+package com.neevin.Parser;
 
 import com.neevin.DataModels.Coordinates;
 import com.neevin.DataModels.Location;
 import com.neevin.DataModels.LocationInteger;
 import com.neevin.DataModels.Route;
-import com.neevin.Parser.Parser;
-import com.neevin.Parser.Token;
-import com.neevin.Parser.TokenType;
-import com.neevin.Parser.Tokenizer;
 
 import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InputHelper {
