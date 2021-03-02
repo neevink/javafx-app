@@ -22,7 +22,7 @@ public class Main {
             col = new CollectionController(ENVIRONMENT_VARIABLE);
         }
         catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             return;
         }
 
