@@ -8,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.AbstractList;
 
+/**
+ * Сохранить состояние коллекции в фвйле
+ */
 public class SaveCommand implements Command{
     private CollectionController controller;
 

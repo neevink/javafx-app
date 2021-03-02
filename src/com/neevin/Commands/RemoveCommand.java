@@ -7,6 +7,9 @@ import com.neevin.Programm.CollectionController;
 
 import java.util.AbstractList;
 
+/**
+ * Удалить элемент из коллекции
+ */
 public class RemoveCommand implements Command{
     CollectionController controller;
 

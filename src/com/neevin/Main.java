@@ -14,13 +14,12 @@ import com.neevin.Programm.Programm;
 import java.util.Scanner;
 
 public class Main {
-
-    final static String environmentVariable = "PROG_LAB_FILE_PATH";
+    final static String ENVIRONMENT_VARIABLE = "PROG_LAB_FILE_PATH";
 
     public static void main(String[] args) {
         CollectionController col;
         try {
-            col = new CollectionController(environmentVariable);
+            col = new CollectionController(ENVIRONMENT_VARIABLE);
         }
         catch (Exception e){
             System.out.println(e);

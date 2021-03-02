@@ -8,6 +8,9 @@ import com.neevin.Programm.CollectionController;
 
 import java.util.AbstractList;
 
+/**
+ * Вывести элементы, имя которых начинается со строки
+ */
 public class FilterStartsWithNameCommand implements Command{
     CollectionController controller;
 

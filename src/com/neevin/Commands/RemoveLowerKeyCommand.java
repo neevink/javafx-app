@@ -9,6 +9,9 @@ import com.neevin.Programm.CollectionController;
 import java.util.AbstractList;
 import java.util.ArrayList;
 
+/**
+ * Удалить из коллекции все элементы, ключ которых меньше, чем заданный
+ */
 public class RemoveLowerKeyCommand implements Command{
     private CollectionController controller;
 

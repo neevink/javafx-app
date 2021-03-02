@@ -8,6 +8,9 @@ import com.neevin.Programm.CollectionController;
 
 import java.util.AbstractList;
 
+/**
+ * Вывести список элементов, значение distance которое больше данного
+ */
 public class FilterGreaterThanDistanceCommand implements Command{
     private CollectionController controller;
 

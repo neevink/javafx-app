@@ -10,6 +10,9 @@ import com.neevin.Programm.Programm;
 import java.io.*;
 import java.util.*;
 
+/**
+ * Выполнить указанный скрипт в файле
+ */
 public class ExecuteScriptCommand implements Command{
     CollectionController controller;
     CommandManager commandManager;

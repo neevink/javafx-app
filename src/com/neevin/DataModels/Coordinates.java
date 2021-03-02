@@ -2,15 +2,25 @@ package com.neevin.DataModels;
 
 import java.util.Objects;
 
+/**
+ * Координаты
+ */
 public class Coordinates implements Comparable<Coordinates> {
+    /**
+     * Координата x
+     */
     private Double x; //Поле не может быть null
+    /**
+     * Координата y
+     */
     private double y; //Максимальное значение поля: 68
 
+    /**
+     * Максимальное значение координаты y
+     */
     private static final double MAX_Y_VALUE = 68;
 
-    public Coordinates(){
-
-    }
+    public Coordinates(){ }
 
     public Coordinates(Double x, double y){
         setX(x);

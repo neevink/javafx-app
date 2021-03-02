@@ -8,8 +8,16 @@ import com.neevin.DataModels.Route;
 import java.util.AbstractList;
 import java.util.Scanner;
 
+/**
+ * Помощник ввода, позволяет запросить у пользователя ввод полей определённого объекта
+ */
 public class InputHelper {
 
+    /**
+     * Запросить ввод координат
+     * @param route Сюда будет установлена спарсенная координата
+     * @param s Сканнер, откуда читать ввод
+     */
     public static void receiveCoordinates(Route route, Scanner s) {
         boolean coordinatesParsed = false;
 
@@ -33,6 +41,11 @@ public class InputHelper {
         }
     }
 
+    /**
+     * Запросить ввод пункта отправления
+     * @param route Сюда будет установлен спарсенный пункт
+     * @param s Сканнер, откуда читать ввод
+     */
     public static void receiveFrom(Route route, Scanner s) {
         boolean locationParsed = false;
 
@@ -56,6 +69,11 @@ public class InputHelper {
         }
     }
 
+    /**
+     * Запросить ввод пункта прибытия
+     * @param route Сюда будет установлен спарсенный пункт
+     * @param s Сканнер, откуда читать ввод
+     */
     public static void receiveTo(Route route, Scanner s) {
         boolean locationParsed = false;
 
@@ -79,6 +97,11 @@ public class InputHelper {
         }
     }
 
+    /**
+     * Запросить ввод id объекта Route
+     * @param route Сюда будет установлен спарсенный id
+     * @param t токен содержащий id
+     */
     public static void receiveId(Route route, Token t) throws Exception {
         long id;
         try{
@@ -90,6 +113,11 @@ public class InputHelper {
         route.setId(id);
     }
 
+    /**
+     * Запросить ввод имени объекта Route
+     * @param route Сюда будет установлено спарсенное имя
+     * @param t токен содержащий имя
+     */
     public static void receiveName(Route route, Token t) throws Exception {
         String name;
         try{
@@ -101,6 +129,11 @@ public class InputHelper {
         route.setName(name);
     }
 
+    /**
+     * Запросить ввод дистанции объекта Route
+     * @param route Сюда будет установлена спарсенная координата
+     * @param t токен содержащий дистанцию
+     */
     public static void receiveDistance(Route route, Token t) throws Exception {
         long distance;
         try{
@@ -112,6 +145,10 @@ public class InputHelper {
         route.setDistance(distance);
     }
 
+    /**
+     * Вывести информацию о пользовательском вводе
+     * @param tokens Список введённых токенов
+     */
     public static void displayInput(AbstractList<Token> tokens){
         String s = "Введено: ";
         for (Token e : tokens){

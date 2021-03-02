@@ -4,17 +4,48 @@ import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Маршрут
+ */
 public class Route implements Comparable<Route> {
+    /**
+     * Идентификатор маршрута
+     */
     private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    /**
+     * Название маршрута
+     */
     private String name; //Поле не может быть null, Строка не может быть пустой
+    /**
+     * Текущая координата маршрута
+     */
     private Coordinates coordinates; //Поле не может быть null
+    /**
+     * Дата создания маршрута
+     */
     private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    /**
+     * Пункт отправления
+     */
     private Location from; //Поле может быть null
+    /**
+     * Пункт прибытия
+     */
     private LocationInteger to; //Поле может быть null
+    /**
+     * Дистанция
+     */
     private Long distance; //Поле может быть null, Значение поля должно быть больше 1
 
-    private static final long MIN_ID_VALUE = 0;
-    private static final long MIN_DISTANCE_VALUE = 1;
+
+    /**
+     * Минимальное значение идентификатора
+     */
+    private static final long MIN_ID_VALUE = 1;
+    /**
+     * Минимальное значение дистанции
+     */
+    private static final long MIN_DISTANCE_VALUE = 2;
     {
         creationDate = new Date();
     }
@@ -37,8 +68,8 @@ public class Route implements Comparable<Route> {
     }
 
     public void setId(long id) {
-        if(id <= MIN_ID_VALUE){
-            throw new IllegalArgumentException("Значение id добжно быть больше " + MIN_ID_VALUE + "!");
+        if(id < MIN_ID_VALUE){
+            throw new IllegalArgumentException("Значение id добжно быть больше или равно " + MIN_ID_VALUE + "!");
         }
 
         this.id = id;
@@ -103,8 +134,8 @@ public class Route implements Comparable<Route> {
     }
 
     public void setDistance(Long distance) {
-        if(distance != null && distance.longValue() <= MIN_DISTANCE_VALUE){
-            throw new IllegalArgumentException("Дистанция должна быть больше " + MIN_DISTANCE_VALUE + "!");
+        if(distance != null && distance.longValue() < MIN_DISTANCE_VALUE){
+            throw new IllegalArgumentException("Дистанция должна быть больше или равна " + MIN_DISTANCE_VALUE + "!");
         }
 
         this.distance = distance;

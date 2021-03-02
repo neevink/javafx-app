@@ -15,10 +15,22 @@ import java.util.HashMap;
  * Класс управляющий коллекцией
  */
 public class CollectionController {
+    /**
+     * Коллекция, которой нужно управлять
+     */
     public HashMap<Long, Route> map;
 
+    /**
+     * Дата создания коллекции
+     */
     public Date initializationTime;
+    /**
+     * Следующий выдаваемы id элемента (нужен для иникальности всех id)
+     */
     protected long nextId = 1;
+    /**
+     * Путь к файлу, где хранится коллекция
+     */
     protected String path;
 
     public CollectionController(String variableName) throws AccessException {
@@ -57,6 +69,10 @@ public class CollectionController {
         }
     }
 
+    /**
+     * Сохранить состояние коллекции в файле
+     * @throws IOException
+     */
     public void Save() throws IOException {
         String entity = serialize();
 
@@ -67,6 +83,10 @@ public class CollectionController {
         writer.close();
     }
 
+    /**
+     * Загрузить коллекцию из файла
+     * @throws Exception
+     */
     public void Load() throws Exception {
         BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(path));
 
@@ -87,10 +107,17 @@ public class CollectionController {
         inputStream.close();
     }
 
+    /**
+     * @return Получить текущий id нового элемента
+     */
     public long getNextId() {
         return this.nextId++;
     }
 
+    /**
+     * Сериализовать коллекцию в xml
+     * @return xml строка сериализованной коллекции
+     */
     private String serialize(){
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -105,6 +132,11 @@ public class CollectionController {
         return outputStream.toString();
     }
 
+    /**
+     * Десериализовать коллекцию из xml
+     * @param bytes Полученные байты документа
+     * @throws Exception
+     */
     private void deserialize(byte[] bytes) throws Exception {
         XMLDecoder decoder = new XMLDecoder(new ByteArrayInputStream(bytes));
 

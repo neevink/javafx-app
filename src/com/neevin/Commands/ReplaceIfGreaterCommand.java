@@ -8,6 +8,9 @@ import com.neevin.Programm.CollectionController;
 import java.util.AbstractList;
 import java.util.Scanner;
 
+/**
+ * Заменить значение по ключу, если новое значение больше старого
+ */
 public class ReplaceIfGreaterCommand implements Command{
     CollectionController controller;
     private Scanner scanner;

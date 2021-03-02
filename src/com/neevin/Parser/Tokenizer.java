@@ -2,6 +2,9 @@ package com.neevin.Parser;
 
 import java.util.ArrayList;
 
+/**
+ * Разбивает введённыю строку на валидные слова - токены
+ */
 public class Tokenizer {
     public static ArrayList<Token> tokenize(String input) throws Exception {
         ArrayList<Token> tokens = new ArrayList<Token>();

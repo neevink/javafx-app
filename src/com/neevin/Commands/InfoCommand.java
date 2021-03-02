@@ -6,6 +6,9 @@ import com.neevin.Programm.CollectionController;
 
 import java.util.AbstractList;
 
+/**
+ * Вывести информацию о коллекции
+ */
 public class InfoCommand implements Command{
     private CollectionController controller;
 

@@ -3,6 +3,9 @@ package com.neevin.Programm;
 import java.io.InputStream;
 import java.util.Scanner;
 
+/**
+ * Программа, управляющая коллекцией
+ */
 public class Programm {
     public static void run(CommandManager cm, Scanner scanner){
         String input;

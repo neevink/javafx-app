@@ -8,6 +8,9 @@ import com.neevin.Programm.CollectionController;
 import java.util.AbstractList;
 import java.util.Scanner;
 
+/**
+ * Добавить новый элемент в коллекцию
+ */
 public class InsertCommand implements Command {
     CollectionController controller;
     Scanner scanner;

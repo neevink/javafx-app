@@ -6,6 +6,10 @@ import com.neevin.Programm.CollectionController;
 
 import java.util.AbstractList;
 
+/**
+ *
+ * Команда, очищающая коллекцию
+ */
 public class ClearCommand implements Command {
     private CollectionController controller;
 

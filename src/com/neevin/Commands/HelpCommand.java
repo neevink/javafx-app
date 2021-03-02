@@ -6,6 +6,9 @@ import com.neevin.Programm.CommandManager;
 
 import java.util.AbstractList;
 
+/**
+ * Вывести список команд и их описания
+ */
 public class HelpCommand implements Command {
     CommandManager manager;
 

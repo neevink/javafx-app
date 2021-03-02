@@ -8,6 +8,9 @@ import com.neevin.Programm.CollectionController;
 import java.util.AbstractList;
 import java.util.Scanner;
 
+/**
+ * Обновить значение элемента коллекции
+ */
 public class UpdateCommand implements Command{
     CollectionController controller;
     Scanner scanner;

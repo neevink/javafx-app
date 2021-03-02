@@ -7,6 +7,9 @@ import com.neevin.Programm.CollectionController;
 
 import java.util.AbstractList;
 
+/**
+ * Вывести список элементов коллекции
+ */
 public class ShowCommand implements Command {
     private CollectionController controller;
 

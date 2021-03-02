@@ -8,6 +8,9 @@ import com.neevin.Parser.Tokenizer;
 import java.io.InputStream;
 import java.util.*;
 
+/**
+ * Класс управляющий командами и содержащий методы для их выполнения
+ */
 public class CommandManager {
     /**
      * Все доступные в программе команды
@@ -33,6 +36,11 @@ public class CommandManager {
         registerCommand(new PrintFieldAscendingDistanceCommand(controller));
     }
 
+    /**
+     * Спарсить введённую строку и выполнить
+     * @param input строка ввода
+     * @throws Exception
+     */
     public void ParseAndExecute(String input) throws Exception {
         ArrayList<Token> tokens;
         try{
@@ -66,6 +74,10 @@ public class CommandManager {
         }
     }
 
+    /**
+     * Спарсить новую команду
+     * @param newCommand новая команда
+     */
     void registerCommand(Command newCommand){
         if(commands.containsKey(newCommand.getName())){
             throw new IllegalArgumentException("Команда с таким именем уже существует!");
@@ -74,6 +86,10 @@ public class CommandManager {
         commands.put(newCommand.getName(), newCommand);
     }
 
+    /**
+     * Вернуть список команд и описаний
+     * @return строка содержащая список команд и их описаний
+     */
     public String getCommandsNameWithDescription(){
         String result = "";
 

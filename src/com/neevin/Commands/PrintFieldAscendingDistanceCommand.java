@@ -8,6 +8,9 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Вывести значения поля distance всех элементов в порядке возрастания
+ */
 public class PrintFieldAscendingDistanceCommand implements Command{
     private CollectionController controller;
 

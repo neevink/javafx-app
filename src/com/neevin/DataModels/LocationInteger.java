@@ -4,17 +4,29 @@ package com.neevin.DataModels;
 import javax.swing.plaf.metal.MetalTheme;
 import java.util.Objects;
 
-// Тут вышла ошибка генератора, сгенерированы два разных класса Location
-public class LocationInteger implements Comparable<LocationInteger> {
+/**
+ * Местоположение с целочисленными координатами
+ */
+public class LocationInteger implements Comparable<LocationInteger> { // Тут вышла ошибка генератора, сгенерированы два разных класса Location
+    /**
+     * Координата x
+     */
     private int x;
+    /**
+     * Координата y
+     */
     private Integer y; //Поле не может быть null
+    /**
+     * Название целочисленного местоположения
+     */
     private String name; //Длина строки не должна быть больше 322, Поле не может быть null
 
+    /**
+     * Максимальная длина имени местоположения
+     */
     private final static int MAX_NAME_LENGTH = 322;
 
-    public LocationInteger(){
-
-    }
+    public LocationInteger(){ }
 
     public  LocationInteger(int x, Integer y, String name){
         setX(x);

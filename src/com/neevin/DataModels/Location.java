@@ -2,14 +2,24 @@ package com.neevin.DataModels;
 
 import java.util.Objects;
 
+/**
+ * Местоположение
+ */
 public class Location implements Comparable<Location> {
+    /**
+     * Координата x
+     */
     private double x;
+    /**
+     * Координата y
+     */
     private Double y; // Поле не может быть null
+    /**
+     * Название местоположения
+     */
     private String name; // Строка не может быть пустой, Поле может быть null
 
-    public Location(){
-
-    }
+    public Location(){ }
 
     public Location(double x, Double y, String name){
         setX(x);
@@ -80,10 +90,6 @@ public class Location implements Comparable<Location> {
 
     @Override
     public int compareTo(Location other) {
-        if(this.equals(other)){
-            return 0;
-        }
-
         // Находим квадрат модуля вектора координат
         double t = this.x * this.x + this.y.doubleValue() * this.y.doubleValue();
         double o = other.x * other.x + other.y.doubleValue() * other.y.doubleValue();
