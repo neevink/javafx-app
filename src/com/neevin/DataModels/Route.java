@@ -1,6 +1,5 @@
 package com.neevin.DataModels;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.Objects;
 
