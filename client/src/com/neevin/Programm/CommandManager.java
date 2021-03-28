@@ -23,21 +23,19 @@ public class CommandManager {
         registerCommand(new HelpCommand(this));
         registerCommand(new InfoCommand(con));
         registerCommand(new ShowCommand(con));
-        /*
         registerCommand(new InsertCommand(con, scanner));
         registerCommand(new UpdateCommand(con, scanner));
         registerCommand(new RemoveCommand(con));
         registerCommand(new ClearCommand(con));
-        registerCommand(new SaveCommand(con));
         registerCommand(new ExecuteScriptCommand(this, con));
         registerCommand(new ExitCommand());
+
         registerCommand(new ReplaceIfGreaterCommand(con, scanner));
         registerCommand(new ReplaceIfLoweCommand(con, scanner));
         registerCommand(new RemoveLowerKeyCommand(con));
         registerCommand(new FilterStartsWithNameCommand(con));
         registerCommand(new FilterGreaterThanDistanceCommand(con));
         registerCommand(new PrintFieldAscendingDistanceCommand(con));
-        */
     }
 
     /**

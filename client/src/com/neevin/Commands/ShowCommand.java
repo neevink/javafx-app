@@ -1,5 +1,8 @@
 package com.neevin.Commands;
 
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
@@ -30,17 +33,14 @@ public class ShowCommand implements Command {
     public void execute(AbstractList<Token> tokens) {
         InputHelper.displayInput(tokens);
 
-        //ExecutionService.show();
-        /*
-        if(controller.map.size() == 0){
-            System.out.println("Коллекция пуста.");
-        }
+        Request<?> request = new Request<Object>(this.getName(), null);
+        CommandResult result = connection.sendRequest(request);
 
-        for(long key : controller.map.keySet()){
-            Route r = controller.map.get(key);
-            System.out.println(r.toString() + '\n');
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
         }
-
-         */
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
+        }
     }
 }

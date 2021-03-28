@@ -1,12 +1,13 @@
 package com.neevin.DataModels;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 /**
  * Маршрут
  */
-public class Route implements Comparable<Route> {
+public class Route implements Comparable<Route>, Serializable {
     /**
      * Идентификатор маршрута
      */

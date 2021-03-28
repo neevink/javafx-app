@@ -17,9 +17,13 @@ public class ExecutionService {
     public ExecutionService(CollectionController controller){
         this.controller = controller;
 
-        registerCommand("clear", this::clear);
         registerCommand("info", this::info);
         registerCommand("show", this::show);
+        registerCommand("insert", this::insert);
+        registerCommand("update", this::update);
+        registerCommand("remove_key", this::remove);
+        registerCommand("clear", this::clear);
+        //registerCommand("clear", this::clear);
 
     }
 
@@ -28,10 +32,13 @@ public class ExecutionService {
     }
 
     public CommandResult executeCommand(Request<?> request){
+        if(!commands.containsKey(request.command)){
+            return new CommandResult(ResultStatus.ERROR, "На сервере такая команда не сществует");
+        }
         return commands.get(request.command).execute(request);
     }
 
-    public CommandResult clear(Object o){
+    public CommandResult clear(Request<?> request){
         controller.map.clear();
         return new CommandResult(ResultStatus.OK, "Все элементы успешно удалены из коллекции.");
     }
@@ -81,7 +88,7 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, message);
     }
 
-    public CommandResult info(Object o){
+    public CommandResult info(Request<?> request){
         String type = "HashMap<Long, Route>";
 
         return new CommandResult(ResultStatus.OK,
@@ -92,7 +99,16 @@ public class ExecutionService {
         );
     }
 
-    public CommandResult insert(Route route){
+    public CommandResult insert(Request<?> request){
+        Route route;
+        try{
+            route = (Route) request.entity;
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+        route.setId(controller.getNextId());
+
         controller.map.put(route.getId(), route);
         return new CommandResult(ResultStatus.OK, "Новый элемент успешно добавлен!");
     }
@@ -117,7 +133,15 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, message);
     }
 
-    public CommandResult remove(long id){
+    public CommandResult remove(Request<?> request){
+        long id;
+        try{
+            id = (long) request.entity;
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+
         if(!controller.map.containsKey(id)){
             return new CommandResult(ResultStatus.ERROR, "Элемент с этим id не содержится в коллекции");
         }
@@ -151,10 +175,11 @@ public class ExecutionService {
             controller.map.remove(storedRoute);
             controller.map.put(route.getId(), route);
 
-            return new CommandResult(ResultStatus.OK, "Новое значение больше старого. Произведена замена.");
+            return new CommandResult(ResultStatus.OK,"Новое значение больше старого. Произведена замена.");
         }
         else{
-            return new CommandResult(ResultStatus.OK, "Новое значение меньше или равно старому. Значение не изменено.");
+            return new CommandResult(ResultStatus.OK,
+                    "Новое значение меньше или равно старому. Значение не изменено.");
         }
     }
 
@@ -168,11 +193,12 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.OK, "Новое значение меньше старого. Произведена замена.");
         }
         else{
-            return new CommandResult(ResultStatus.OK, "Новое значение больше или равно старому. Значение не изменено.");
+            return new CommandResult(ResultStatus.OK,
+                    "Новое значение больше или равно старому. Значение не изменено.");
         }
     }
 
-    public CommandResult show(Object o){
+    public CommandResult show(Request<?> request){
         if(controller.map.size() == 0){
             return new CommandResult(ResultStatus.OK, "Коллекция пуста.");
         }
@@ -185,7 +211,19 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, message);
     }
 
-    public CommandResult update(Route newRoute){
+    public CommandResult update(Request<?> request){
+        Route newRoute;
+        try{
+            newRoute = (Route) request.entity;
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+
+        if(!controller.map.containsKey(newRoute.getId())){
+            return new CommandResult(ResultStatus.ERROR, "Элемента с таким индексом не существует!");
+        }
+
         Route storedRoute = controller.map.get(newRoute.getId());
         controller.map.remove(storedRoute);
         controller.map.put(newRoute.getId(), newRoute);

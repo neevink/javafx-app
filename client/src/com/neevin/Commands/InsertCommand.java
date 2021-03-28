@@ -1,6 +1,9 @@
 package com.neevin.Commands;
 
 import com.neevin.DataModels.Route;
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
@@ -45,8 +48,6 @@ public class InsertCommand implements Command {
 
         Route route = new Route();
 
-        //route.setId(controller.getNextId());
-
         InputHelper.receiveName(route, tokens.get(1));
         InputHelper.receiveDistance(route, tokens.get(2));
 
@@ -54,11 +55,14 @@ public class InsertCommand implements Command {
         InputHelper.receiveFrom(route, scanner);
         InputHelper.receiveTo(route, scanner);
 
-        //ExecutionService.insert(route);
-        /*
-        controller.map.put(route.getId(), route);
-        System.out.println("Новый элемент успешно добавлен!");
+        Request<?> request = new Request<Route>(this.getName(), route);
+        CommandResult result = connection.sendRequest(request);
 
-         */
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
+        }
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
+        }
     }
 }

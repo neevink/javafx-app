@@ -1,5 +1,8 @@
 package com.neevin.Commands;
 
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
@@ -48,15 +51,14 @@ public class RemoveCommand implements Command{
             throw new Exception("Парсинг агрумента id не удался. " + e.getMessage());
         }
 
-        //ExecutionService.remove(id);
-        /*
-        if(!controller.map.containsKey(id)){
-            throw new IndexOutOfBoundsException("Элемент с этим id не содержится в коллекции");
+        Request<?> request = new Request<Long>(this.getName(), id);
+        CommandResult result = connection.sendRequest(request);
+
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
         }
-
-        controller.map.remove(id);
-        System.out.println(String.format("Элемент с индексом %d успешно удалён", id));
-
-         */
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
+        }
     }
 }

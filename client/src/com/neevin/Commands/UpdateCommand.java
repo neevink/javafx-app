@@ -1,6 +1,9 @@
 package com.neevin.Commands;
 
 import com.neevin.DataModels.Route;
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
@@ -47,12 +50,6 @@ public class UpdateCommand implements Command{
 
         InputHelper.receiveId(newRoute, tokens.get(1));
 
-        /*
-        if(!controller.map.containsKey(newRoute.getId())){
-            throw new Exception("Элемента с таким индексом не существует!");
-        }
-        */
-
         InputHelper.receiveName(newRoute, tokens.get(2));
         InputHelper.receiveDistance(newRoute, tokens.get(3));
 
@@ -60,14 +57,14 @@ public class UpdateCommand implements Command{
         InputHelper.receiveFrom(newRoute, scanner);
         InputHelper.receiveTo(newRoute, scanner);
 
-        //ExecutionService.update(newRoute);
-        /*
-        Route storedRoute = controller.map.get(newRoute.getId());
-        controller.map.remove(storedRoute);
-        controller.map.put(newRoute.getId(), newRoute);
+        Request<?> request = new Request<Route>(this.getName(), newRoute);
+        CommandResult result = connection.sendRequest(request);
 
-        System.out.println(String.format("Значение элемента с id %d успешно обновлено.", newRoute.getId()));
-
-         */
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
+        }
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
+        }
     }
 }

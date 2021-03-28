@@ -5,6 +5,7 @@ import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.CommandManager;
 import com.neevin.Programm.Connection;
+import com.neevin.Programm.Programm;
 
 import java.io.*;
 import java.util.*;
@@ -16,7 +17,7 @@ public class ExecuteScriptCommand implements Command{
     CommandManager commandManager;
     Connection connection;
 
-    static Set<String> executingScripts = new HashSet<>();
+    protected static Set<String> executingScripts = new HashSet<>();
 
     public ExecuteScriptCommand(CommandManager commandManager, Connection connection){
         this.commandManager = commandManager;
@@ -45,7 +46,13 @@ public class ExecuteScriptCommand implements Command{
             throw new Exception("Парсинг агрумента file_name не удался. " + e.getMessage());
         }
 
-        File script = new File(path);
+        File script = null;
+        try {
+            script = new File(path);
+        }
+        catch (Exception exc){
+            throw new Exception("Не удалось получить доступ к файлу, возможно указана директория вместо файла!");
+        }
 
         if(!script.exists()){
             throw new Exception("Файла со скриптом не существует!");
@@ -59,11 +66,13 @@ public class ExecuteScriptCommand implements Command{
 
         Scanner fileScanner = new Scanner(new BufferedInputStream(new FileInputStream(script)));
 
-        System.out.println("\uD83D\uDCC1 Началось выполнение скрипта");
+        System.out.println("Началось выполнение скрипта");
         executingScripts.add(path);
-        // Тут какая-то дичь
-        //Programm.run(new CommandManager(controller, fileScanner), fileScanner);
+
+        CommandManager cm = new CommandManager(connection, fileScanner);
+        Programm.run(cm, fileScanner);
+
         executingScripts.remove(path);
-        System.out.println("\uD83D\uDCC1 Выполение скрипта завершено");
+        System.out.println("Выполение скрипта завершено");
     }
 }

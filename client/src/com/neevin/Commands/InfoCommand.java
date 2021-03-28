@@ -2,6 +2,7 @@ package com.neevin.Commands;
 
 import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
@@ -35,18 +36,11 @@ public class InfoCommand implements Command{
         Request<?> request = new Request<String>(this.getName(), null);
         CommandResult result = connection.sendRequest(request);
 
-        System.out.println(result.status.toString() + " : " + result.message);
-
-        //ExecutionService.info();
-        /*
-        String type = "HashMap<Long, Route>";
-
-        System.out.println(
-                "Информация о коллекции: " + "\n" +
-                "Тип коллекции: " + type + "\n" +
-                "Дата инициализации: " + controller.initializationTime + "\n" +
-                "Количество элементов в коллекции: " + controller.map.size()
-        );
-         */
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
+        }
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
+        }
     }
 }

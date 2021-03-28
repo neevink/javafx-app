@@ -1,11 +1,12 @@
 package com.neevin.DataModels;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Координаты
  */
-public class Coordinates implements Comparable<Coordinates> {
+public class Coordinates implements Comparable<Coordinates>, Serializable {
     /**
      * Координата x
      */

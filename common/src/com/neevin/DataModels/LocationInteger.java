@@ -1,12 +1,14 @@
 package com.neevin.DataModels;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Местоположение с целочисленными координатами
  */
-public class LocationInteger implements Comparable<LocationInteger> { // Тут вышла ошибка генератора, сгенерированы два разных класса Location
+public class LocationInteger implements Comparable<LocationInteger>, Serializable {
+    // Тут вышла ошибка генератора, сгенерированы два разных класса Location
     /**
      * Координата x
      */

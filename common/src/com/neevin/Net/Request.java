@@ -2,7 +2,7 @@ package com.neevin.Net;
 
 import java.io.Serializable;
 
-public class Request<T extends Serializable>  implements Serializable {
+public class Request<T>  implements Serializable {
     public final String command;
     public final T entity;
 

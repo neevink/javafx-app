@@ -29,11 +29,6 @@ public class HelpCommand implements Command {
     @Override
     public void execute(AbstractList<Token> tokens) {
         InputHelper.displayInput(tokens);
-
-        //
-        // Команда help пусть останется на клиенте, нефиг её выносить на сервер
-        //
-
         System.out.println(manager.getCommandsNameWithDescription());
     }
 }

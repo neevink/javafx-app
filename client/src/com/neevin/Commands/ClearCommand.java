@@ -2,6 +2,7 @@ package com.neevin.Commands;
 
 import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
@@ -35,10 +36,12 @@ public class ClearCommand implements Command {
 
         Request<?> request = new Request<String>(this.getName(), null);
         CommandResult result = connection.sendRequest(request);
-        /* Вынес в другое место
-        controller.map.clear();
-        System.out.println("Все элементы успешно удалены из коллекции.");
 
-        */
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
+        }
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
+        }
     }
 }
