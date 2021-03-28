@@ -10,10 +10,10 @@ package com.neevin;
  */
 
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+import com.neevin.Programm.Connection;
+import com.neevin.Programm.CommandManager;
+import com.neevin.Programm.Programm;
+
 import java.util.Scanner;
 
 public class ClientMain {
@@ -31,27 +31,8 @@ public class ClientMain {
             }
         }
 
-        Scanner sc = new Scanner(System.in);
-        while (sc.hasNextLine()){
-            byte[] b = sc.nextLine().getBytes(StandardCharsets.UTF_8);
-            try{
-                Socket socket = new Socket("127.0.0.1", port);
-                System.out.println("Успешное подключение по адресу 127.0.0.1:" + port);
-
-                OutputStream outputStream = socket.getOutputStream();
-                outputStream.write(b);
-
-                InputStream inputStream = socket.getInputStream();
-
-
-                // ТУТ ждём пока придёт ответ
-
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
-
-
+        Connection connection = new Connection(port);
+        CommandManager cm = new CommandManager(connection, new Scanner(System.in));
+        Programm.run(cm, new Scanner(System.in));
     }
 }

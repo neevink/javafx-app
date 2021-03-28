@@ -9,16 +9,16 @@ package com.neevin;
 
  */
 
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Programm.CollectionController;
-import com.neevin.Programm.CommandManager;
-import com.neevin.Programm.Programm;
+import com.neevin.Programm.ExecutionService;
 
-import java.io.ByteArrayInputStream;
+import java.io.*;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Scanner;
 
 public class ServerMain {
     // Поскольку ip это localhost, а вот порт меняется, тогда может понадобиться возможность сменить порт
@@ -36,34 +36,51 @@ public class ServerMain {
             }
         }
 
-        try{
-            byte[] b = new byte[3];
-
-
-            ServerSocketChannel ssc = ServerSocketChannel.open();
-            ssc.bind(new InetSocketAddress(port));
-
-            // Тут ждём
-            SocketChannel s = ssc.accept();
-
-
-            CollectionController col;
-            try {
-                col = new CollectionController(ENVIRONMENT_VARIABLE);
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-                return;
-            }
-
-            CommandManager cm = new CommandManager(col, new Scanner(s));
-            Programm.run(cm, new Scanner(s));
-
-
+        CollectionController collectionController;
+        try {
+            collectionController = new CollectionController(ENVIRONMENT_VARIABLE);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+            return;
         }
 
+
+        ServerSocketChannel serverChannel;
+        try{
+            serverChannel = ServerSocketChannel.open();
+            serverChannel.bind(new InetSocketAddress(port));
+        }
+        catch (IOException exc){
+            System.out.println("Ошибка запуска сервера! Скорее всего занят порт!");
+            return;
+        }
+
+        ExecutionService executionService = new ExecutionService(collectionController);
+        while (true) {
+            try(SocketChannel clientChannel = serverChannel.accept()){
+                System.out.println("Полступил новый запрос с машины " + clientChannel.getRemoteAddress());
+
+                ObjectInputStream ios = new ObjectInputStream(clientChannel.socket().getInputStream());
+                Request<?> request = (Request<?>) ios.readObject();
+                System.out.println("Запрос : " + request.command);
+
+                CommandResult result = executionService.executeCommand(request);
+                if(result.status == ResultStatus.OK){
+                    System.out.println("Результат выполнения: успешно");
+                }
+                else{
+                    System.out.println("Результат выполнения: неуспешно");
+                }
+                System.out.println();
+
+                OutputStream os = clientChannel.socket().getOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(os);
+                oos.writeObject(result);
+            }
+            catch (IOException | ClassNotFoundException exc){
+                System.out.println(exc.getMessage());
+            }
+        }
     }
 }

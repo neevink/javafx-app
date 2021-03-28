@@ -3,36 +3,37 @@ package com.neevin.Commands;
 import com.neevin.DataModels.Route;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
 import java.util.Scanner;
 
 /**
- * Заменить значение по ключу, если новое значение больше старого
+ * Обновить значение элемента коллекции
  */
-public class ReplaceIfGreaterCommand implements Command{
-    CollectionController controller;
-    private Scanner scanner;
+public class UpdateCommand implements Command{
+    Connection connection;
+    Scanner scanner;
 
-    public ReplaceIfGreaterCommand(CollectionController controller, Scanner scanner){
-        this.controller = controller;
+    public UpdateCommand(Connection connection, Scanner scanner){
+        this.connection = connection;
         this.scanner = scanner;
     }
 
     @Override
     public String getName() {
-        return "replace_if_greater";
+        return "update";
     }
 
     @Override
     public String getDescription() {
-        return "заменить значение по ключу, если новое значение больше старого / replace_if_greater id \"name\" distance";
+        return "обновить значение элемента коллекции, id которого равен заданному / update id \"name\" distance";
     }
 
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
         InputHelper.displayInput(tokens);
+
         if(tokens == null){
             throw new IllegalArgumentException("Сисок токенов не может быть равен null!");
         }
@@ -46,9 +47,11 @@ public class ReplaceIfGreaterCommand implements Command{
 
         InputHelper.receiveId(newRoute, tokens.get(1));
 
+        /*
         if(!controller.map.containsKey(newRoute.getId())){
             throw new Exception("Элемента с таким индексом не существует!");
         }
+        */
 
         InputHelper.receiveName(newRoute, tokens.get(2));
         InputHelper.receiveDistance(newRoute, tokens.get(3));
@@ -57,16 +60,14 @@ public class ReplaceIfGreaterCommand implements Command{
         InputHelper.receiveFrom(newRoute, scanner);
         InputHelper.receiveTo(newRoute, scanner);
 
+        //ExecutionService.update(newRoute);
+        /*
         Route storedRoute = controller.map.get(newRoute.getId());
+        controller.map.remove(storedRoute);
+        controller.map.put(newRoute.getId(), newRoute);
 
-        if(newRoute.compareTo(storedRoute) > 0){
-            controller.map.remove(storedRoute);
-            controller.map.put(newRoute.getId(), newRoute);
+        System.out.println(String.format("Значение элемента с id %d успешно обновлено.", newRoute.getId()));
 
-            System.out.println("Новое значение больше старого. Произведена замена.");
-        }
-        else{
-            System.out.println("Новое значение меньше или равно старому. Значение не изменено.");
-        }
+         */
     }
 }

@@ -1,22 +1,20 @@
 package com.neevin.Commands;
 
-import com.neevin.DataModels.Route;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
-import java.util.ArrayList;
 
 /**
  * Удалить из коллекции все элементы, ключ которых меньше, чем заданный
  */
 public class RemoveLowerKeyCommand implements Command{
-    private CollectionController controller;
+    private Connection connection;
 
-    public  RemoveLowerKeyCommand(CollectionController controller){
-        this.controller = controller;
+    public  RemoveLowerKeyCommand(Connection connection){
+        this.connection = connection;
     }
 
     @Override
@@ -40,6 +38,8 @@ public class RemoveLowerKeyCommand implements Command{
             throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
         }
 
+        //ExecutionService.removeLowerKey(id);
+        /*
         ArrayList<Long> keys = new ArrayList<Long>();
         for(long key : controller.map.keySet()){
             keys.add(key);
@@ -55,5 +55,7 @@ public class RemoveLowerKeyCommand implements Command{
         }
 
         System.out.println(String.format("Из коллекции успешно удалено %d элементов.", count));
+
+         */
     }
 }

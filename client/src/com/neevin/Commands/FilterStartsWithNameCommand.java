@@ -1,10 +1,9 @@
 package com.neevin.Commands;
 
-import com.neevin.DataModels.Route;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
 
@@ -12,10 +11,10 @@ import java.util.AbstractList;
  * Вывести элементы, имя которых начинается со строки
  */
 public class FilterStartsWithNameCommand implements Command{
-    CollectionController controller;
+    Connection connection;
 
-    public FilterStartsWithNameCommand(CollectionController controller){
-        this.controller = controller;
+    public FilterStartsWithNameCommand(Connection connection){
+        this.connection = connection;
     }
 
     @Override
@@ -31,9 +30,11 @@ public class FilterStartsWithNameCommand implements Command{
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
         InputHelper.displayInput(tokens);
+        /*
         if(controller.map.size() == 0){
             System.out.println("Коллекция пуста. Нечего выводить.");
         }
+        */
 
         String name;
         try{
@@ -43,6 +44,8 @@ public class FilterStartsWithNameCommand implements Command{
             throw new Exception("Парсинг агрумента name не удался. " + e.getMessage());
         }
 
+        //ExecutionService.filterStartsWithName(name);
+        /*
         boolean wasPrint = false;
         for(long key : controller.map.keySet()){
             Route r = controller.map.get(key);
@@ -56,5 +59,6 @@ public class FilterStartsWithNameCommand implements Command{
         if(!wasPrint){
             System.out.println("Нет ни одного объекта, поле distance которого больше заданного.");
         }
+         */
     }
 }

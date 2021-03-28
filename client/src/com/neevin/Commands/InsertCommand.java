@@ -3,7 +3,7 @@ package com.neevin.Commands;
 import com.neevin.DataModels.Route;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
 import java.util.Scanner;
@@ -12,11 +12,11 @@ import java.util.Scanner;
  * Добавить новый элемент в коллекцию
  */
 public class InsertCommand implements Command {
-    CollectionController controller;
+    Connection connection;
     Scanner scanner;
 
-    public InsertCommand(CollectionController controller, Scanner scanner){
-        this.controller = controller;
+    public InsertCommand(Connection connection, Scanner scanner){
+        this.connection = connection;
         this.scanner = scanner;
     }
 
@@ -45,7 +45,7 @@ public class InsertCommand implements Command {
 
         Route route = new Route();
 
-        route.setId(controller.getNextId());
+        //route.setId(controller.getNextId());
 
         InputHelper.receiveName(route, tokens.get(1));
         InputHelper.receiveDistance(route, tokens.get(2));
@@ -54,7 +54,11 @@ public class InsertCommand implements Command {
         InputHelper.receiveFrom(route, scanner);
         InputHelper.receiveTo(route, scanner);
 
+        //ExecutionService.insert(route);
+        /*
         controller.map.put(route.getId(), route);
         System.out.println("Новый элемент успешно добавлен!");
+
+         */
     }
 }

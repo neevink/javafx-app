@@ -3,9 +3,8 @@ package com.neevin.Commands;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
 import com.neevin.Programm.CommandManager;
-import com.neevin.Programm.Programm;
+import com.neevin.Programm.Connection;
 
 import java.io.*;
 import java.util.*;
@@ -14,14 +13,14 @@ import java.util.*;
  * Выполнить указанный скрипт в файле
  */
 public class ExecuteScriptCommand implements Command{
-    CollectionController controller;
     CommandManager commandManager;
+    Connection connection;
 
     static Set<String> executingScripts = new HashSet<>();
 
-    public ExecuteScriptCommand(CommandManager commandManager,CollectionController controller){
+    public ExecuteScriptCommand(CommandManager commandManager, Connection connection){
         this.commandManager = commandManager;
-        this.controller = controller;
+        this.connection = connection;
     }
 
     @Override
@@ -62,7 +61,8 @@ public class ExecuteScriptCommand implements Command{
 
         System.out.println("\uD83D\uDCC1 Началось выполнение скрипта");
         executingScripts.add(path);
-        Programm.run(new CommandManager(controller, fileScanner), fileScanner);
+        // Тут какая-то дичь
+        //Programm.run(new CommandManager(controller, fileScanner), fileScanner);
         executingScripts.remove(path);
         System.out.println("\uD83D\uDCC1 Выполение скрипта завершено");
     }

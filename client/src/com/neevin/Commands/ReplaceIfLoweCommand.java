@@ -3,7 +3,7 @@ package com.neevin.Commands;
 import com.neevin.DataModels.Route;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
 import java.util.Scanner;
@@ -12,11 +12,11 @@ import java.util.Scanner;
  * Заменить значение по ключу, если новое значение меньше старого
  */
 public class ReplaceIfLoweCommand implements Command{
-    CollectionController controller;
+    Connection connection;
     private Scanner scanner;
 
-    public ReplaceIfLoweCommand(CollectionController controller, Scanner scanner) {
-        this.controller = controller;
+    public ReplaceIfLoweCommand(Connection connection, Scanner scanner) {
+        this.connection= connection;
         this.scanner = scanner;
     }
 
@@ -46,9 +46,11 @@ public class ReplaceIfLoweCommand implements Command{
 
         InputHelper.receiveId(newRoute, tokens.get(1));
 
+        /*
         if(!controller.map.containsKey(newRoute.getId())){
             throw new Exception("Элемента с таким индексом не существует!");
         }
+        */
 
         InputHelper.receiveName(newRoute, tokens.get(2));
         InputHelper.receiveDistance(newRoute, tokens.get(3));
@@ -57,6 +59,8 @@ public class ReplaceIfLoweCommand implements Command{
         InputHelper.receiveFrom(newRoute, scanner);
         InputHelper.receiveTo(newRoute, scanner);
 
+        //ExecutionService.replaceIfLowe(newRoute);
+        /*
         Route storedRoute = controller.map.get(newRoute.getId());
 
         if(newRoute.compareTo(storedRoute) < 0){
@@ -68,5 +72,7 @@ public class ReplaceIfLoweCommand implements Command{
         else{
             System.out.println("Новое значение больше или равно старому. Значение не изменено.");
         }
+
+         */
     }
 }

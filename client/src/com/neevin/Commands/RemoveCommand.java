@@ -3,7 +3,7 @@ package com.neevin.Commands;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
 
@@ -11,10 +11,10 @@ import java.util.AbstractList;
  * Удалить элемент из коллекции
  */
 public class RemoveCommand implements Command{
-    CollectionController controller;
+    Connection connection;
 
-    public RemoveCommand(CollectionController controller) {
-        this.controller = controller;
+    public RemoveCommand(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -48,11 +48,15 @@ public class RemoveCommand implements Command{
             throw new Exception("Парсинг агрумента id не удался. " + e.getMessage());
         }
 
+        //ExecutionService.remove(id);
+        /*
         if(!controller.map.containsKey(id)){
             throw new IndexOutOfBoundsException("Элемент с этим id не содержится в коллекции");
         }
 
         controller.map.remove(id);
         System.out.println(String.format("Элемент с индексом %d успешно удалён", id));
+
+         */
     }
 }

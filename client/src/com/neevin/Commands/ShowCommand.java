@@ -1,9 +1,8 @@
 package com.neevin.Commands;
 
-import com.neevin.DataModels.Route;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
 
@@ -11,10 +10,10 @@ import java.util.AbstractList;
  * Вывести список элементов коллекции
  */
 public class ShowCommand implements Command {
-    private CollectionController controller;
+    private Connection connection;
 
-    public ShowCommand(CollectionController controller){
-        this.controller = controller;
+    public ShowCommand(Connection connection){
+        this.connection = connection;
     }
 
     @Override
@@ -30,6 +29,9 @@ public class ShowCommand implements Command {
     @Override
     public void execute(AbstractList<Token> tokens) {
         InputHelper.displayInput(tokens);
+
+        //ExecutionService.show();
+        /*
         if(controller.map.size() == 0){
             System.out.println("Коллекция пуста.");
         }
@@ -38,5 +40,7 @@ public class ShowCommand implements Command {
             Route r = controller.map.get(key);
             System.out.println(r.toString() + '\n');
         }
+
+         */
     }
 }

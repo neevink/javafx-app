@@ -2,20 +2,18 @@ package com.neevin.Commands;
 
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Вывести значения поля distance всех элементов в порядке возрастания
  */
 public class PrintFieldAscendingDistanceCommand implements Command{
-    private CollectionController controller;
+    private Connection connection;
 
-    public  PrintFieldAscendingDistanceCommand(CollectionController controller){
-        this.controller = controller;
+    public  PrintFieldAscendingDistanceCommand(Connection connection){
+        this.connection = connection;
     }
 
     @Override
@@ -31,6 +29,9 @@ public class PrintFieldAscendingDistanceCommand implements Command{
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
         InputHelper.displayInput(tokens);
+
+        //ExecutionService.printFieldAscendingDistance();
+        /*
         if(controller.map.size() == 0){
             System.out.println("Коллекция пуста. Нечего выводить.");
         }
@@ -45,5 +46,7 @@ public class PrintFieldAscendingDistanceCommand implements Command{
         for(long e :arr){
             System.out.println(e);
         }
+
+         */
     }
 }

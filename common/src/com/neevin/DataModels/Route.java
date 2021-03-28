@@ -22,7 +22,7 @@ public class Route implements Comparable<Route> {
     /**
      * Дата создания маршрута
      */
-    private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     /**
      * Пункт отправления
      */

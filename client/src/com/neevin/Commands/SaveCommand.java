@@ -2,20 +2,18 @@ package com.neevin.Commands;
 
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.AbstractList;
 
 /**
  * Сохранить состояние коллекции в фвйле
  */
 public class SaveCommand implements Command{
-    private CollectionController controller;
+    private Connection connection;
 
-    public SaveCommand(CollectionController controller){
-        this.controller = controller;
+    public SaveCommand(Connection connection){
+        this.connection = connection;
     }
 
     @Override
@@ -28,13 +26,14 @@ public class SaveCommand implements Command{
         return "сохранить коллекцию в файл";
     }
 
-    // Это говно переписать
     @Override
     public void execute(AbstractList<Token> tokens) {
         InputHelper.displayInput(tokens);
 
+        /*
+        // Сохранение должно происходить автоматически
         try {
-            controller.Save();
+            //controller.Save();
 
             System.out.println("Текущее состояние коллекции успешно сохранено в файле.");
         } catch (FileNotFoundException e) {
@@ -42,5 +41,7 @@ public class SaveCommand implements Command{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+         */
     }
 }

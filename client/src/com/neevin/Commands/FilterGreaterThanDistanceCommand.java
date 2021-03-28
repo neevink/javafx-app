@@ -1,10 +1,9 @@
 package com.neevin.Commands;
 
-import com.neevin.DataModels.Route;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.CollectionController;
+import com.neevin.Programm.Connection;
 
 import java.util.AbstractList;
 
@@ -12,10 +11,10 @@ import java.util.AbstractList;
  * Вывести список элементов, значение distance которое больше данного
  */
 public class FilterGreaterThanDistanceCommand implements Command{
-    private CollectionController controller;
+    private Connection connection;
 
-    public  FilterGreaterThanDistanceCommand(CollectionController controller){
-        this.controller = controller;
+    public  FilterGreaterThanDistanceCommand(Connection connection){
+        this.connection = connection;
     }
 
     @Override
@@ -31,7 +30,6 @@ public class FilterGreaterThanDistanceCommand implements Command{
     @Override
     public void execute(AbstractList<Token> tokens) throws Exception {
         InputHelper.displayInput(tokens);
-        boolean wasPrint = false;
 
         long distance;
         try{
@@ -41,6 +39,10 @@ public class FilterGreaterThanDistanceCommand implements Command{
             throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
         }
 
+        //ExecutionService.filterGreaterThanDistance(distance);
+
+        /*
+        boolean wasPrint = false;
         for(long key : controller.map.keySet()){
             Route r = controller.map.get(key);
             if(r.getDistance() > distance){
@@ -52,5 +54,6 @@ public class FilterGreaterThanDistanceCommand implements Command{
         if(!wasPrint){
             System.out.println("Нет ни одного объекта, поле distance которого больше заданного.");
         }
+        */
     }
 }
