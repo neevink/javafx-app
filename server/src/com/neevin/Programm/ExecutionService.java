@@ -23,8 +23,12 @@ public class ExecutionService {
         registerCommand("update", this::update);
         registerCommand("remove_key", this::remove);
         registerCommand("clear", this::clear);
-        //registerCommand("clear", this::clear);
-
+        registerCommand("replace_if_greater", this::replaceIfGreater);
+        registerCommand("replace_if_lowe", this::replaceIfLowe);
+        registerCommand("remove_lower_key", this::removeLowerKey);
+        registerCommand("filter_starts_with_name", this::filterStartsWithName);
+        registerCommand("filter_greater_than_distance", this::filterGreaterThanDistance);
+        registerCommand("print_field_ascending_distance", this::printFieldAscendingDistance);
     }
 
     protected void registerCommand(String name, Executable func){
@@ -43,10 +47,10 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, "Все элементы успешно удалены из коллекции.");
     }
 
-    public CommandResult filterGreaterThanDistance(Object dist){
+    public CommandResult filterGreaterThanDistance(Request<?> request){
         long distance;
         try{
-            distance = (long)dist;
+            distance = (long) request.entity;
         }
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
@@ -64,12 +68,25 @@ public class ExecutionService {
         }
 
         if(!wasPrint){
-            return new CommandResult(ResultStatus.OK,"Нет ни одного объекта, поле distance которого больше заданного.");
+            return new CommandResult(ResultStatus.OK,
+                    "Нет ни одного объекта, поле distance которого больше заданного.");
         }
         return new CommandResult(ResultStatus.OK, message);
     }
 
-    public CommandResult filterStartsWithName(String name){
+    public CommandResult filterStartsWithName(Request<?> request){
+        String name;
+        try{
+            name = (String) request.entity;
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+
+        if(controller.map.size() == 0){
+            return new CommandResult(ResultStatus.OK,"Коллекция пуста. Нечего выводить.");
+        }
+
         boolean wasPrint = false;
         String message = "";
 
@@ -83,7 +100,8 @@ public class ExecutionService {
         }
 
         if(!wasPrint){
-            return new CommandResult(ResultStatus.OK, "Нет ни одного объекта, поле distance которого больше заданного.");
+            return new CommandResult(ResultStatus.OK,
+                    "Нет ни одного объекта, поле name которого начинается с данной подстроки.");
         }
         return new CommandResult(ResultStatus.OK, message);
     }
@@ -113,11 +131,12 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, "Новый элемент успешно добавлен!");
     }
 
-    public CommandResult printFieldAscendingDistance(){
+    public CommandResult printFieldAscendingDistance(Request<?> request){
         if(controller.map.size() == 0){
             return new CommandResult(ResultStatus.OK, "Коллекция пуста. Нечего выводить.");
         }
 
+        // Список дистанций
         ArrayList<Long> arr = new ArrayList<Long>();
         for(long key : controller.map.keySet()){
             long distance = controller.map.get(key).getDistance();
@@ -127,7 +146,7 @@ public class ExecutionService {
         String message = "";
         Collections.sort(arr);
         for(long e :arr){
-            message += '\n';
+            message += e + "\n";
         }
 
         return new CommandResult(ResultStatus.OK, message);
@@ -150,7 +169,15 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, String.format("Элемент с индексом %d успешно удалён", id));
     }
 
-    public CommandResult removeLowerKey(long id){
+    public CommandResult removeLowerKey(Request<?> request){
+        long id;
+        try{
+            id = (long) request.entity;
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+
         ArrayList<Long> keys = new ArrayList<Long>();
         for(long key : controller.map.keySet()){
             keys.add(key);
@@ -168,8 +195,20 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, String.format("Из коллекции успешно удалено %d элементов.", count));
     }
 
-    public CommandResult replaceIfGreater(Route route){
+    public CommandResult replaceIfGreater(Request<?> request){
+        Route route;
+        try{
+            route = (Route) request.entity;
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+        if(!controller.map.containsKey(route.getId())){
+            return new CommandResult(ResultStatus.ERROR,"Элемента с таким индексом не существует!");
+        }
+
         Route storedRoute = controller.map.get(route.getId());
+
 
         if(route.compareTo(storedRoute) > 0){
             controller.map.remove(storedRoute);
@@ -183,18 +222,30 @@ public class ExecutionService {
         }
     }
 
-    public CommandResult replaceIfLowe(Route route){
+    public CommandResult replaceIfLowe(Request<?> request){
+        Route route;
+        try{
+            route = (Route) request.entity;
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+        if(!controller.map.containsKey(route.getId())){
+            return new CommandResult(ResultStatus.ERROR,"Элемента с таким индексом не существует!");
+        }
+
         Route storedRoute = controller.map.get(route.getId());
+
 
         if(route.compareTo(storedRoute) < 0){
             controller.map.remove(storedRoute);
             controller.map.put(route.getId(), route);
 
-            return new CommandResult(ResultStatus.OK, "Новое значение меньше старого. Произведена замена.");
+            return new CommandResult(ResultStatus.OK,"Новое значение больше старого. Произведена замена.");
         }
         else{
             return new CommandResult(ResultStatus.OK,
-                    "Новое значение больше или равно старому. Значение не изменено.");
+                    "Новое значение меньше или равно старому. Значение не изменено.");
         }
     }
 

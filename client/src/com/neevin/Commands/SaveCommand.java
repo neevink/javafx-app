@@ -3,6 +3,7 @@ package com.neevin.Commands;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
+import jdk.jshell.spi.ExecutionControl;
 
 import java.util.AbstractList;
 
@@ -30,18 +31,6 @@ public class SaveCommand implements Command{
     public void execute(AbstractList<Token> tokens) {
         InputHelper.displayInput(tokens);
 
-        /*
-        // Сохранение должно происходить автоматически
-        try {
-            //controller.Save();
-
-            System.out.println("Текущее состояние коллекции успешно сохранено в файле.");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-         */
+        // Выпилено
     }
 }

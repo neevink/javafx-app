@@ -29,7 +29,6 @@ public class CommandManager {
         registerCommand(new ClearCommand(con));
         registerCommand(new ExecuteScriptCommand(this, con));
         registerCommand(new ExitCommand());
-
         registerCommand(new ReplaceIfGreaterCommand(con, scanner));
         registerCommand(new ReplaceIfLoweCommand(con, scanner));
         registerCommand(new RemoveLowerKeyCommand(con));

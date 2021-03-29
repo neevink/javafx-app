@@ -1,6 +1,9 @@
 package com.neevin.Commands;
 
 import com.neevin.DataModels.Route;
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
@@ -59,20 +62,14 @@ public class ReplaceIfLoweCommand implements Command{
         InputHelper.receiveFrom(newRoute, scanner);
         InputHelper.receiveTo(newRoute, scanner);
 
-        //ExecutionService.replaceIfLowe(newRoute);
-        /*
-        Route storedRoute = controller.map.get(newRoute.getId());
+        Request<?> request = new Request<Route>(this.getName(), newRoute);
+        CommandResult result = connection.sendRequest(request);
 
-        if(newRoute.compareTo(storedRoute) < 0){
-            controller.map.remove(storedRoute);
-            controller.map.put(newRoute.getId(), newRoute);
-
-            System.out.println("Новое значение меньше старого. Произведена замена.");
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
         }
         else{
-            System.out.println("Новое значение больше или равно старому. Значение не изменено.");
+            System.out.println("Произошла ошибка: " + result.message);
         }
-
-         */
     }
 }

@@ -1,5 +1,9 @@
 package com.neevin.Commands;
 
+import com.neevin.DataModels.Route;
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
@@ -38,24 +42,14 @@ public class RemoveLowerKeyCommand implements Command{
             throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
         }
 
-        //ExecutionService.removeLowerKey(id);
-        /*
-        ArrayList<Long> keys = new ArrayList<Long>();
-        for(long key : controller.map.keySet()){
-            keys.add(key);
+        Request<?> request = new Request<Long>(this.getName(), id);
+        CommandResult result = connection.sendRequest(request);
+
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
         }
-
-        int count = 0;
-        for(long key : keys){
-            Route r = controller.map.get(key);
-            if(r.getId() < id){
-                controller.map.remove(key);
-                count++;
-            }
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
         }
-
-        System.out.println(String.format("Из коллекции успешно удалено %d элементов.", count));
-
-         */
     }
 }

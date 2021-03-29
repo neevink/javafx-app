@@ -1,5 +1,8 @@
 package com.neevin.Commands;
 
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.Connection;
@@ -30,23 +33,14 @@ public class PrintFieldAscendingDistanceCommand implements Command{
     public void execute(AbstractList<Token> tokens) throws Exception {
         InputHelper.displayInput(tokens);
 
-        //ExecutionService.printFieldAscendingDistance();
-        /*
-        if(controller.map.size() == 0){
-            System.out.println("Коллекция пуста. Нечего выводить.");
-        }
+        Request<?> request = new Request<Object>(this.getName(), null);
+        CommandResult result = connection.sendRequest(request);
 
-        ArrayList<Long> arr = new ArrayList<Long>();
-        for(long key : controller.map.keySet()){
-            long distance = controller.map.get(key).getDistance();
-            arr.add(distance);
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
         }
-
-        Collections.sort(arr);
-        for(long e :arr){
-            System.out.println(e);
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
         }
-
-         */
     }
 }

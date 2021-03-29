@@ -1,5 +1,8 @@
 package com.neevin.Commands;
 
+import com.neevin.Net.CommandResult;
+import com.neevin.Net.Request;
+import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
@@ -39,21 +42,14 @@ public class FilterGreaterThanDistanceCommand implements Command{
             throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
         }
 
-        //ExecutionService.filterGreaterThanDistance(distance);
+        Request<?> request = new Request<Long>(this.getName(), distance);
+        CommandResult result = connection.sendRequest(request);
 
-        /*
-        boolean wasPrint = false;
-        for(long key : controller.map.keySet()){
-            Route r = controller.map.get(key);
-            if(r.getDistance() > distance){
-                System.out.println(r.toString() + '\n');
-                wasPrint = true;
-            }
+        if(result.status == ResultStatus.OK){
+            System.out.println(result.message);
         }
-
-        if(!wasPrint){
-            System.out.println("Нет ни одного объекта, поле distance которого больше заданного.");
+        else{
+            System.out.println("Произошла ошибка: " + result.message);
         }
-        */
     }
 }
