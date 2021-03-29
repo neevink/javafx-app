@@ -50,7 +50,7 @@ public class ExecutionService {
     public CommandResult filterGreaterThanDistance(Request<?> request){
         long distance;
         try{
-            distance = (long) request.entity;
+            distance = ((Long) request.entity).longValue();
         }
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
@@ -155,7 +155,7 @@ public class ExecutionService {
     public CommandResult remove(Request<?> request){
         long id;
         try{
-            id = (long) request.entity;
+            id = ((Long) request.entity).longValue();
         }
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
@@ -172,7 +172,7 @@ public class ExecutionService {
     public CommandResult removeLowerKey(Request<?> request){
         long id;
         try{
-            id = (long) request.entity;
+            id = ((Long) request.entity).longValue();;
         }
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");

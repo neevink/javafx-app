@@ -17,8 +17,9 @@ import com.neevin.Programm.ExecutionService;
 
 import java.io.*;
 import java.net.*;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ServerMain {
     // Поскольку ip это localhost, а вот порт меняется, тогда может понадобиться возможность сменить порт
@@ -50,15 +51,32 @@ public class ServerMain {
         try{
             serverChannel = ServerSocketChannel.open();
             serverChannel.bind(new InetSocketAddress(port));
+            serverChannel.configureBlocking(false);
+            System.out.println("Сервер успешно запущен. Порт: " + port);
         }
         catch (IOException exc){
             System.out.println("Ошибка запуска сервера! Скорее всего занят порт!");
             return;
         }
 
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                System.out.println("Выход");
+                save(collectionController);
+            }
+        });
+
         ExecutionService executionService = new ExecutionService(collectionController);
-        while (true) {
+
+        AtomicBoolean exit = new AtomicBoolean(false);
+        Thread thread = getUserInputHandler(collectionController, exit);
+        thread.start();
+
+        while (!exit.get()) {
             try(SocketChannel clientChannel = serverChannel.accept()){
+                if (clientChannel == null){
+                    continue;
+                }
                 System.out.println("Полступил новый запрос с машины " + clientChannel.getRemoteAddress());
 
                 ObjectInputStream ios = new ObjectInputStream(clientChannel.socket().getInputStream());
@@ -82,5 +100,43 @@ public class ServerMain {
                 System.out.println(exc.getMessage());
             }
         }
+    }
+
+    protected static void save(CollectionController controller){
+        try {
+            controller.Save();
+            System.out.println("Текущее состояние коллекции успешно сохранено в файле.");
+        } catch (IOException e) {
+            System.out.println("Не удалось сохранить текущее состояние коллекции в файле! Файл не найден/не хватает прав!");
+        }
+    }
+
+    private static Thread getUserInputHandler(CollectionController collectionController, AtomicBoolean exit){
+        return new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
+
+            while (true){
+                if(scanner.hasNextLine()){
+                    String serverCommand = scanner.nextLine();
+                    System.out.println("Введено: " + serverCommand);
+
+                    switch (serverCommand){
+                        case "save":
+                            save(collectionController);
+                            break;
+                        case "exit":
+                            exit.set(true);
+                            return;
+                        default:
+                            System.out.println("Такой команды не существует");
+                            break;
+                    }
+                }
+                else{
+                    exit.set(true);
+                    return;
+                }
+            }
+        });
     }
 }
