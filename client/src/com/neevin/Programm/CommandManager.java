@@ -19,7 +19,7 @@ public class CommandManager {
      */
     protected HashMap<String,Command> commands = new HashMap<String, Command>();
 
-    public CommandManager(Connection con, Scanner scanner){
+    public CommandManager(RequestSender con, Scanner scanner){
         registerCommand(new HelpCommand(this));
         registerCommand(new InfoCommand(con));
         registerCommand(new ShowCommand(con));

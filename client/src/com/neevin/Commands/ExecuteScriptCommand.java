@@ -4,7 +4,7 @@ import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
 import com.neevin.Programm.CommandManager;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 import com.neevin.Programm.Programm;
 
 import java.io.*;
@@ -15,13 +15,13 @@ import java.util.*;
  */
 public class ExecuteScriptCommand implements Command{
     CommandManager commandManager;
-    Connection connection;
+    RequestSender requestSender;
 
     protected static Set<String> executingScripts = new HashSet<>();
 
-    public ExecuteScriptCommand(CommandManager commandManager, Connection connection){
+    public ExecuteScriptCommand(CommandManager commandManager, RequestSender requestSender){
         this.commandManager = commandManager;
-        this.connection = connection;
+        this.requestSender = requestSender;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ExecuteScriptCommand implements Command{
         System.out.println("Началось выполнение скрипта");
         executingScripts.add(path);
 
-        CommandManager cm = new CommandManager(connection, fileScanner);
+        CommandManager cm = new CommandManager(requestSender, fileScanner);
         Programm.run(cm, fileScanner);
 
         executingScripts.remove(path);

@@ -5,7 +5,7 @@ import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 
 import java.util.AbstractList;
 
@@ -13,10 +13,10 @@ import java.util.AbstractList;
  * Вывести значения поля distance всех элементов в порядке возрастания
  */
 public class PrintFieldAscendingDistanceCommand implements Command{
-    private Connection connection;
+    private RequestSender requestSender;
 
-    public  PrintFieldAscendingDistanceCommand(Connection connection){
-        this.connection = connection;
+    public  PrintFieldAscendingDistanceCommand(RequestSender requestSender){
+        this.requestSender = requestSender;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PrintFieldAscendingDistanceCommand implements Command{
         InputHelper.displayInput(tokens);
 
         Request<?> request = new Request<Object>(this.getName(), null);
-        CommandResult result = connection.sendRequest(request);
+        CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
             System.out.println(result.message);

@@ -3,19 +3,24 @@ package com.neevin.Programm;
 import com.neevin.Net.CommandResult;
 import com.neevin.Net.ResultStatus;
 import com.neevin.Net.Request;
-
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-public class Connection {
+/**
+ * Класс, который позваляет оправлять запросы на сервер по сети
+ */
+public class RequestSender {
     protected int port;
 
-    public Connection(int port){
+    public RequestSender(int port){
         this.port = port;
     }
 
-    // тут как-то запросы отправляться будут
+    /**
+     * Отправить запрос на выполнение
+     * @param request Запрос
+     * @return Результат выполнения
+     */
     public CommandResult sendRequest(Request<?> request){
         if(request == null){
             throw new IllegalArgumentException("Запрос не может быть null!");

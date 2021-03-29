@@ -6,7 +6,7 @@ import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 
 import java.util.AbstractList;
 
@@ -14,10 +14,10 @@ import java.util.AbstractList;
  * Вывести элементы, имя которых начинается со строки
  */
 public class FilterStartsWithNameCommand implements Command{
-    Connection connection;
+    RequestSender requestSender;
 
-    public FilterStartsWithNameCommand(Connection connection){
-        this.connection = connection;
+    public FilterStartsWithNameCommand(RequestSender requestSender){
+        this.requestSender = requestSender;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class FilterStartsWithNameCommand implements Command{
         }
 
         Request<?> request = new Request<String>(this.getName(), name);
-        CommandResult result = connection.sendRequest(request);
+        CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
             System.out.println(result.message);

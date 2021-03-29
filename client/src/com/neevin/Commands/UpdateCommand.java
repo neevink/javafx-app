@@ -6,7 +6,7 @@ import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 
 import java.util.AbstractList;
 import java.util.Scanner;
@@ -15,11 +15,11 @@ import java.util.Scanner;
  * Обновить значение элемента коллекции
  */
 public class UpdateCommand implements Command{
-    Connection connection;
+    RequestSender requestSender;
     Scanner scanner;
 
-    public UpdateCommand(Connection connection, Scanner scanner){
-        this.connection = connection;
+    public UpdateCommand(RequestSender requestSender, Scanner scanner){
+        this.requestSender = requestSender;
         this.scanner = scanner;
     }
 
@@ -58,7 +58,7 @@ public class UpdateCommand implements Command{
         InputHelper.receiveTo(newRoute, scanner);
 
         Request<?> request = new Request<Route>(this.getName(), newRoute);
-        CommandResult result = connection.sendRequest(request);
+        CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
             System.out.println(result.message);

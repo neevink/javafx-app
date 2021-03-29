@@ -1,5 +1,10 @@
 package com.neevin;
 
+import com.neevin.Programm.RequestSender;
+import com.neevin.Programm.CommandManager;
+import com.neevin.Programm.Programm;
+import java.util.Scanner;
+
 /*
 Лабораторная 5
 Вариант: 313087
@@ -8,13 +13,6 @@ package com.neevin;
 Варинат: 313387
 
  */
-
-
-import com.neevin.Programm.Connection;
-import com.neevin.Programm.CommandManager;
-import com.neevin.Programm.Programm;
-
-import java.util.Scanner;
 
 public class ClientMain {
     // Поскольку ip это localhost, а вот порт меняется, тогда может понадобиться возможность сменить порт
@@ -31,8 +29,9 @@ public class ClientMain {
             }
         }
 
-        Connection connection = new Connection(port);
-        CommandManager cm = new CommandManager(connection, new Scanner(System.in));
+        RequestSender requestSender = new RequestSender(port);
+        CommandManager cm = new CommandManager(requestSender, new Scanner(System.in));
+        System.out.println("Клиентское приложение запущено!");
         Programm.run(cm, new Scanner(System.in));
     }
 }

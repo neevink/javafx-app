@@ -6,7 +6,7 @@ import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 
 import java.util.AbstractList;
 
@@ -14,10 +14,10 @@ import java.util.AbstractList;
  * Вывести список элементов, значение distance которое больше данного
  */
 public class FilterGreaterThanDistanceCommand implements Command{
-    private Connection connection;
+    private RequestSender requestSender;
 
-    public  FilterGreaterThanDistanceCommand(Connection connection){
-        this.connection = connection;
+    public  FilterGreaterThanDistanceCommand(RequestSender requestSender){
+        this.requestSender = requestSender;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class FilterGreaterThanDistanceCommand implements Command{
         }
 
         Request<?> request = new Request<Long>(this.getName(), distance);
-        CommandResult result = connection.sendRequest(request);
+        CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
             System.out.println(result.message);

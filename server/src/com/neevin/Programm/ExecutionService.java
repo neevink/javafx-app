@@ -4,16 +4,27 @@ import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import com.neevin.DataModels.*;
+
+import java.util.Comparator;
 import java.util.HashMap;
 
-// Типо сервис, который выполняет команды
+/**
+ * Сервис, который выполяет операции над коллекцией
+ */
 public class ExecutionService {
+    /**
+     * Все команды
+     */
     protected HashMap<String, Executable> commands = new HashMap<>();
+    /**
+     * Коллекция
+     */
     protected CollectionController controller;
 
     public ExecutionService(CollectionController controller){
         this.controller = controller;
 
+        // Регистрируем все команды, которые может выполнять сервер
         registerCommand("info", this::info);
         registerCommand("show", this::show);
         registerCommand("insert", this::insert);
@@ -28,10 +39,20 @@ public class ExecutionService {
         registerCommand("print_field_ascending_distance", this::printFieldAscendingDistance);
     }
 
+    /**
+     * Зарегистрировать новую команду
+     * @param name название команды
+     * @param func функция, которая её выполняет
+     */
     protected void registerCommand(String name, Executable func){
         commands.put(name, func);
     }
 
+    /**
+     * Выполнить команду (запрос)
+     * @param request запрос
+     * @return результат выполнения
+     */
     public CommandResult executeCommand(Request<?> request){
         if(!commands.containsKey(request.command)){
             return new CommandResult(ResultStatus.ERROR, "На сервере такая команда не сществует");
@@ -39,12 +60,12 @@ public class ExecutionService {
         return commands.get(request.command).execute(request);
     }
 
-    public CommandResult clear(Request<?> request){
+    protected CommandResult clear(Request<?> request){
         controller.map.clear();
         return new CommandResult(ResultStatus.OK, "Все элементы успешно удалены из коллекции.");
     }
 
-    public CommandResult filterGreaterThanDistance(Request<?> request){
+    protected CommandResult filterGreaterThanDistance(Request<?> request){
         long distance;
         try{
             distance = ((Long) request.entity).longValue();
@@ -58,6 +79,7 @@ public class ExecutionService {
         controller.map.entrySet().stream()
                 .map(x -> x.getValue())
                 .filter(x -> x.getDistance() > distance)
+                .sorted(Comparator.comparing(Route::getCoordinates).reversed())
                 .forEach(x -> message.append(x.toString()));
 
         if(message.length() == 0){
@@ -68,7 +90,7 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, message.toString());
     }
 
-    public CommandResult filterStartsWithName(Request<?> request){
+    protected CommandResult filterStartsWithName(Request<?> request){
         String name;
         try{
             name = (String) request.entity;
@@ -82,6 +104,7 @@ public class ExecutionService {
         controller.map.entrySet().stream()
                 .map(x -> x.getValue())
                 .filter(x -> x.getName().startsWith(name))
+                .sorted(Comparator.comparing(Route::getCoordinates).reversed())
                 .forEach(x -> message.append(x.toString() + '\n'));
 
         if(message.length() == 0){
@@ -92,7 +115,7 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, message.toString());
     }
 
-    public CommandResult info(Request<?> request){
+    protected CommandResult info(Request<?> request){
         String type = "HashMap<Long, Route>";
 
         return new CommandResult(ResultStatus.OK,
@@ -103,7 +126,7 @@ public class ExecutionService {
         );
     }
 
-    public CommandResult insert(Request<?> request){
+    protected CommandResult insert(Request<?> request){
         Route route;
         try{
             route = (Route) request.entity;
@@ -117,7 +140,7 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, "Новый элемент успешно добавлен!");
     }
 
-    public CommandResult printFieldAscendingDistance(Request<?> request){
+    protected CommandResult printFieldAscendingDistance(Request<?> request){
         if(controller.map.size() == 0){
             return new CommandResult(ResultStatus.OK, "Коллекция пуста. Нечего выводить.");
         }
@@ -132,7 +155,7 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, message.toString());
     }
 
-    public CommandResult remove(Request<?> request){
+    protected CommandResult remove(Request<?> request){
         long id;
         try{
             id = ((Long) request.entity).longValue();
@@ -149,7 +172,7 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, String.format("Элемент с индексом %d успешно удалён", id));
     }
 
-    public CommandResult removeLowerKey(Request<?> request){
+    protected CommandResult removeLowerKey(Request<?> request){
         long id;
         try{
             id = ((Long) request.entity).longValue();
@@ -173,7 +196,7 @@ public class ExecutionService {
         return new CommandResult(ResultStatus.OK, String.format("Из коллекции успешно удалено %d элементов.", count));
     }
 
-    public CommandResult replaceIfGreater(Request<?> request){
+    protected CommandResult replaceIfGreater(Request<?> request){
         Route route;
         try{
             route = (Route) request.entity;
@@ -199,7 +222,7 @@ public class ExecutionService {
         }
     }
 
-    public CommandResult replaceIfLowe(Request<?> request){
+    protected CommandResult replaceIfLowe(Request<?> request){
         Route route;
         try{
             route = (Route) request.entity;
@@ -226,19 +249,21 @@ public class ExecutionService {
         }
     }
 
-    public CommandResult show(Request<?> request){
+    protected CommandResult show(Request<?> request){
         if(controller.map.size() == 0){
             return new CommandResult(ResultStatus.OK, "Коллекция пуста.");
         }
 
         StringBuffer message = new StringBuffer();
-        controller.map.entrySet().stream().
-                forEach(x -> message.append(x.getValue().toString() + "\n"));
+        controller.map.entrySet().stream()
+                .map(x -> x.getValue())
+                .sorted(Comparator.comparing(Route::getCoordinates).reversed())
+                .forEach(x -> message.append(x.toString() + "\n"));
 
         return new CommandResult(ResultStatus.OK, message.toString());
     }
 
-    public CommandResult update(Request<?> request){
+    protected CommandResult update(Request<?> request){
         Route newRoute;
         try{
             newRoute = (Route) request.entity;

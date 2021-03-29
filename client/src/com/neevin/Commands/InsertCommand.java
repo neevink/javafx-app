@@ -6,7 +6,7 @@ import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 
 import java.util.AbstractList;
 import java.util.Scanner;
@@ -15,11 +15,11 @@ import java.util.Scanner;
  * Добавить новый элемент в коллекцию
  */
 public class InsertCommand implements Command {
-    Connection connection;
+    RequestSender requestSender;
     Scanner scanner;
 
-    public InsertCommand(Connection connection, Scanner scanner){
-        this.connection = connection;
+    public InsertCommand(RequestSender requestSender, Scanner scanner){
+        this.requestSender = requestSender;
         this.scanner = scanner;
     }
 
@@ -50,13 +50,12 @@ public class InsertCommand implements Command {
 
         InputHelper.receiveName(route, tokens.get(1));
         InputHelper.receiveDistance(route, tokens.get(2));
-
         InputHelper.receiveCoordinates(route, scanner);
         InputHelper.receiveFrom(route, scanner);
         InputHelper.receiveTo(route, scanner);
 
         Request<?> request = new Request<Route>(this.getName(), route);
-        CommandResult result = connection.sendRequest(request);
+        CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
             System.out.println(result.message);

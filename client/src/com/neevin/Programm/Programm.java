@@ -3,7 +3,7 @@ package com.neevin.Programm;
 import java.util.Scanner;
 
 /**
- * Программа, управляющая коллекцией
+ * Чтение команд и передача на парсинг и исполнение
  */
 public class Programm {
     public static void run(CommandManager cm, Scanner scanner){

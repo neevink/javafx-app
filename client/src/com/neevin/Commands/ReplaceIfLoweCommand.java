@@ -6,7 +6,7 @@ import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 
 import java.util.AbstractList;
 import java.util.Scanner;
@@ -15,11 +15,11 @@ import java.util.Scanner;
  * Заменить значение по ключу, если новое значение меньше старого
  */
 public class ReplaceIfLoweCommand implements Command{
-    Connection connection;
+    RequestSender requestSender;
     private Scanner scanner;
 
-    public ReplaceIfLoweCommand(Connection connection, Scanner scanner) {
-        this.connection= connection;
+    public ReplaceIfLoweCommand(RequestSender requestSender, Scanner scanner) {
+        this.requestSender = requestSender;
         this.scanner = scanner;
     }
 
@@ -48,13 +48,6 @@ public class ReplaceIfLoweCommand implements Command{
         Route newRoute = new Route();
 
         InputHelper.receiveId(newRoute, tokens.get(1));
-
-        /*
-        if(!controller.map.containsKey(newRoute.getId())){
-            throw new Exception("Элемента с таким индексом не существует!");
-        }
-        */
-
         InputHelper.receiveName(newRoute, tokens.get(2));
         InputHelper.receiveDistance(newRoute, tokens.get(3));
 
@@ -63,7 +56,7 @@ public class ReplaceIfLoweCommand implements Command{
         InputHelper.receiveTo(newRoute, scanner);
 
         Request<?> request = new Request<Route>(this.getName(), newRoute);
-        CommandResult result = connection.sendRequest(request);
+        CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
             System.out.println(result.message);

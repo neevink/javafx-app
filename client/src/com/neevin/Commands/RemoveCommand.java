@@ -6,7 +6,7 @@ import com.neevin.Net.ResultStatus;
 import com.neevin.Parser.InputHelper;
 import com.neevin.Parser.Parser;
 import com.neevin.Parser.Token;
-import com.neevin.Programm.Connection;
+import com.neevin.Programm.RequestSender;
 
 import java.util.AbstractList;
 
@@ -14,10 +14,10 @@ import java.util.AbstractList;
  * Удалить элемент из коллекции
  */
 public class RemoveCommand implements Command{
-    Connection connection;
+    RequestSender requestSender;
 
-    public RemoveCommand(Connection connection) {
-        this.connection = connection;
+    public RemoveCommand(RequestSender requestSender) {
+        this.requestSender = requestSender;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class RemoveCommand implements Command{
         }
 
         Request<?> request = new Request<Long>(this.getName(), id);
-        CommandResult result = connection.sendRequest(request);
+        CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
             System.out.println(result.message);

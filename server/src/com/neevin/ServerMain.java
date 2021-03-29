@@ -46,7 +46,6 @@ public class ServerMain {
             return;
         }
 
-
         ServerSocketChannel serverChannel;
         try{
             serverChannel = ServerSocketChannel.open();
