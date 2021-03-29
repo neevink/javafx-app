@@ -4,9 +4,6 @@ import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import com.neevin.DataModels.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 // Типо сервис, который выполняет команды
@@ -56,22 +53,19 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        boolean wasPrint = false;
-        String message = "";
+        StringBuffer message = new StringBuffer();
 
-        for(long key : controller.map.keySet()){
-            Route r = controller.map.get(key);
-            if(r.getDistance() > distance){
-                message += r.toString() + '\n';
-                wasPrint = true;
-            }
-        }
+        controller.map.entrySet().stream()
+                .map(x -> x.getValue())
+                .filter(x -> x.getDistance() > distance)
+                .forEach(x -> message.append(x.toString()));
 
-        if(!wasPrint){
+        if(message.length() == 0){
             return new CommandResult(ResultStatus.OK,
                     "Нет ни одного объекта, поле distance которого больше заданного.");
         }
-        return new CommandResult(ResultStatus.OK, message);
+
+        return new CommandResult(ResultStatus.OK, message.toString());
     }
 
     public CommandResult filterStartsWithName(Request<?> request){
@@ -83,27 +77,19 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        if(controller.map.size() == 0){
-            return new CommandResult(ResultStatus.OK,"Коллекция пуста. Нечего выводить.");
-        }
+        StringBuilder message = new StringBuilder();
 
-        boolean wasPrint = false;
-        String message = "";
+        controller.map.entrySet().stream()
+                .map(x -> x.getValue())
+                .filter(x -> x.getName().startsWith(name))
+                .forEach(x -> message.append(x.toString() + '\n'));
 
-        for(long key : controller.map.keySet()){
-            Route r = controller.map.get(key);
-
-            if(r.getName().startsWith(name)){
-                message += r.toString() + '\n';
-                wasPrint = true;
-            }
-        }
-
-        if(!wasPrint){
+        if(message.length() == 0){
             return new CommandResult(ResultStatus.OK,
                     "Нет ни одного объекта, поле name которого начинается с данной подстроки.");
         }
-        return new CommandResult(ResultStatus.OK, message);
+
+        return new CommandResult(ResultStatus.OK, message.toString());
     }
 
     public CommandResult info(Request<?> request){
@@ -136,20 +122,14 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.OK, "Коллекция пуста. Нечего выводить.");
         }
 
-        // Список дистанций
-        ArrayList<Long> arr = new ArrayList<Long>();
-        for(long key : controller.map.keySet()){
-            long distance = controller.map.get(key).getDistance();
-            arr.add(distance);
-        }
+        StringBuilder message = new StringBuilder();
 
-        String message = "";
-        Collections.sort(arr);
-        for(long e :arr){
-            message += e + "\n";
-        }
+        controller.map.entrySet().stream()
+                .map(x -> x.getValue().getDistance())
+                .sorted()
+                .forEach(x -> message.append(x + "\n"));
 
-        return new CommandResult(ResultStatus.OK, message);
+        return new CommandResult(ResultStatus.OK, message.toString());
     }
 
     public CommandResult remove(Request<?> request){
@@ -172,24 +152,22 @@ public class ExecutionService {
     public CommandResult removeLowerKey(Request<?> request){
         long id;
         try{
-            id = ((Long) request.entity).longValue();;
+            id = ((Long) request.entity).longValue();
         }
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        ArrayList<Long> keys = new ArrayList<Long>();
-        for(long key : controller.map.keySet()){
-            keys.add(key);
-        }
+        Long[] keys = controller.map.keySet().stream()
+                .map(x -> x.longValue())
+                .filter(x -> x < id)
+                .toArray(Long[]::new);
+
 
         int count = 0;
         for(long key : keys){
-            Route r = controller.map.get(key);
-            if(r.getId() < id){
-                controller.map.remove(key);
-                count++;
-            }
+            controller.map.remove(key);
+            count++;
         }
 
         return new CommandResult(ResultStatus.OK, String.format("Из коллекции успешно удалено %d элементов.", count));
@@ -208,7 +186,6 @@ public class ExecutionService {
         }
 
         Route storedRoute = controller.map.get(route.getId());
-
 
         if(route.compareTo(storedRoute) > 0){
             controller.map.remove(storedRoute);
@@ -254,12 +231,11 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.OK, "Коллекция пуста.");
         }
 
-        String message = "";
-        for(long key : controller.map.keySet()){
-            Route r = controller.map.get(key);
-            message += r.toString() + '\n';
-        }
-        return new CommandResult(ResultStatus.OK, message);
+        StringBuffer message = new StringBuffer();
+        controller.map.entrySet().stream().
+                forEach(x -> message.append(x.getValue().toString() + "\n"));
+
+        return new CommandResult(ResultStatus.OK, message.toString());
     }
 
     public CommandResult update(Request<?> request){
