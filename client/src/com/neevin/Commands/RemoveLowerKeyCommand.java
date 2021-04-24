@@ -41,7 +41,7 @@ public class RemoveLowerKeyCommand implements Command{
             throw new Exception("Парсинг агрумента distance не удался. " + e.getMessage());
         }
 
-        Request<?> request = new Request<Long>(this.getName(), id);
+        Request<?> request = new Request<Long>(this.getName(), id, requestSender.getUserLogin(), requestSender.getUserPassword());
         CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){

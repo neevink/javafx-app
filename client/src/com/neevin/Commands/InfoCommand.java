@@ -33,7 +33,7 @@ public class InfoCommand implements Command{
     public void execute(AbstractList<Token> tokens) {
         InputHelper.displayInput(tokens);
 
-        Request<?> request = new Request<String>(this.getName(), null);
+        Request<?> request = new Request<String>(this.getName(), null, requestSender.getUserLogin(), requestSender.getUserPassword());
         CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){

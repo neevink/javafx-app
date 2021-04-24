@@ -42,7 +42,7 @@ public class FilterStartsWithNameCommand implements Command{
             throw new Exception("Парсинг агрумента name не удался. " + e.getMessage());
         }
 
-        Request<?> request = new Request<String>(this.getName(), name);
+        Request<?> request = new Request<String>(this.getName(), name, requestSender.getUserLogin(), requestSender.getUserPassword());
         CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){

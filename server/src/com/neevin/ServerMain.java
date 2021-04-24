@@ -7,6 +7,9 @@ package com.neevin;
 Лабораторная 6
 Варинат: 313387
 
+Лабораторная 6
+Варинат: 313589
+
  */
 
 import com.neevin.Net.CommandResult;
@@ -20,6 +23,7 @@ import java.net.*;
 import java.nio.channels.*;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.postgresql.Driver;
 
 public class ServerMain {
     // Поскольку ip это localhost, а вот порт меняется, тогда может понадобиться возможность сменить порт
@@ -35,6 +39,12 @@ public class ServerMain {
             catch (Exception e){
                 System.out.println("Что-то не получилось спарсить порт из агрументов командной строки, используется стандартный");
             }
+        }
+
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Отстутствует драйвер базы данных PostgreSQL!");
         }
 
         CollectionController collectionController;

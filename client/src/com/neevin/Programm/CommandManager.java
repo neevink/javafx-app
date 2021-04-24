@@ -19,22 +19,23 @@ public class CommandManager {
      */
     protected HashMap<String,Command> commands = new HashMap<String, Command>();
 
-    public CommandManager(RequestSender con, Scanner scanner){
+    public CommandManager(RequestSender requestSender, Scanner scanner){
         registerCommand(new HelpCommand(this));
-        registerCommand(new InfoCommand(con));
-        registerCommand(new ShowCommand(con));
-        registerCommand(new InsertCommand(con, scanner));
-        registerCommand(new UpdateCommand(con, scanner));
-        registerCommand(new RemoveCommand(con));
-        registerCommand(new ClearCommand(con));
-        registerCommand(new ExecuteScriptCommand(this, con));
+        registerCommand(new InfoCommand(requestSender));
+        registerCommand(new ShowCommand(requestSender));
+        registerCommand(new InsertCommand(requestSender, scanner));
+        registerCommand(new UpdateCommand(requestSender, scanner));
+        registerCommand(new RemoveCommand(requestSender));
+        registerCommand(new ClearCommand(requestSender));
+        registerCommand(new ExecuteScriptCommand(this, requestSender));
         registerCommand(new ExitCommand());
-        registerCommand(new ReplaceIfGreaterCommand(con, scanner));
-        registerCommand(new ReplaceIfLoweCommand(con, scanner));
-        registerCommand(new RemoveLowerKeyCommand(con));
-        registerCommand(new FilterStartsWithNameCommand(con));
-        registerCommand(new FilterGreaterThanDistanceCommand(con));
-        registerCommand(new PrintFieldAscendingDistanceCommand(con));
+        registerCommand(new ReplaceIfGreaterCommand(requestSender, scanner));
+        registerCommand(new ReplaceIfLoweCommand(requestSender, scanner));
+        registerCommand(new RemoveLowerKeyCommand(requestSender));
+        registerCommand(new FilterStartsWithNameCommand(requestSender));
+        registerCommand(new FilterGreaterThanDistanceCommand(requestSender));
+        registerCommand(new PrintFieldAscendingDistanceCommand(requestSender));
+        registerCommand(new LogInCommand(requestSender, scanner));
     }
 
     /**

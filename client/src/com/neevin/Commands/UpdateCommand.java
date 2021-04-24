@@ -57,7 +57,7 @@ public class UpdateCommand implements Command{
         InputHelper.receiveFrom(newRoute, scanner);
         InputHelper.receiveTo(newRoute, scanner);
 
-        Request<?> request = new Request<Route>(this.getName(), newRoute);
+        Request<?> request = new Request<Route>(this.getName(), newRoute, requestSender.getUserLogin(), requestSender.getUserPassword());
         CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){

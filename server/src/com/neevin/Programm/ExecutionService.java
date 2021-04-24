@@ -24,7 +24,7 @@ public class ExecutionService {
     public ExecutionService(CollectionController controller){
         this.controller = controller;
 
-        // Регистрируем все команды, которые может выполнять сервер
+        // Регистрируем все команды, которые может выполнять сервер и назначаем им обработчики
         registerCommand("info", this::info);
         registerCommand("show", this::show);
         registerCommand("insert", this::insert);
@@ -37,6 +37,8 @@ public class ExecutionService {
         registerCommand("filter_starts_with_name", this::filterStartsWithName);
         registerCommand("filter_greater_than_distance", this::filterGreaterThanDistance);
         registerCommand("print_field_ascending_distance", this::printFieldAscendingDistance);
+
+        registerCommand("login", this::login);
     }
 
     /**
@@ -283,4 +285,37 @@ public class ExecutionService {
         String message = String.format("Значение элемента с id %d успешно обновлено.", newRoute.getId());
         return new CommandResult(ResultStatus.OK, message);
     }
+
+    protected CommandResult login(Request<?> request) {
+        Account account;
+        try {
+            account = (Account) request.entity;
+        } catch (Exception exc) {
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+
+        if(account.accountName.equals("admin") && account.password.equals("admin")){
+            return new CommandResult(ResultStatus.OK, "Вход в аккаунт выполнен успешно");
+        }
+        else{
+            return new CommandResult(ResultStatus.ERROR, "Неверный логин/пароль");
+        }
+    }
+
+    protected CommandResult register(Request<?> request) {
+        Account account;
+        try {
+            account = (Account) request.entity;
+        } catch (Exception exc) {
+            return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
+        }
+
+        //
+        // Тут напиши запрос на создание аккаунта
+        //
+
+        return new CommandResult(ResultStatus.OK, "Вход в аккаунт выполнен успешно");
+    }
+
+
 }

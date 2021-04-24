@@ -1,0 +1,31 @@
+create table "Users"
+(
+	"Login" text not null
+		constraint users_pk
+			primary key,
+	"Password" text not null,
+	"Salt" text not null
+);
+
+create table "Route"
+(
+	"Id" bigserial not null
+		constraint route_pk
+			primary key,
+	"Owner" text not null
+		constraint route_users_login_fk
+			references "Users"
+				on update cascade on delete cascade,
+	"Name" text not null,
+	"CoordinateX" double precision not null,
+	"CoordinateY" double precision not null,
+	"Date" timestamp not null,
+	"FromX" double precision,
+	"FromY" double precision,
+	"FromName" text,
+	"ToX" int,
+	"ToY" int,
+	"ToName" text,
+	"Distance" bigint
+);
+

@@ -54,7 +54,7 @@ public class InsertCommand implements Command {
         InputHelper.receiveFrom(route, scanner);
         InputHelper.receiveTo(route, scanner);
 
-        Request<?> request = new Request<Route>(this.getName(), route);
+        Request<?> request = new Request<Route>(this.getName(), route, requestSender.getUserLogin(), requestSender.getUserPassword());
         CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){

@@ -51,7 +51,7 @@ public class RemoveCommand implements Command{
             throw new Exception("Парсинг агрумента id не удался. " + e.getMessage());
         }
 
-        Request<?> request = new Request<Long>(this.getName(), id);
+        Request<?> request = new Request<Long>(this.getName(), id, requestSender.getUserLogin(), requestSender.getUserPassword());
         CommandResult result = requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){

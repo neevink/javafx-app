@@ -16,8 +16,13 @@ public class Request<T>  implements Serializable {
      */
     public final T entity;
 
-    public Request(String command, T entity) {
+    protected String userLogin;
+    protected String userPassword;
+
+    public Request(String command, T entity, String userLogin, String userPassword) {
         this.command = command;
         this.entity = entity;
+        this.userLogin = userLogin;
+        this.userPassword = userPassword;
     }
 }
