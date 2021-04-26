@@ -1,10 +1,13 @@
 package com.neevin.Programm;
 
+import com.neevin.Database.DatabaseConnection;
+import com.neevin.Database.PasswordHasher;
 import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import com.neevin.DataModels.*;
-
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
@@ -19,10 +22,12 @@ public class ExecutionService {
     /**
      * Коллекция
      */
-    protected CollectionController controller;
+    public final HashMap<Long, Route> map = new HashMap<>();
 
-    public ExecutionService(CollectionController controller){
-        this.controller = controller;
+    protected DatabaseConnection dbConnection;
+
+    public ExecutionService(DatabaseConnection dbConnection) throws Exception{
+        this.dbConnection = dbConnection;
 
         // Регистрируем все команды, которые может выполнять сервер и назначаем им обработчики
         registerCommand("info", this::info);
@@ -39,6 +44,9 @@ public class ExecutionService {
         registerCommand("print_field_ascending_distance", this::printFieldAscendingDistance);
 
         registerCommand("login", this::login);
+        registerCommand("register", this::register);
+
+        updateMap();
     }
 
     /**
@@ -48,6 +56,20 @@ public class ExecutionService {
      */
     protected void registerCommand(String name, Executable func){
         commands.put(name, func);
+    }
+
+    /**
+     * Метод, который выполняет обновление коллекции из базы данных
+     * @throws Exception
+     */
+    public void updateMap() throws Exception {
+        ArrayList<Route> routes = new ArrayList<>();
+        routes = dbConnection.getAllRoutes();
+
+        map.clear();
+        for(Route r : routes){
+            map.put(r.getId(), r);
+        }
     }
 
     /**
@@ -63,8 +85,14 @@ public class ExecutionService {
     }
 
     protected CommandResult clear(Request<?> request){
-        controller.map.clear();
-        return new CommandResult(ResultStatus.OK, "Все элементы успешно удалены из коллекции.");
+        try{
+            dbConnection.deleteAllRoutes(request.userLogin);
+            updateMap();
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, exc.getMessage());
+        }
+        return new CommandResult(ResultStatus.OK, "Все элементы, принадлежащие этому пользователю, успешно удалены из коллекции.");
     }
 
     protected CommandResult filterGreaterThanDistance(Request<?> request){
@@ -78,7 +106,7 @@ public class ExecutionService {
 
         StringBuffer message = new StringBuffer();
 
-        controller.map.entrySet().stream()
+        map.entrySet().stream()
                 .map(x -> x.getValue())
                 .filter(x -> x.getDistance() > distance)
                 .sorted(Comparator.comparing(Route::getCoordinates).reversed())
@@ -103,7 +131,7 @@ public class ExecutionService {
 
         StringBuilder message = new StringBuilder();
 
-        controller.map.entrySet().stream()
+        map.entrySet().stream()
                 .map(x -> x.getValue())
                 .filter(x -> x.getName().startsWith(name))
                 .sorted(Comparator.comparing(Route::getCoordinates).reversed())
@@ -121,10 +149,10 @@ public class ExecutionService {
         String type = "HashMap<Long, Route>";
 
         return new CommandResult(ResultStatus.OK,
-                "Информация о коллекции: " + "\n" +
+                "Информация: " + "\n" +
                         "Тип коллекции: " + type + "\n" +
-                        "Дата инициализации: " + controller.initializationTime + "\n" +
-                        "Количество элементов в коллекции: " + controller.map.size()
+                        "Количество элементов в коллекции: " + map.size()  + "\n" +
+                        "Пользователь, под которым выполнен вход: " + request.userLogin
         );
     }
 
@@ -136,20 +164,31 @@ public class ExecutionService {
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
-        route.setId(controller.getNextId());
 
-        controller.map.put(route.getId(), route);
+        try{
+            dbConnection.AddRoute(route, request.userLogin);
+        }
+        catch (SQLException exc){
+            return new CommandResult(ResultStatus.ERROR, exc.getMessage());
+        }
+
+        try {
+            updateMap();
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, "Данные в базе данных повреждены!");
+        }
         return new CommandResult(ResultStatus.OK, "Новый элемент успешно добавлен!");
     }
 
     protected CommandResult printFieldAscendingDistance(Request<?> request){
-        if(controller.map.size() == 0){
+        if(map.size() == 0){
             return new CommandResult(ResultStatus.OK, "Коллекция пуста. Нечего выводить.");
         }
 
         StringBuilder message = new StringBuilder();
 
-        controller.map.entrySet().stream()
+        map.entrySet().stream()
                 .map(x -> x.getValue().getDistance())
                 .sorted()
                 .forEach(x -> message.append(x + "\n"));
@@ -166,11 +205,14 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        if(!controller.map.containsKey(id)){
-            return new CommandResult(ResultStatus.ERROR, "Элемент с этим id не содержится в коллекции");
+        try{
+            dbConnection.deleteRoute(request.userLogin, id);
+            updateMap();
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, exc.getMessage());
         }
 
-        controller.map.remove(id);
         return new CommandResult(ResultStatus.OK, String.format("Элемент с индексом %d успешно удалён", id));
     }
 
@@ -183,7 +225,7 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        Long[] keys = controller.map.keySet().stream()
+        Long[] keys = map.keySet().stream()
                 .map(x -> x.longValue())
                 .filter(x -> x < id)
                 .toArray(Long[]::new);
@@ -191,11 +233,20 @@ public class ExecutionService {
 
         int count = 0;
         for(long key : keys){
-            controller.map.remove(key);
-            count++;
+            try{
+                dbConnection.deleteRoute(request.userLogin, key);
+                count++;
+            }
+            catch (Exception exc){ }
         }
 
-        return new CommandResult(ResultStatus.OK, String.format("Из коллекции успешно удалено %d элементов.", count));
+        try{
+            updateMap();
+        }
+        catch (Exception exc){}
+
+        return new CommandResult(ResultStatus.OK,
+                String.format("Из коллекции успешно удалено %d элементов, которые принадлежат этому пользователю", count));
     }
 
     protected CommandResult replaceIfGreater(Request<?> request){
@@ -206,16 +257,29 @@ public class ExecutionService {
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
-        if(!controller.map.containsKey(route.getId())){
-            return new CommandResult(ResultStatus.ERROR,"Элемента с таким индексом не существует!");
+
+        if(!dbConnection.isOwnedByUser(request.userLogin, route.getId())){
+            return new CommandResult(ResultStatus.ERROR,
+                    "Элемента, принадлежащего этому пользователю, с таким индексом не существует!");
         }
 
-        Route storedRoute = controller.map.get(route.getId());
+        Route storedRoute;
+        try{
+            storedRoute = dbConnection.getRouteById(route.getId());
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, exc.getMessage());
+        }
 
         if(route.compareTo(storedRoute) > 0){
-            controller.map.remove(storedRoute);
-            controller.map.put(route.getId(), route);
-
+            dbConnection.updateRoute(request.userLogin, route);
+            try{
+                updateMap();
+            }
+            catch (Exception exc){
+                return new CommandResult(ResultStatus.OK, exc.getMessage());
+            }
+            
             return new CommandResult(ResultStatus.OK,"Новое значение больше старого. Произведена замена.");
         }
         else{
@@ -232,32 +296,44 @@ public class ExecutionService {
         catch (Exception exc){
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
-        if(!controller.map.containsKey(route.getId())){
-            return new CommandResult(ResultStatus.ERROR,"Элемента с таким индексом не существует!");
+
+        if(!dbConnection.isOwnedByUser(request.userLogin, route.getId())){
+            return new CommandResult(ResultStatus.ERROR,
+                    "Элемента, принадлежащего этому пользователю, с таким индексом не существует!");
         }
 
-        Route storedRoute = controller.map.get(route.getId());
-
+        Route storedRoute;
+        try{
+            storedRoute = dbConnection.getRouteById(route.getId());
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, exc.getMessage());
+        }
 
         if(route.compareTo(storedRoute) < 0){
-            controller.map.remove(storedRoute);
-            controller.map.put(route.getId(), route);
+            dbConnection.updateRoute(request.userLogin, route);
+            try{
+                updateMap();
+            }
+            catch (Exception exc){
+                return new CommandResult(ResultStatus.OK, exc.getMessage());
+            }
 
-            return new CommandResult(ResultStatus.OK,"Новое значение больше старого. Произведена замена.");
+            return new CommandResult(ResultStatus.OK,"Новое значение меньше старого. Произведена замена.");
         }
         else{
             return new CommandResult(ResultStatus.OK,
-                    "Новое значение меньше или равно старому. Значение не изменено.");
+                    "Новое значение больше или равно старому. Значение не изменено.");
         }
     }
 
     protected CommandResult show(Request<?> request){
-        if(controller.map.size() == 0){
+        if(map.size() == 0){
             return new CommandResult(ResultStatus.OK, "Коллекция пуста.");
         }
 
         StringBuffer message = new StringBuffer();
-        controller.map.entrySet().stream()
+        map.entrySet().stream()
                 .map(x -> x.getValue())
                 .sorted(Comparator.comparing(Route::getCoordinates).reversed())
                 .forEach(x -> message.append(x.toString() + "\n"));
@@ -274,13 +350,18 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        if(!controller.map.containsKey(newRoute.getId())){
-            return new CommandResult(ResultStatus.ERROR, "Элемента с таким индексом не существует!");
+        if(!dbConnection.isOwnedByUser(request.userLogin, newRoute.getId())){
+            return new CommandResult(ResultStatus.ERROR,
+                    "Элемента, принадлежащего этому пользователю, с таким индексом не существует!");
         }
 
-        Route storedRoute = controller.map.get(newRoute.getId());
-        controller.map.remove(storedRoute);
-        controller.map.put(newRoute.getId(), newRoute);
+        try{
+            dbConnection.updateRoute(request.userLogin, newRoute);
+            updateMap();
+        }
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.OK, exc.getMessage());
+        }
 
         String message = String.format("Значение элемента с id %d успешно обновлено.", newRoute.getId());
         return new CommandResult(ResultStatus.OK, message);
@@ -294,12 +375,16 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        if(account.accountName.equals("admin") && account.password.equals("admin")){
-            return new CommandResult(ResultStatus.OK, "Вход в аккаунт выполнен успешно");
+        try {
+            String salt = dbConnection.getAccountSalt(account.login);
+            String pwdHash = PasswordHasher.hashPassword(account.password, salt);
+            dbConnection.checkAccountPasswordHash(account.login, pwdHash);
         }
-        else{
-            return new CommandResult(ResultStatus.ERROR, "Неверный логин/пароль");
+        catch (Exception exc){
+            return new CommandResult(ResultStatus.ERROR, exc.getMessage());
         }
+
+        return new CommandResult(ResultStatus.OK, "Вход в аккаунт выполнен успешно");
     }
 
     protected CommandResult register(Request<?> request) {
@@ -310,12 +395,19 @@ public class ExecutionService {
             return new CommandResult(ResultStatus.ERROR, "В контроллер передан аргумент другого типа");
         }
 
-        //
-        // Тут напиши запрос на создание аккаунта
-        //
+        String salt = PasswordHasher.generateSalt();
+        String hashedPwd = PasswordHasher.hashPassword(account.password, salt);
 
-        return new CommandResult(ResultStatus.OK, "Вход в аккаунт выполнен успешно");
+        try {
+            if(dbConnection.registerAccount(account.login, hashedPwd, salt)){
+                return new CommandResult(ResultStatus.OK, "Новый аккаутн успешно зарегистрирован!");
+            }
+            else {
+                return new CommandResult(ResultStatus.ERROR, "Аккаунт с таким именем уже существует!");
+            }
+        }
+        catch (SQLException exc){
+            return new CommandResult(ResultStatus.ERROR, "Аккаунт с таким именем уже существует! " + exc.getMessage());
+        }
     }
-
-
 }

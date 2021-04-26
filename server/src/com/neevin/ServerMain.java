@@ -7,15 +7,15 @@ package com.neevin;
 Лабораторная 6
 Варинат: 313387
 
-Лабораторная 6
+Лабораторная 7
 Варинат: 313589
 
  */
 
+import com.neevin.Database.DatabaseConnection;
 import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
-import com.neevin.Programm.CollectionController;
 import com.neevin.Programm.ExecutionService;
 
 import java.io.*;
@@ -23,12 +23,10 @@ import java.net.*;
 import java.nio.channels.*;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.postgresql.Driver;
 
 public class ServerMain {
     // Поскольку ip это localhost, а вот порт меняется, тогда может понадобиться возможность сменить порт
     private static int port = 12345;
-    final static String ENVIRONMENT_VARIABLE = "PROG_LAB_FILE_PATH";
 
     public static void main(String[] args) {
         // Если предан другой порт в командной строке
@@ -47,15 +45,6 @@ public class ServerMain {
             System.out.println("Отстутствует драйвер базы данных PostgreSQL!");
         }
 
-        CollectionController collectionController;
-        try {
-            collectionController = new CollectionController(ENVIRONMENT_VARIABLE);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return;
-        }
-
         ServerSocketChannel serverChannel;
         try{
             serverChannel = ServerSocketChannel.open();
@@ -68,17 +57,27 @@ public class ServerMain {
             return;
         }
 
+        DatabaseConnection db;
+        ExecutionService executionService;
+        try{
+            db = new DatabaseConnection(System.getProperty("user.dir") + "\\database-connection.yaml");
+            System.out.println("Файл с данными для подключения к БД найден и подключение успешно установлено.");
+
+            executionService = new ExecutionService(db);
+        }
+        catch (Exception exc){
+            System.out.println(exc.getMessage());
+            return;
+        }
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
                 System.out.println("Выход");
-                save(collectionController);
             }
         });
 
-        ExecutionService executionService = new ExecutionService(collectionController);
-
         AtomicBoolean exit = new AtomicBoolean(false);
-        Thread thread = getUserInputHandler(collectionController, exit);
+        Thread thread = getUserInputHandler(exit);
         thread.start();
 
         while (!exit.get()) {
@@ -111,16 +110,7 @@ public class ServerMain {
         }
     }
 
-    protected static void save(CollectionController controller){
-        try {
-            controller.Save();
-            System.out.println("Текущее состояние коллекции успешно сохранено в файле.");
-        } catch (IOException e) {
-            System.out.println("Не удалось сохранить текущее состояние коллекции в файле! Файл не найден/не хватает прав!");
-        }
-    }
-
-    private static Thread getUserInputHandler(CollectionController collectionController, AtomicBoolean exit){
+    private static Thread getUserInputHandler(AtomicBoolean exit){
         return new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
 
@@ -130,9 +120,6 @@ public class ServerMain {
                     System.out.println("Введено: " + serverCommand);
 
                     switch (serverCommand){
-                        case "save":
-                            save(collectionController);
-                            break;
                         case "exit":
                             exit.set(true);
                             return;
