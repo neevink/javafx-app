@@ -68,7 +68,8 @@ public class ServerMain {
         DatabaseConnection db;
         ExecutionService executionService;
         try{
-            db = new DatabaseConnection(System.getProperty("user.dir") + "\\database-connection.yaml");
+            System.out.println(System.getProperty("user.dir") + "\\database-connection.yaml");
+            db = new DatabaseConnection(System.getProperty("user.dir") + "/database-connection.yaml");
             System.out.println("Файл с данными для подключения к БД найден и подключение успешно установлено.");
 
             executionService = new ExecutionService(db);

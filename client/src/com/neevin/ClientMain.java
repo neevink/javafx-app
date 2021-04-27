@@ -53,27 +53,30 @@ public class ClientMain {
     }
 
     private static void handleLogin(Scanner scanner, RequestSender requestSender, Console console) {
-        String password;
-        String login;
+        String password = "";
+        String login = "";
         boolean successAuth = false;
         while(!successAuth){
-            if (console != null) {
-                char[] loginArr = console.readPassword("Имя аккаунта: ");
-                login = String.valueOf(loginArr);
-                char[] pwdArr = console.readPassword("Пароль: ");
-                password = String.valueOf(pwdArr);
-            }
-            else{
-                System.out.print("Имя аккаунта: ");
-                if(!scanner.hasNextLine()){
-                    return;
+            if (true) {
+                System.out.println("Имя аккаунта: ");
+                if(scanner.hasNextLine()){
+                    login = scanner.nextLine();
                 }
-                login = scanner.nextLine();
-                System.out.print("Пароль: ");
-                if(!scanner.hasNextLine()){
-                    return;
+                else {
+                    System.exit(-1);
                 }
-                password = scanner.nextLine();
+
+                if(login.length() < 3){
+                    System.out.println("Короткое имя пользователя!");
+                    continue;
+                }
+
+                System.out.println("Пароль: ");
+                char passwd[] = console.readPassword("Придумай пароль: ");
+                if (passwd == null) {
+                    System.exit(1);
+                }
+                password = String.valueOf(passwd);
             }
 
             Account account = new Account(login, password);
@@ -95,13 +98,24 @@ public class ClientMain {
     private static void handleRegister(Scanner scanner, RequestSender requestSender, Console console) {
         final int MIN_PASSWORD_LENGTH = 6;
 
-        String password;
-        String login;
+        String password = "";
+        String login = "";
+        String passwordAgain = "";
         boolean successRegister = false;
         while(!successRegister){
             if (console != null) {
-                char[] loginArr = console.readPassword("Введите имя нового аккаунта: ");
-                login = String.valueOf(loginArr);
+                System.out.println("Имя аккаунта: ");
+                if(scanner.hasNextLine()){
+                    login = scanner.nextLine();
+                }
+                else {
+                    System.exit(-1);
+                }
+
+                if(login.length() < 3){
+                    System.out.println("Короткое имя пользователя!");
+                    continue;
+                }
 
                 // Логин может состоять только из букв, цифр и символа нижнего подчёркивания
                 if(!login.chars().allMatch(x -> (x == '_' || Character.isLetterOrDigit(x)))){
@@ -109,49 +123,22 @@ public class ClientMain {
                     continue;
                 }
 
-                char[] pwdArr = console.readPassword("Придумайте пароль: ");
-                password = String.valueOf(pwdArr);
+                char passwd[] = console.readPassword("Придумай пароль: ");
+                if (passwd == null) {
+                    System.exit(1);
+                }
+                password = String.valueOf(passwd);
+
                 if(password.length() < MIN_PASSWORD_LENGTH){
                     System.out.println("Пароль должен состоять минимум из " + MIN_PASSWORD_LENGTH + " символов");
                     continue;
                 }
 
-                pwdArr = console.readPassword("Повторите пароль: ");
-                String passwordAgain = String.valueOf(pwdArr);
-
-                if(!password.equals(passwordAgain)){
-                    System.out.println("Пароли не сопадают!");
-                    continue;
+                passwd = console.readPassword("Повтори пароль: ");
+                if (passwd == null) {
+                    System.exit(1);
                 }
-            }
-            else{
-                System.out.print("Введите имя нового аккаунта: ");
-                if(!scanner.hasNextLine()){
-                    return;
-                }
-                login = scanner.nextLine();
-
-                // Логин может состоять только из букв, цифр и символа нижнего подчёркивания
-                if(!login.chars().allMatch(x -> (x == '_' || Character.isLetterOrDigit(x)))){
-                    System.out.println("Имя аккаунта может состоять только из букв, цифр и символа нижнего подчёркивания");
-                    continue;
-                }
-
-                System.out.print("Придумайте пароль: ");
-                if(!scanner.hasNextLine()){
-                    return;
-                }
-                password = scanner.nextLine();
-                if(password.length() < MIN_PASSWORD_LENGTH){
-                    System.out.println("Пароль должен состоять минимум из " + MIN_PASSWORD_LENGTH + " символов");
-                    continue;
-                }
-
-                System.out.print("Повторите пароль: ");
-                if(!scanner.hasNextLine()){
-                    return;
-                }
-                String passwordAgain = scanner.nextLine();
+                passwordAgain = String.valueOf(passwd);
 
                 if(!password.equals(passwordAgain)){
                     System.out.println("Пароли не сопадают!");
