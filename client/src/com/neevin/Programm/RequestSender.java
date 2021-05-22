@@ -39,33 +39,26 @@ public class RequestSender {
         }
 
         int attempts = 0; // Сколько было попыток отправить запрос
-        while (attempts < MAX_ATTEMPTS_COUNT){
-            try{
-                Socket socket = new Socket("127.0.0.1", port);
+        try{
+            Socket socket = new Socket("127.0.0.1", port);
 
-                OutputStream os = socket.getOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(os);
-                oos.writeObject(request);
+            OutputStream os = socket.getOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(os);
+            oos.writeObject(request);
 
-                InputStream is = socket.getInputStream();
-                ObjectInputStream ois = new ObjectInputStream(is);
-                CommandResult result = (CommandResult) ois.readObject();
-                if(attempts != 0){
-                    System.out.println("Вау! Появилось подключение!");
-                }
-                attempts = MAX_ATTEMPTS_COUNT;
-                return result;
+            InputStream is = socket.getInputStream();
+            ObjectInputStream ois = new ObjectInputStream(is);
+            CommandResult result = (CommandResult) ois.readObject();
+            if(attempts != 0){
+                System.out.println("Вау! Появилось подключение!");
             }
-            catch (IOException | ClassNotFoundException exc){
-                System.out.println("Не удалось подключиться к серверу, но мы подождём, мало ли...");
-                attempts++;
-                try {
-                    Thread.sleep(5 * 1000);
-                }
-                catch (Exception e) { }
-            }
+            attempts = MAX_ATTEMPTS_COUNT;
+            return result;
         }
-        return new CommandResult(ResultStatus.ERROR, "Не удалось подключиться к серверу, больше пытаться нет смысла.");
+        catch (IOException | ClassNotFoundException exc){
+        }
+
+        return new CommandResult(ResultStatus.ERROR, "Не удалось подключиться к серверу.");
     }
 
     public String getUserLogin() {

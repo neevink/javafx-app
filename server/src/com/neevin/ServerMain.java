@@ -10,12 +10,12 @@ package com.neevin;
 Лабораторная 7
 Варинат: 313589
 
+Лабораторная 8
+Варинат: 313790
+
  */
 
 import com.neevin.Database.DatabaseConnection;
-import com.neevin.Net.CommandResult;
-import com.neevin.Net.Request;
-import com.neevin.Net.ResultStatus;
 import com.neevin.Programm.ExecutionService;
 import com.neevin.Programm.RequestReaderRunnable;
 
@@ -25,7 +25,6 @@ import java.nio.channels.*;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ServerMain {

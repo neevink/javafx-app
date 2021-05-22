@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.RegisterController">
+   <top>
+      <ChoiceBox fx:id="languageChoiceBox" prefWidth="150.0" BorderPane.alignment="CENTER" value="Русский" onAction="#changeLanguage">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Русский" />
+               <String fx:value="Türk" />
+               <String fx:value="Dansk" />
+               <String fx:value="Español" />
+            </FXCollections>
+         </items>
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
+      </ChoiceBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" fillWidth="false" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Имя аккаунта" fx:id="loginAccountNameLabel"/>
+            <TextField fx:id="loginField" />
+            <Label text="Пароль" fx:id="passwordLabel"/>
+            <PasswordField fx:id="passwordField" />
+            <Label text="Пароль ещё раз" fx:id="passwordAgainLabel"/>
+            <PasswordField fx:id="passwordAgainField" />
+            <HBox alignment="CENTER">
+               <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#backClick" text="Отмена" fx:id="cancelButton">
+                  <HBox.margin>
+                     <Insets right="5.0" />
+                  </HBox.margin></Button>
+               <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#createAccount" text="Зарегистрироваться" fx:id="registerButton">
+                  <HBox.margin>
+                     <Insets left="5.0" />
+                  </HBox.margin></Button>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</BorderPane>

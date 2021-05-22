@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.VisualisationController">
+    <top>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="accountNameLabel" text="accountName">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </HBox.margin></Label>
+                <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Выход">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </HBox.margin>
+                </Button>
+                <ChoiceBox fx:id="languageChoiceBox" onAction="#changeLanguage" prefWidth="150.0" value="Русский" BorderPane.alignment="CENTER">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Русский" />
+                            <String fx:value="Türk" />
+                            <String fx:value="Dansk" />
+                            <String fx:value="Español" />
+                        </FXCollections>
+                    </items>
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </BorderPane.margin>
+                    <HBox.margin>
+                        <Insets left="80.0" />
+                    </HBox.margin>
+                </ChoiceBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" top="5.0" />
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <center>
+
+    </center>
+</BorderPane>
