@@ -14,7 +14,22 @@ public class resource extends ListResourceBundle {
                     {"Password", "Пароль"},
                     {"PasswordAgain", "Пароль ещё раз"},
                     {"Cancel", "Отмена"},
+                    {"Save", "Сохранить"},
                     {"Back", "Назад"},
+                    {"VisualizationArea", "Область визуализации"},
+                    {"Id", "Идентификатор"},
+                    {"CreationDate", "Дата создания"},
+                    {"Name", "Название"},
+                    {"Distance", "Дистанция"},
+                    {"CoordinateX", "Коорданата X"},
+                    {"CoordinateY", "Координата Y"},
+                    {"FromX", "Откуда X"},
+                    {"FromY", "Откуда Y"},
+                    {"FromName", "Название откуда"},
+                    {"ToX", "Куда X"},
+                    {"ToY", "Куда Y"},
+                    {"ToName", "Название куда"},
+                    {"FieldsCantBeEmpty", "Поля не могут быть пустыми"},
             };
 
     @Override

@@ -20,5 +20,6 @@ public class MainController extends BaseController{
     @Override
     public void updateLanguage() {
         super.updateLanguage();
+        visualizationButton.setText(ClientMain.resources.getString("VisualizationArea"));
     }
 }

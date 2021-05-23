@@ -14,6 +14,22 @@ public class resource_tr extends ListResourceBundle {
                     {"Password", "Parola"},
                     {"PasswordAgain", "Tekrar şifre"},
                     {"Cancel", "İptal"},
+                    {"Save", "Kayıt etmek"},
+                    {"Back", "Geri dön"},
+                    {"VisualizationArea", "Görselleştirme alanı"},
+                    {"Id", "Tanımlayıcı"},
+                    {"CreationDate", "yaratma tarihi"},
+                    {"Name", "İsim Soyisim"},
+                    {"Distance", "Mesafe"},
+                    {"CoordinateX", "X koordinatı"},
+                    {"CoordinateY", "Y koordinatı"},
+                    {"FromX", "Nerede X"},
+                    {"FromY", "Nereden Y"},
+                    {"FromName", "Nereden isim"},
+                    {"ToX", "Nerede X"},
+                    {"ToY", "Nerede Y"},
+                    {"ToName", "Nerede isim"},
+                    {"FieldsCantBeEmpty", "Alanlar boş olamaz"},
             };
 
     @Override

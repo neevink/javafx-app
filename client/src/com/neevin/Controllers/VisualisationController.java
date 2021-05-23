@@ -1,32 +1,23 @@
 package com.neevin.Controllers;
 
 import com.neevin.ClientMain;
-import com.neevin.DataModels.Coordinates;
 import com.neevin.DataModels.Route;
 import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.OptionalDouble;
 
 public class VisualisationController extends BaseController{
     @FXML
@@ -34,12 +25,29 @@ public class VisualisationController extends BaseController{
     @FXML
     private Button backButton;
 
+    private Thread thread;
+
     @Override
     public void initialize() {
         super.initialize();
 
+        thread = new Thread(() -> {
+            try {
+                while (true) {
+                    Platform.runLater(this::drawRoutes);
+                    Thread.sleep(1000);
+                }
+            }
+            catch(InterruptedException e) {}
+        });
+        thread.start();
+    }
+
+    private void drawRoutes() {
         Request<?> request = new Request<Object>("show", null, ClientMain.requestSender.getUserLogin(), ClientMain.requestSender.getUserPassword());
         CommandResult result = ClientMain.requestSender.sendRequest(request);
+
+        pane.getChildren().clear();
 
         if(result.status == ResultStatus.OK){
             int screenSizeX = 600;
@@ -47,7 +55,7 @@ public class VisualisationController extends BaseController{
             var entities = calculatePositions((ArrayList<Route>)result.entity, screenSizeX, screenSizeY);
 
             for(Circle c : entities){
-                ScaleTransition st = new ScaleTransition(Duration.millis(1000), c);
+                ScaleTransition st = new ScaleTransition(Duration.millis(500), c);
                 st.setByX(0.25f);
                 st.setByY(0.25f);
                 st.setCycleCount(1000);
@@ -78,8 +86,14 @@ public class VisualisationController extends BaseController{
 
         ArrayList<Circle> newCoordinates = new ArrayList<>();
         for(Route r : array){
-            int newPositionX = (int) (screenSizeX/2 + r.getCoordinates().getX().doubleValue()/maxCoordinateX*(screenSizeX/2 - OFFSET_X));
-            int newPositionY = (int) (screenSizeY/2 + r.getCoordinates().getY()/maxCoordinateY*(screenSizeY/2 - OFFSET_Y));
+            int newPositionX = screenSizeX/2;
+            if(maxCoordinateX != 0){
+                newPositionX = (int) (screenSizeX/2 + r.getCoordinates().getX().doubleValue()/maxCoordinateX*(screenSizeX/2 - OFFSET_X));
+            }
+            int newPositionY = screenSizeY/2;
+            if(maxCoordinateY != 0){
+                newPositionY = (int) (screenSizeY/2 + r.getCoordinates().getY()/maxCoordinateY*(screenSizeY/2 - OFFSET_Y));
+            }
 
             Circle c;
             // Если объект принадлежит этому пользователю, то зелёным нарисовать, иначе красным
@@ -93,13 +107,13 @@ public class VisualisationController extends BaseController{
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     if(mouseEvent.getClickCount() >= 2) {
+                        EditRouteFromVisualisationController.editingRoute = r;
                         try {
                             changeView(pane, "/com/neevin/Views/EditRouteFromVisualisationView.fxml");
                         } catch (IOException exc) {
                             System.out.println("Всё хана, Кирюха ты юзаешь вьюху, которой нет! " + exc.getMessage());
+                            exc.printStackTrace();
                         }
-
-                        EditRouteFromVisualisationController.editingRoute = r;
                     }
                 }
             });
