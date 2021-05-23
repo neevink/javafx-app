@@ -329,7 +329,9 @@ public class ExecutionService {
 
     protected CommandResult show(Request<?> request){
         if(map.size() == 0){
-            return new CommandResult(ResultStatus.OK, "Коллекция пуста.");
+            CommandResult<ArrayList<Route>> answer = new CommandResult(ResultStatus.OK, "Колекция пуста.");
+            answer.entity = new ArrayList<Route>();
+            return answer;
         }
 
         StringBuffer message = new StringBuffer();
@@ -338,7 +340,9 @@ public class ExecutionService {
                 .sorted(Comparator.comparing(Route::getCoordinates).reversed())
                 .forEach(x -> message.append(x.toString() + "\n"));
 
-        return new CommandResult(ResultStatus.OK, message.toString());
+        CommandResult<ArrayList<Route>> answer = new CommandResult(ResultStatus.OK, message.toString());
+        answer.entity = new ArrayList<Route>(map.values());
+        return answer;
     }
 
     protected CommandResult update(Request<?> request){

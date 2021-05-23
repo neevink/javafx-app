@@ -36,6 +36,10 @@ public class Route implements Comparable<Route>, Serializable {
      * Дистанция
      */
     private Long distance; //Поле может быть null, Значение поля должно быть больше 1
+    /**
+     * Логин владельца данного маршрута
+     */
+    private String owner;
 
 
     /**
@@ -202,5 +206,13 @@ public class Route implements Comparable<Route>, Serializable {
         else{
             return 0;
         }
+    }
+
+    public String getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

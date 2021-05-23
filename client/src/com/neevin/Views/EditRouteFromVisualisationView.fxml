@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.EditRouteFromVisualisationController">
+    <top>
+        <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="accountNameLabel" text="accountName">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </HBox.margin></Label>
+                <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Выход">
+                    <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </HBox.margin>
+                </Button>
+                <ChoiceBox fx:id="languageChoiceBox" onAction="#changeLanguage" prefWidth="150.0" value="Русский" BorderPane.alignment="CENTER">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Русский" />
+                            <String fx:value="Türk" />
+                            <String fx:value="Dansk" />
+                            <String fx:value="Español" />
+                        </FXCollections>
+                    </items>
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                    </BorderPane.margin>
+                    <HBox.margin>
+                        <Insets left="80.0" />
+                    </HBox.margin>
+                </ChoiceBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" top="5.0" />
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <center>
+        <GridPane alignment="CENTER" hgap="20" vgap="4">
+            <Label text="Id" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="idValueLabel" text="Id" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="CreationDate" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label text="13.12.2001 21:00" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="Name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField text="" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label text="X Coordinate" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Y Coordinate" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <Label text="FROM X" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+            <Label text="FROM Y" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+            <Label text="FROM Name" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+            <Label text="TO X" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+
+            <Label text="TO Y" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+
+            <Label text="TO Name" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+
+            <Label text="Distance" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Отмена">
+            <HBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </HBox.margin></Button>
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClick" text="Сохранить">
+                <HBox.margin>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </HBox.margin>
+            </Button>
+        </HBox>
+    </bottom>
+</BorderPane>

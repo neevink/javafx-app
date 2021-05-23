@@ -13,7 +13,6 @@ public class MainController extends BaseController{
     @FXML
     protected Button visualizationButton;
 
-
     public void visualizationButtonClick(ActionEvent event) throws IOException {
         changeView(event, "/com/neevin/Views/VisualisationView.fxml");
     }

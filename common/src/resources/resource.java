@@ -14,6 +14,7 @@ public class resource extends ListResourceBundle {
                     {"Password", "Пароль"},
                     {"PasswordAgain", "Пароль ещё раз"},
                     {"Cancel", "Отмена"},
+                    {"Back", "Назад"},
             };
 
     @Override

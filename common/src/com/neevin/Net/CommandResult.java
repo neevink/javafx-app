@@ -5,18 +5,24 @@ import java.io.Serializable;
 /**
  * Результат выполнения запроса
  */
-public class CommandResult  implements Serializable {
+public class CommandResult<T> implements Serializable {
     /**
      * Статус выполнения
      */
     public final ResultStatus status;
     /**
-     * Результат или сообщение об ошибке
+     * Сообщение об удачном выполнении или об ошибке
      */
     public final String message;
+
+    /**
+     * Отправленная сущность
+     */
+    public T entity;
 
     public CommandResult(ResultStatus status, String message) {
         this.status = status;
         this.message = message;
+        this.entity = null;
     }
 }

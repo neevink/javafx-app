@@ -83,6 +83,14 @@ public abstract class BaseController {
         appStage.show();
     }
 
+    protected void changeView(Parent element, String viewPath) throws IOException {
+        Parent blah = FXMLLoader.load(getClass().getResource(viewPath));
+        Scene scene = new Scene(blah);
+        Stage appStage = (Stage) element.getScene().getWindow();
+        appStage.setScene(scene);
+        appStage.show();
+    }
+
     protected void createAlert(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка");

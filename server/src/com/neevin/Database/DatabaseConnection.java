@@ -130,6 +130,7 @@ public class DatabaseConnection {
                     Route newRoute = new Route();
 
                     newRoute.setId(result.getLong(1));
+                    newRoute.setOwner(result.getString(2));
                     newRoute.setName(result.getString(3));
 
                     Coordinates coord = new Coordinates();
@@ -180,6 +181,7 @@ public class DatabaseConnection {
                     Route newRoute = new Route();
 
                     newRoute.setId(result.getLong(1));
+                    newRoute.setOwner(result.getString(2));
                     newRoute.setName(result.getString(3));
 
                     Coordinates coord = new Coordinates();

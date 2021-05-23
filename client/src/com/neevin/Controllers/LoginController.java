@@ -38,15 +38,15 @@ public class LoginController extends BaseController {
 
         CommandResult result = ClientMain.requestSender.sendRequest(request);
 
-            if(result.status == ResultStatus.OK){
-                ClientMain.requestSender.setUserLogin(login);
-                ClientMain.requestSender.setUserPassword(password);
+        if(result.status == ResultStatus.OK){
+            ClientMain.requestSender.setUserLogin(login);
+            ClientMain.requestSender.setUserPassword(password);
 
-                changeView(event,"/com/neevin/Views/MainView.fxml");
-            }
-            else{
-                createAlert(result.message);
-            }
+            changeView(event,"/com/neevin/Views/MainView.fxml");
+        }
+        else{
+            createAlert(result.message);
+        }
     }
 
     @FXML
