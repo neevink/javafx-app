@@ -43,41 +43,44 @@
     </top>
     <center>
         <GridPane alignment="CENTER" hgap="20" vgap="4">
-            <Label fx:id="idLabel" text="Id" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <Label fx:id="idValueLabel" text="Id" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label fx:id="ownerLabel" text="Owner" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="ownerValueLabel" text="Owner_name" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-            <Label fx:id="creationDateLabel" text="CreationDate" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <Label fx:id="creationDateValueLabel" text="13.12.2001 21:00" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Label fx:id="idLabel" text="Id" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label fx:id="idValueLabel" text="Id" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-            <Label fx:id="nameLabel" text="Name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-            <TextField fx:id="nameValueField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <Label fx:id="creationDateLabel" text="CreationDate" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Label fx:id="creationDateValueLabel" text="13.12.2001 21:00" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-            <Label fx:id="coordinateXLabel" text="X Coordinate" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-            <TextField fx:id="coordinateXValueField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <Label fx:id="nameLabel" text="Name" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="nameValueField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-            <Label fx:id="coordinateYLabel" text="Y Coordinate" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-            <TextField fx:id="coordinateYValueField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <Label fx:id="coordinateXLabel" text="X Coordinate" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <TextField fx:id="coordinateXValueField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-            <Label fx:id="fromXLabel" text="FROM X" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-            <TextField fx:id="fromXValueField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <Label fx:id="coordinateYLabel" text="Y Coordinate" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <TextField fx:id="coordinateYValueField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
-            <Label fx:id="fromYLabel" text="FROM Y" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-            <TextField fx:id="fromYValueField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            <Label fx:id="fromXLabel" text="FROM X" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+            <TextField fx:id="fromXValueField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
 
-            <Label fx:id="fromNameLabel" text="FROM Name" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
-            <TextField fx:id="fromNameValueField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            <Label fx:id="fromYLabel" text="FROM Y" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+            <TextField fx:id="fromYValueField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 
-            <Label fx:id="toXLabel" text="TO X" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
-            <TextField fx:id="toXValueField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            <Label fx:id="fromNameLabel" text="FROM Name" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+            <TextField fx:id="fromNameValueField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
 
-            <Label fx:id="toYLabel" text="TO Y" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
-            <TextField fx:id="toYValueField" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+            <Label fx:id="toXLabel" text="TO X" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+            <TextField fx:id="toXValueField" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
 
-            <Label fx:id="toNameLabel" text="TO Name" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
-            <TextField fx:id="toNameValueField" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+            <Label fx:id="toYLabel" text="TO Y" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+            <TextField fx:id="toYValueField" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
 
-            <Label fx:id="distanceLabel" text="Distance" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
-            <TextField fx:id="distanceValueField" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+            <Label fx:id="toNameLabel" text="TO Name" GridPane.columnIndex="0" GridPane.rowIndex="11"/>
+            <TextField fx:id="toNameValueField" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+
+            <Label fx:id="distanceLabel" text="Distance" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
+            <TextField fx:id="distanceValueField" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
 
          <columnConstraints>
             <ColumnConstraints />

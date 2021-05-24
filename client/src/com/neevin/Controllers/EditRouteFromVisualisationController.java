@@ -29,6 +29,8 @@ public class EditRouteFromVisualisationController extends BaseController{
 
     public Label idLabel;
     public Label idValueLabel;
+    public Label ownerLabel;
+    public Label ownerValueLabel;
     public Label creationDateLabel;
     public Label creationDateValueLabel;
     public Label nameLabel;
@@ -52,11 +54,14 @@ public class EditRouteFromVisualisationController extends BaseController{
     public Label distanceLabel;
     public TextField distanceValueField;
 
+    public static String backPath = "/com/neevin/Views/VisualisationView.fxml.fxml";
+
     @Override
     public void initialize(){
         super.initialize();
 
         idValueLabel.setText(String.valueOf(editingRoute.getId()));
+        ownerValueLabel.setText(editingRoute.getOwner());
         creationDateValueLabel.setText(editingRoute.getCreationDate().toString());
         nameValueField.setText(editingRoute.getName());
         coordinateXValueField.setText(editingRoute.getCoordinates().getX().toString());
@@ -87,7 +92,7 @@ public class EditRouteFromVisualisationController extends BaseController{
 
     @FXML
     private void backButtonClick(ActionEvent event) throws IOException {
-        changeView(event, "/com/neevin/Views/VisualisationView.fxml");
+        changeView(event, backPath);
     }
 
     @FXML
@@ -121,7 +126,7 @@ public class EditRouteFromVisualisationController extends BaseController{
             CommandResult result = ClientMain.requestSender.sendRequest(request);
 
             if(result.status == ResultStatus.OK){
-                changeView(event, "/com/neevin/Views/VisualisationView.fxml");
+                changeView(event, backPath);
             }
             else{
                 createAlert(result.message);
@@ -139,6 +144,7 @@ public class EditRouteFromVisualisationController extends BaseController{
     public void updateLanguage() {
         super.updateLanguage();
         idLabel.setText(ClientMain.resources.getString("Id"));
+        ownerLabel.setText(ClientMain.resources.getString("Owner"));
         creationDateLabel.setText(ClientMain.resources.getString("CreationDate"));
         nameLabel.setText(ClientMain.resources.getString("Name"));
         coordinateXLabel.setText(ClientMain.resources.getString("CoordinateX"));

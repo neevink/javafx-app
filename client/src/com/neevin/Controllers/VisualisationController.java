@@ -109,6 +109,7 @@ public class VisualisationController extends BaseController{
                     if(mouseEvent.getClickCount() >= 2) {
                         EditRouteFromVisualisationController.editingRoute = r;
                         try {
+                            EditRouteFromVisualisationController.backPath = "/com/neevin/Views/VisualisationView.fxml";
                             changeView(pane, "/com/neevin/Views/EditRouteFromVisualisationView.fxml");
                         } catch (IOException exc) {
                             System.out.println("Всё хана, Кирюха ты юзаешь вьюху, которой нет! " + exc.getMessage());

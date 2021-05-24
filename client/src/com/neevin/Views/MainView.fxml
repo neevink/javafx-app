@@ -42,6 +42,27 @@
         </HBox>
     </top>
    <center>
-      <Button fx:id="visualizationButton" mnemonicParsing="false" onAction="#visualizationButtonClick" text="Область визуализации" BorderPane.alignment="CENTER" />
+       <VBox alignment="CENTER">
+           <Button fx:id="visualizationButton" mnemonicParsing="false" onAction="#visualizationButtonClick" text="Область визуализации">
+                <VBox.margin>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+           </Button>
+           <Button fx:id="showButton" mnemonicParsing="false" onAction="#showButtonClick" text="Обзор коллекции">
+                <VBox.margin>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </VBox.margin>
+           </Button>
+           <Button fx:id="executeScriptButton" mnemonicParsing="false" onAction="#executeScriptButtonClick" text="Выполнить скрипт">
+               <VBox.margin>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+           </Button>
+           <Button fx:id="infoButton" mnemonicParsing="false" onAction="#infoButtonClick" text="Информация">
+               <VBox.margin>
+                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+           </Button>
+       </VBox>
    </center>
 </BorderPane>

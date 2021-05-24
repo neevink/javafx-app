@@ -17,6 +17,8 @@ public class resource extends ListResourceBundle {
                     {"Save", "Сохранить"},
                     {"Back", "Назад"},
                     {"VisualizationArea", "Область визуализации"},
+                    {"BrowseCollection", "Обзор коллекции"},
+                    {"Owner", "Владелец"},
                     {"Id", "Идентификатор"},
                     {"CreationDate", "Дата создания"},
                     {"Name", "Название"},
@@ -30,6 +32,10 @@ public class resource extends ListResourceBundle {
                     {"ToY", "Куда Y"},
                     {"ToName", "Название куда"},
                     {"FieldsCantBeEmpty", "Поля не могут быть пустыми"},
+                    {"ExecuteScript", "Выполнить скрипт"},
+                    {"Information", "Информация"},
+                    {"Add", "Добавить"},
+                    {"Clear", "Очистить"},
             };
 
     @Override
