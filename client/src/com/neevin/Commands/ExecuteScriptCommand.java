@@ -17,7 +17,7 @@ public class ExecuteScriptCommand implements Command{
     CommandManager commandManager;
     RequestSender requestSender;
 
-    protected static Set<String> executingScripts = new HashSet<>();
+    public static Set<String> executingScripts = new HashSet<>();
 
     public ExecuteScriptCommand(CommandManager commandManager, RequestSender requestSender){
         this.commandManager = commandManager;
