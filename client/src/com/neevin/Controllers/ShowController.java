@@ -18,8 +18,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShowController extends BaseController{
     @FXML
@@ -50,6 +51,9 @@ public class ShowController extends BaseController{
     private TableColumn<Route, String> toNameColumn;
     @FXML
     private TableColumn<Route, String> distanceColumn;
+
+    @FXML
+    private TextField commonField;
 
     private Thread thread;
 
@@ -104,7 +108,7 @@ public class ShowController extends BaseController{
             try {
                 while (true) {
                     Platform.runLater(this::updateTable);
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 }
             }
             catch(InterruptedException e) {}
@@ -112,11 +116,32 @@ public class ShowController extends BaseController{
         thread.start();
     }
 
+    protected List<Route> collection = null;
+
     private void updateTable() {
         Request<?> request = new Request<Object>("show", null, ClientMain.requestSender.getUserLogin(), ClientMain.requestSender.getUserPassword());
         CommandResult result = ClientMain.requestSender.sendRequest(request);
 
+        if(filterStartsWithName){
+            result.entity = ((List<Route>) result.entity).stream()
+                    .filter(x -> x.getName().startsWith(startsWithName))
+                    .sorted(Comparator.comparing(Route::getCoordinates).reversed())
+                    .collect(Collectors.toList());
+        }
+
+        if(filterDistanceGreater){
+            result.entity = ((List<Route>) result.entity).stream()
+                    .filter(x -> x.getDistance() > distanceGreater)
+                    .sorted(Comparator.comparing(Route::getCoordinates).reversed())
+                    .collect(Collectors.toList());
+        }
+
         if(result.status == ResultStatus.OK){
+            if(collection != null && collection.equals((List<Route>) result.entity)){
+                return;
+            }
+            collection = (List<Route>) result.entity;
+
             ObservableList<RouteViewModel> tableRoutes = FXCollections.observableArrayList();
 
             ArrayList<RouteViewModel> arr = new ArrayList<>();
@@ -176,5 +201,55 @@ public class ShowController extends BaseController{
         backButton.setText(ClientMain.resources.getString("Back"));
         clearButton.setText(ClientMain.resources.getString("Clear"));
         addButton.setText(ClientMain.resources.getString("Add"));
+    }
+
+    public void removeLessThenKeyClick(ActionEvent event) {
+        long id = -1;
+        try {
+            id = Long.parseLong(commonField.getText());
+        }
+        catch (NumberFormatException exc){
+            createAlert(ClientMain.resources.getString("FieldsCantBeEmpty"));
+            return;
+        }
+
+        Request<?> request = new Request<Long>("remove_lower_key", id, ClientMain.requestSender.getUserLogin(), ClientMain.requestSender.getUserPassword());
+        CommandResult result = ClientMain.requestSender.sendRequest(request);
+
+        if(result.status != ResultStatus.OK){
+            createAlert("Произошла ошибка: " + result.message);
+        }
+    }
+
+    boolean filterStartsWithName = false;
+    String startsWithName = "";
+
+    boolean filterDistanceGreater = false;
+    long distanceGreater = -1;
+
+    public void startsWithClick(ActionEvent event) {
+        startsWithName = commonField.getText();
+        filterStartsWithName = true;
+        filterDistanceGreater = false;
+    }
+
+    public void distanceGreaterThenClick(ActionEvent event) {
+        long distance = -1;
+        try {
+            distance = Long.parseLong(commonField.getText());
+        }
+        catch (NumberFormatException exc){
+            createAlert(ClientMain.resources.getString("FieldsCantBeEmpty"));
+            return;
+        }
+        distanceGreater = distance;
+        filterDistanceGreater = true;
+        filterStartsWithName = false;
+    }
+
+    public void dropClick(ActionEvent event) {
+        filterStartsWithName = false;
+        filterDistanceGreater = false;
+
     }
 }

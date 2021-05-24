@@ -49,10 +49,9 @@ public class RequestSender {
             InputStream is = socket.getInputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
             CommandResult result = (CommandResult) ois.readObject();
-            if(attempts != 0){
-                System.out.println("Вау! Появилось подключение!");
-            }
-            attempts = MAX_ATTEMPTS_COUNT;
+
+            ois.close();
+            socket.close();
             return result;
         }
         catch (IOException | ClassNotFoundException exc){

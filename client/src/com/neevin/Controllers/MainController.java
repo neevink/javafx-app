@@ -16,6 +16,8 @@ public class MainController extends BaseController{
     protected Button executeScriptButton;
     @FXML
     protected Button infoButton;
+    @FXML
+    protected Button replaceIfButton;
 
     public void visualizationButtonClick(ActionEvent event) throws IOException {
         changeView(event, "/com/neevin/Views/VisualisationView.fxml");
@@ -30,7 +32,11 @@ public class MainController extends BaseController{
     }
 
     public void infoButtonClick(ActionEvent event) throws IOException {
-        changeView(event, "/com/neevin/Views/InfoView.fxml");
+        changeView(event, "/com/neevin/Views/InformationView.fxml");
+    }
+
+    public void replaceIfButtonClick(ActionEvent event) throws IOException {
+        changeView(event, "/com/neevin/Views/ReplaceIfView.fxml");
     }
 
     @Override
