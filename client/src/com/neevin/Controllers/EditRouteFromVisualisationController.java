@@ -10,9 +10,7 @@ import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 
@@ -26,6 +24,8 @@ public class EditRouteFromVisualisationController extends BaseController{
     public Button backButton;
     @FXML
     public Button saveButton;
+    @FXML
+    public Button deleteButton;
 
     public Label idLabel;
     public Label idValueLabel;
@@ -54,7 +54,7 @@ public class EditRouteFromVisualisationController extends BaseController{
     public Label distanceLabel;
     public TextField distanceValueField;
 
-    public static String backPath = "/com/neevin/Views/VisualisationView.fxml.fxml";
+    public static String backPath = "/com/neevin/Views/VisualisationView.fxml";
 
     @Override
     public void initialize(){
@@ -87,6 +87,26 @@ public class EditRouteFromVisualisationController extends BaseController{
             distanceValueField.setDisable(true);
 
             saveButton.setDisable(true);
+            deleteButton.setDisable(true);
+        }
+    }
+
+    @FXML
+    private void deleteButtonClick(ActionEvent event) throws IOException {
+        // Удаление
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Удалить нафиг?", ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            Request<?> request = new Request<Long>("remove_key", editingRoute.getId(), ClientMain.requestSender.getUserLogin(), ClientMain.requestSender.getUserPassword());
+            CommandResult result = ClientMain.requestSender.sendRequest(request);
+
+            if(result.status == ResultStatus.OK){
+                changeView(event, backPath);
+            }
+            else{
+                createAlert(result.message);
+            }
         }
     }
 
@@ -159,5 +179,6 @@ public class EditRouteFromVisualisationController extends BaseController{
 
         backButton.setText(ClientMain.resources.getString("Cancel"));
         saveButton.setText(ClientMain.resources.getString("Save"));
+        deleteButton.setText(ClientMain.resources.getString("Delete"));
     }
 }

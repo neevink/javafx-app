@@ -36,6 +36,8 @@ public class resource extends ListResourceBundle {
                     {"Information", "Информация"},
                     {"Add", "Добавить"},
                     {"Clear", "Очистить"},
+                    {"Delete", "Удалить"},
+                    {"Create", "Создать"}
             };
 
     @Override

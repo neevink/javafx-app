@@ -85,6 +85,9 @@ public class ShowController extends BaseController{
         table.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if(table.getSelectionModel().getSelectedItem() == null){
+                    return;
+                }
                 if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                     EditRouteFromVisualisationController.editingRoute = table.getSelectionModel().getSelectedItem().getRoute();
                     try {
@@ -137,11 +140,18 @@ public class ShowController extends BaseController{
     @FXML
     public void clearButtonClick(ActionEvent actionEvent) throws IOException {
         // Очистка коллекции
+        Request<?> request = new Request<String>("clear", null, ClientMain.requestSender.getUserLogin(), ClientMain.requestSender.getUserPassword());
+        CommandResult result = ClientMain.requestSender.sendRequest(request);
+
+        if(result.status != ResultStatus.OK){
+            createAlert(result.message);
+        }
     }
 
     @FXML
     public void addButtonClick(ActionEvent actionEvent) throws IOException {
-        // Открыть окно для добавления
+        CreateRouteController.backPath = "/com/neevin/Views/ShowView.fxml";
+        changeView(actionEvent, "/com/neevin/Views/CreateRouteView.fxml");
     }
 
     void initializeTable(){

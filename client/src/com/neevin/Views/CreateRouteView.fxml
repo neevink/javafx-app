@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.EditRouteFromVisualisationController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.CreateRouteController">
     <top>
         <HBox alignment="CENTER" BorderPane.alignment="CENTER">
             <children>
@@ -43,14 +43,6 @@
     </top>
     <center>
         <GridPane alignment="CENTER" hgap="20" vgap="4">
-            <Label fx:id="ownerLabel" text="Owner" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <Label fx:id="ownerValueLabel" text="Owner_name" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-            <Label fx:id="idLabel" text="Id" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <Label fx:id="idValueLabel" text="Id" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-            <Label fx:id="creationDateLabel" text="CreationDate" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <Label fx:id="creationDateValueLabel" text="13.12.2001 21:00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
             <Label fx:id="nameLabel" text="Name" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <TextField fx:id="nameValueField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -106,17 +98,11 @@
     <bottom>
         <VBox>
             <HBox alignment="CENTER">
-                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClick" style="-fx-background-color: rgb(255,143,136);" text="Удалить">
-                    <HBox.margin>
-                        <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
-                    </HBox.margin></Button>
-            </HBox>
-            <HBox alignment="CENTER">
                 <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Отмена">
                 <HBox.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                 </HBox.margin></Button>
-                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClick" text="Сохранить">
+                <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonClick" text="Создать">
                     <HBox.margin>
                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                     </HBox.margin>
