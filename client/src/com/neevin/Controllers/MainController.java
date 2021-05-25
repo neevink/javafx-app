@@ -46,5 +46,6 @@ public class MainController extends BaseController{
         showButton.setText(ClientMain.resources.getString("BrowseCollection"));
         executeScriptButton.setText(ClientMain.resources.getString("ExecuteScript"));
         infoButton.setText(ClientMain.resources.getString("Information"));
+        replaceIfButton.setText(ClientMain.resources.getString("ReplaceIf"));
     }
 }

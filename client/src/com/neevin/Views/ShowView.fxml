@@ -43,8 +43,8 @@
         </HBox>
     </top>
     <center>
-        <ScrollPane>
-            <TableView fx:id="table" tableMenuButtonVisible="true">
+        <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <TableView fx:id="table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="550.0" prefWidth="1350.0" tableMenuButtonVisible="true">
                 <columns>
                     <TableColumn fx:id="ownerColumn" text="Владелец">
                         <cellValueFactory>
@@ -70,19 +70,19 @@
                         </cellValueFactory>
                     </TableColumn>
 
-                    <TableColumn fx:id="coordinateXColumn" text="Координата X">
+                    <TableColumn fx:id="coordinateXColumn" prefWidth="90.0" text="Координата X">
                         <cellValueFactory>
                             <PropertyValueFactory property="coordinateX" />
                         </cellValueFactory>
                     </TableColumn>
 
-                    <TableColumn fx:id="coordinateYColumn" text="Координата Y">
+                    <TableColumn fx:id="coordinateYColumn" prefWidth="91.0" text="Координата Y">
                         <cellValueFactory>
                             <PropertyValueFactory property="coordinateY" />
                         </cellValueFactory>
                     </TableColumn>
 
-                    <TableColumn fx:id="fromXColumn" text="Откуда X">
+                    <TableColumn fx:id="fromXColumn" prefWidth="59.0" text="Откуда X">
                         <cellValueFactory>
                             <PropertyValueFactory property="fromX" />
                         </cellValueFactory>
@@ -94,7 +94,7 @@
                         </cellValueFactory>
                     </TableColumn>
 
-                    <TableColumn fx:id="fromNameColumn" text="Название откуда">
+                    <TableColumn fx:id="fromNameColumn" prefWidth="70.0" text="Название откуда">
                         <cellValueFactory>
                             <PropertyValueFactory property="fromName" />
                         </cellValueFactory>
@@ -112,7 +112,7 @@
                         </cellValueFactory>
                     </TableColumn>
 
-                    <TableColumn fx:id="toNameColumn" text="Название куда">
+                    <TableColumn fx:id="toNameColumn" prefWidth="70.0" text="Название куда">
                         <cellValueFactory>
                             <PropertyValueFactory property="toName" />
                         </cellValueFactory>
@@ -134,31 +134,31 @@
         <VBox>
             <HBox alignment="CENTER">
 
-                <Button mnemonicParsing="false" text="Сброс" onAction="#dropClick">
+                <Button mnemonicParsing="false" onAction="#dropClick" text="Сброс" fx:id="dropButton">
                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>
                 </Button>
 
-                <Button mnemonicParsing="false" text="Начинается с" onAction="#startsWithClick">
+                <Button mnemonicParsing="false" onAction="#startsWithClick" text="Начинается с" fx:id="startsWithButton">
                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>
                 </Button>
 
-                <Button mnemonicParsing="false" text="ID &lt;" onAction="#removeLessThenKeyClick">
+                <Button mnemonicParsing="false" onAction="#removeLessThenKeyClick" text="ID &lt;">
                     <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </HBox.margin>
                 </Button>
 
-                <Button mnemonicParsing="false" text="Distance &gt;" onAction="#distanceGreaterThenClick">
+                <Button mnemonicParsing="false" onAction="#distanceGreaterThenClick" text="Distance &gt;">
                    <HBox.margin>
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                    </HBox.margin>
                 </Button>
 
-                <TextField prefHeight="25.0" prefWidth="71.0" fx:id="commonField">
+                <TextField fx:id="commonField" prefHeight="25.0" prefWidth="71.0">
                    <HBox.margin>
                       <Insets bottom="5.0" left="5.0" right="15.0" top="5.0" />
                    </HBox.margin>

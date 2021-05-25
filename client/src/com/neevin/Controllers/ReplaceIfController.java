@@ -18,6 +18,10 @@ import java.util.Date;
 public class ReplaceIfController extends BaseController{
     @FXML
     public Button backButton;
+    @FXML
+    public Button replaceIfGreaterButton;
+    @FXML
+    public Button replaceIfLowerButton;
 
     public Label idLabel;
     public TextField idValueField;
@@ -106,6 +110,8 @@ public class ReplaceIfController extends BaseController{
         distanceLabel.setText(ClientMain.resources.getString("Distance"));
 
         backButton.setText(ClientMain.resources.getString("Cancel"));
+        replaceIfGreaterButton.setText(ClientMain.resources.getString("ReplaceIfGreater"));
+        replaceIfLowerButton.setText(ClientMain.resources.getString("ReplaceIfLower"));
     }
 
     public void replaceIfGreaterButtonClick(ActionEvent event) throws IOException {

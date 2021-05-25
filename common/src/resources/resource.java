@@ -18,6 +18,9 @@ public class resource extends ListResourceBundle {
                     {"Back", "Назад"},
                     {"VisualizationArea", "Область визуализации"},
                     {"BrowseCollection", "Обзор коллекции"},
+                    {"ExecuteScript", "Выполнить скрипт"},
+                    {"Information", "Информация"},
+                    {"ReplaceIf", "Заменить если"},
                     {"Owner", "Владелец"},
                     {"Id", "Идентификатор"},
                     {"CreationDate", "Дата создания"},
@@ -32,12 +35,16 @@ public class resource extends ListResourceBundle {
                     {"ToY", "Куда Y"},
                     {"ToName", "Название куда"},
                     {"FieldsCantBeEmpty", "Поля не могут быть пустыми"},
-                    {"ExecuteScript", "Выполнить скрипт"},
-                    {"Information", "Информация"},
                     {"Add", "Добавить"},
+                    {"Remove", "Удалить"},
                     {"Clear", "Очистить"},
                     {"Delete", "Удалить"},
-                    {"Create", "Создать"}
+                    {"Create", "Создать"},
+                    {"ChooseFile", "Выбрать файл"},
+                    {"ReplaceIfGreater", "Заменить, если больше"},
+                    {"ReplaceIfLower", "Заменить, если меньше"},
+                    {"Drop", "Сбросить"},
+                    {"StartsWith", "Начинается с"},
             };
 
     @Override

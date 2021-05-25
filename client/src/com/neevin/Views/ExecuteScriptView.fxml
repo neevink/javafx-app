@@ -45,7 +45,7 @@
         <VBox alignment="CENTER">
          <ScrollPane prefHeight="267.0" prefWidth="590.0">
             <content>
-                  <Label fx:id="outputLabel">
+                  <Label fx:id="outputLabel" prefHeight="Infinity">
                       <padding>
                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                       </padding>

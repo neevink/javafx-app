@@ -85,5 +85,6 @@ public class ExecuteScriptController extends BaseController{
     public void updateLanguage() {
         super.updateLanguage();
         backButton.setText(ClientMain.resources.getString("Back"));
+        chooseFileButton.setText(ClientMain.resources.getString("ChooseFile"));
     }
 }

@@ -23,6 +23,8 @@ public abstract class BaseController {
     @FXML
     protected Button logoutButton;
 
+    public static void resized(){ }
+
     public void initialize(){
         updateLanguage();
         if(ClientMain.selectedLanguage.equals("ru")){

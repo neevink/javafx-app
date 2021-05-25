@@ -30,6 +30,7 @@ public class VisualisationController extends BaseController{
     @Override
     public void initialize() {
         super.initialize();
+        pane.autosize();
 
         thread = new Thread(() -> {
             try {
@@ -50,8 +51,8 @@ public class VisualisationController extends BaseController{
         pane.getChildren().clear();
 
         if(result.status == ResultStatus.OK){
-            int screenSizeX = 600;
-            int screenSizeY = 400;
+            double screenSizeX = pane.getWidth();
+            double screenSizeY = pane.getHeight();
             var entities = calculatePositions((ArrayList<Route>)result.entity, screenSizeX, screenSizeY);
 
             for(Circle c : entities){
@@ -70,7 +71,7 @@ public class VisualisationController extends BaseController{
         }
     }
 
-    private ArrayList<Circle> calculatePositions(ArrayList<Route> array, int screenSizeX, int screenSizeY){
+    private ArrayList<Circle> calculatePositions(ArrayList<Route> array, double screenSizeX, double screenSizeY){
         final int OFFSET_X = 50; // Отступ от краёв экрана по X
         final int OFFSET_Y = 70; // Отступ от краёв экрана по Y
         final int CIRCLE_SIZE = 15; // Радиус кружков-элементов
@@ -86,13 +87,13 @@ public class VisualisationController extends BaseController{
 
         ArrayList<Circle> newCoordinates = new ArrayList<>();
         for(Route r : array){
-            int newPositionX = screenSizeX/2;
+            double newPositionX = screenSizeX/2;
             if(maxCoordinateX != 0){
-                newPositionX = (int) (screenSizeX/2 + r.getCoordinates().getX().doubleValue()/maxCoordinateX*(screenSizeX/2 - OFFSET_X));
+                newPositionX = (screenSizeX/2 + r.getCoordinates().getX().doubleValue()/maxCoordinateX*(screenSizeX/2 - OFFSET_X));
             }
-            int newPositionY = screenSizeY/2;
+            double newPositionY = screenSizeY/2;
             if(maxCoordinateY != 0){
-                newPositionY = (int) (screenSizeY/2 + r.getCoordinates().getY()/maxCoordinateY*(screenSizeY/2 - OFFSET_Y));
+                newPositionY = (screenSizeY/2 + r.getCoordinates().getY()/maxCoordinateY*(screenSizeY/2 - OFFSET_Y));
             }
 
             Circle c;

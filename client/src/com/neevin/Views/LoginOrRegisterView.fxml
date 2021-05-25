@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.LoginOrRegisterController">
     <top>
-        <ChoiceBox fx:id="languageChoiceBox" prefWidth="150.0" BorderPane.alignment="CENTER" value="Русский" onAction="#changeLanguage">
+        <ChoiceBox fx:id="languageChoiceBox" onAction="#changeLanguage" prefWidth="150.0" value="Русский" BorderPane.alignment="CENTER">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Русский" />

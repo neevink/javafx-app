@@ -5,15 +5,13 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.VisualisationController">
-    <AnchorPane fx:id="pane" prefWidth="0.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0" BorderPane.alignment="CENTER">
-        <!--
-        <Circle centerX="50" centerY="50" radius="10"></Circle>
-        -->
 
-    </AnchorPane>
+    <center>
+        <AnchorPane fx:id="pane" prefHeight="Infinity" prefWidth="Infinity" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0" BorderPane.alignment="CENTER">
+        </AnchorPane>
+    </center>
     <top>
             <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                 <children>
@@ -49,7 +47,7 @@
             </HBox>
         </top>
    <bottom>
-      <Button fx:id="backButton" onAction="#backButtonClick" mnemonicParsing="false" text="Назад" BorderPane.alignment="CENTER_LEFT">
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#backButtonClick" text="Назад" BorderPane.alignment="CENTER_LEFT">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" />
          </BorderPane.margin>

@@ -24,6 +24,11 @@ import java.util.stream.Collectors;
 
 public class ShowController extends BaseController{
     @FXML
+    private Button dropButton;
+    @FXML
+    private Button startsWithButton;
+
+    @FXML
     private TableView<RouteViewModel> table;
     @FXML
     private TableColumn<Route, String> ownerColumn;
@@ -201,6 +206,23 @@ public class ShowController extends BaseController{
         backButton.setText(ClientMain.resources.getString("Back"));
         clearButton.setText(ClientMain.resources.getString("Clear"));
         addButton.setText(ClientMain.resources.getString("Add"));
+
+        dropButton.setText(ClientMain.resources.getString("Drop"));
+        startsWithButton.setText(ClientMain.resources.getString("StartsWith"));
+
+        ownerColumn.setText(ClientMain.resources.getString("Owner"));
+        idColumn.setText(ClientMain.resources.getString("Id"));
+        dateColumn.setText(ClientMain.resources.getString("CreationDate"));
+        nameColumn.setText(ClientMain.resources.getString("Name"));
+        coordinateXColumn.setText(ClientMain.resources.getString("CoordinateX"));
+        coordinateYColumn.setText(ClientMain.resources.getString("CoordinateY"));
+        fromXColumn.setText(ClientMain.resources.getString("FromX"));
+        fromYColumn.setText(ClientMain.resources.getString("FromY"));
+        fromNameColumn.setText(ClientMain.resources.getString("FromName"));
+        toXColumn.setText(ClientMain.resources.getString("ToX"));
+        toYColumn.setText(ClientMain.resources.getString("ToY"));
+        toNameColumn.setText(ClientMain.resources.getString("ToName"));
+        distanceColumn.setText(ClientMain.resources.getString("Distance"));
     }
 
     public void removeLessThenKeyClick(ActionEvent event) {

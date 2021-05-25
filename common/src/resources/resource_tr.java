@@ -17,6 +17,11 @@ public class resource_tr extends ListResourceBundle {
                     {"Save", "Kayıt etmek"},
                     {"Back", "Geri dön"},
                     {"VisualizationArea", "Görselleştirme alanı"},
+                    {"BrowseCollection", "Koleksiyona genel bakış"},
+                    {"ExecuteScript", "Komut dosyasını yürüt"},
+                    {"Information", "Bilgi"},
+                    {"ReplaceIf", "Değiştirin"},
+                    {"Owner", "Sahip"},
                     {"Id", "Tanımlayıcı"},
                     {"CreationDate", "yaratma tarihi"},
                     {"Name", "İsim Soyisim"},
@@ -30,6 +35,16 @@ public class resource_tr extends ListResourceBundle {
                     {"ToY", "Nerede Y"},
                     {"ToName", "Nerede isim"},
                     {"FieldsCantBeEmpty", "Alanlar boş olamaz"},
+                    {"Add", "a ekle"},
+                    {"Remove", "Silme"},
+                    {"Clear", "Açık"},
+                    {"Delete", "Silme"},
+                    {"Create", "Oluşturmak"},
+                    {"ChooseFile", "Bir dosya seçin"},
+                    {"ReplaceIfGreater", "Daha büyükse değiştirin"},
+                    {"ReplaceIfLower", "Daha azsa değiştirin"},
+                    {"Drop", "Sıfırla"},
+                    {"StartsWith", "İle başlar"},
             };
 
     @Override
