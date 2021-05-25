@@ -24,15 +24,22 @@
     </top>
     <center>
        <VBox alignment="CENTER">
-         <Button fx:id="loginButton" mnemonicParsing="false" onAction="#openLoginClick" prefHeight="31.0" prefWidth="110.0" text="Вход">
+         <Button fx:id="loginButton" mnemonicParsing="false" onAction="#openLoginClick" prefHeight="40.0" prefWidth="142.0" text="Вход">
             <VBox.margin>
                <Insets bottom="10.0" top="5.0" />
             </VBox.margin>
          </Button>
-           <Button fx:id="registerButton" mnemonicParsing="false" onAction="#openRegisterClick" prefHeight="31.0" prefWidth="112.0" text="Регистрация" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+           <Button fx:id="registerButton" mnemonicParsing="false" onAction="#openRegisterClick" prefHeight="39.0" prefWidth="141.0" text="Регистрация" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
             <VBox.margin>
                <Insets top="10.0" />
-            </VBox.margin></Button>
+            </VBox.margin>
+           </Button>
+
+           <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButtonClick" prefHeight="38.0" prefWidth="137.0" text="Выход" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                   <Insets top="10.0" />
+               </VBox.margin>
+           </Button>
        </VBox>
    </center>
 </BorderPane>

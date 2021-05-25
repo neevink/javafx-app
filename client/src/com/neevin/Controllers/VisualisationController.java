@@ -6,6 +6,7 @@ import com.neevin.Net.CommandResult;
 import com.neevin.Net.Request;
 import com.neevin.Net.ResultStatus;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Transition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

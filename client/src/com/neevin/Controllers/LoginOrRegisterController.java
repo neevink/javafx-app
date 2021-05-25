@@ -21,6 +21,8 @@ public class LoginOrRegisterController extends BaseController {
     private Button loginButton;
     @FXML
     private Button registerButton;
+    @FXML
+    private Button exitButton;
 
 
     @FXML
@@ -38,5 +40,10 @@ public class LoginOrRegisterController extends BaseController {
         super.updateLanguage();
         loginButton.setText(ClientMain.resources.getString("Login"));
         registerButton.setText(ClientMain.resources.getString("Register"));
+        exitButton.setText(ClientMain.resources.getString("Exit"));
+    }
+
+    public void exitButtonClick(ActionEvent event) {
+        System.exit(2);
     }
 }

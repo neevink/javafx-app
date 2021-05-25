@@ -113,7 +113,7 @@ public class ShowController extends BaseController{
             try {
                 while (true) {
                     Platform.runLater(this::updateTable);
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 }
             }
             catch(InterruptedException e) {}

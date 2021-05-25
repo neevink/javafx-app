@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.LoginController">
     <top>
-        <ChoiceBox fx:id="languageChoiceBox" prefWidth="150.0" BorderPane.alignment="CENTER" value="Русский" onAction="#changeLanguage">
+        <ChoiceBox fx:id="languageChoiceBox" onAction="#changeLanguage" prefWidth="150.0" value="Русский" BorderPane.alignment="CENTER">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Русский" />
@@ -23,20 +23,26 @@
         </ChoiceBox>
     </top>
     <center>
-        <VBox alignment="TOP_CENTER" fillWidth="false" BorderPane.alignment="CENTER">
+        <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="accountName" text="Имя аккаунта" />
+                <Label fx:id="accountName" text="Имя аккаунта">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Label>
                 <TextField fx:id="loginField" />
-                <Label fx:id="passwordLabel" text="Пароль" />
+                <Label fx:id="passwordLabel" text="Пароль">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Label>
                 <PasswordField fx:id="passwordField" />
                 <HBox alignment="CENTER">
-                    <Button fx:id="cancelButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#backClick" text="Отмена">
+                    <Button fx:id="cancelButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#backClick" prefHeight="26.0" prefWidth="65.0" text="Отмена">
                   <HBox.margin>
-                     <Insets right="5.0" />
+                     <Insets right="5.0" top="5.0" />
                   </HBox.margin></Button>
-                    <Button fx:id="loginButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#loginClick" text="Войти">
+                    <Button fx:id="loginButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#loginClick" prefHeight="27.0" prefWidth="64.0" text="Войти">
                   <HBox.margin>
-                     <Insets left="5.0" />
+                     <Insets left="5.0" top="5.0" />
                   </HBox.margin></Button>
                <VBox.margin>
                   <Insets top="10.0" />

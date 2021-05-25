@@ -20,7 +20,11 @@ public class InformationController extends BaseController{
     public void initialize() {
         super.initialize();
 
-        Request<?> request = new Request<String>("info", null, ClientMain.requestSender.getUserLogin(), ClientMain.requestSender.getUserPassword());
+        updateCollectionInfo();
+    }
+
+    private void updateCollectionInfo() {
+        Request<?> request = new Request<String>("info", ClientMain.selectedLanguage, ClientMain.requestSender.getUserLogin(), ClientMain.requestSender.getUserPassword());
         CommandResult result = ClientMain.requestSender.sendRequest(request);
 
         if(result.status == ResultStatus.OK){
@@ -39,6 +43,7 @@ public class InformationController extends BaseController{
     @Override
     public void updateLanguage() {
         super.updateLanguage();
+        updateCollectionInfo();
         backButton.setText(ClientMain.resources.getString("Back"));
     }
 }

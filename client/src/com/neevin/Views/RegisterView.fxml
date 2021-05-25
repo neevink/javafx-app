@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.neevin.Controllers.RegisterController">
    <top>
-      <ChoiceBox fx:id="languageChoiceBox" prefWidth="150.0" BorderPane.alignment="CENTER" value="Русский" onAction="#changeLanguage">
+      <ChoiceBox fx:id="languageChoiceBox" onAction="#changeLanguage" prefWidth="150.0" value="Русский" BorderPane.alignment="CENTER">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="Русский" />
@@ -23,26 +23,38 @@
       </ChoiceBox>
    </top>
    <center>
-      <VBox alignment="TOP_CENTER" fillWidth="false" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" fillWidth="false" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Имя аккаунта" fx:id="loginAccountNameLabel"/>
+            <Label fx:id="loginAccountNameLabel" text="Имя аккаунта">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Label>
             <TextField fx:id="loginField" />
-            <Label text="Пароль" fx:id="passwordLabel"/>
+            <Label fx:id="passwordLabel" text="Пароль">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Label>
             <PasswordField fx:id="passwordField" />
-            <Label text="Пароль ещё раз" fx:id="passwordAgainLabel"/>
+            <Label fx:id="passwordAgainLabel" text="Пароль ещё раз">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Label>
             <PasswordField fx:id="passwordAgainField" />
             <HBox alignment="CENTER">
-               <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#backClick" text="Отмена" fx:id="cancelButton">
+               <Button fx:id="cancelButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#backClick" text="Отмена">
                   <HBox.margin>
                      <Insets right="5.0" />
                   </HBox.margin></Button>
-               <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#createAccount" text="Зарегистрироваться" fx:id="registerButton">
+               <Button fx:id="registerButton" alignment="BOTTOM_CENTER" mnemonicParsing="false" onAction="#createAccount" text="Зарегистрироваться">
                   <HBox.margin>
                      <Insets left="5.0" />
                   </HBox.margin></Button>
                <padding>
                   <Insets top="10.0" />
                </padding>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
          </children>
          <BorderPane.margin>

@@ -147,13 +147,40 @@ public class ExecutionService {
 
     protected CommandResult info(Request<?> request){
         String type = "HashMap<Long, Route>";
+        String lang = (String) request.entity;
 
-        return new CommandResult(ResultStatus.OK,
-                "Информация: " + "\n" +
-                        "Тип коллекции: " + type + "\n" +
-                        "Количество элементов в коллекции: " + map.size()  + "\n" +
-                        "Пользователь, под которым выполнен вход: " + request.userLogin
-        );
+        if(lang == null || lang.equals("ru")){
+            return new CommandResult(ResultStatus.OK,
+                    "Информация: " + "\n" +
+                            "Тип коллекции: " + type + "\n" +
+                            "Количество элементов в коллекции: " + map.size()  + "\n" +
+                            "Пользователь, под которым выполнен вход: " + request.userLogin
+            );
+        }
+        else if(lang.equals("tr")){ // Турецкий
+            return new CommandResult(ResultStatus.OK,
+                    "Bilgi: " + "\n" +
+                            "Koleksiyon türü: " + type + "\n" +
+                            "Koleksiyondaki öğe sayısı: " + map.size()  + "\n" +
+                            "Giriş yapan kullanıcı: " + request.userLogin
+            );
+        }
+        else if(lang.equals("es")){ // Испанский
+            return new CommandResult(ResultStatus.OK,
+                    "Información: " + "\n" +
+                            "Tipo de colección: " + type + "\n" +
+                            "El número de elementos de la colección: " + map.size()  + "\n" +
+                            "El usuario que inició sesión: " + request.userLogin
+            );
+        }
+        else{ // Датский
+            return new CommandResult(ResultStatus.OK,
+                    "Information: " + "\n" +
+                            "Samlingstype: " + type + "\n" +
+                            "Antallet af genstande i samlingen: " + map.size()  + "\n" +
+                            "Brugeren, der er logget ind: " + request.userLogin
+            );
+        }
     }
 
     protected CommandResult insert(Request<?> request){
